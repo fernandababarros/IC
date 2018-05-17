@@ -14,11 +14,11 @@ attach(dados_originais)
 #visão geral das variáveis
 summary(dados_originais)
 
-histogram(log(Income), col="grey", probability=TRUE, xlab="Renda",
-          main="Histograma da Renda")
+hist(log(Income), col="grey", probability=TRUE, xlab="Renda",
+     main="Histograma da Renda")
 lines(density(log(Income)), col="blue", lwd=2)
 
-densityplot(log(Income), col="black", xlab="Renda")
+# densityplot(log(Income), col="black", xlab="Renda")
 
 #diferença entre os valores de Renda para homens e mulheres
 #hipótese homens ganham mais do que mulheres?
