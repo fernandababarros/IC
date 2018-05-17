@@ -30,7 +30,7 @@ boxplot(log(Income) ~ Gender, col="grey",
 boxplot(log(Income) ~ Education, col="#636363",
       main="Boxplot da variável Renda e Anos de Escolaridade",
       xlab="Anos de Escolaridade")
-lines(mean(log(Income)), mean(log(Income)), lty=2)
+abline(h=mean(log(Income)), lty=2)
 
 #avaliar se o estado civil influencia na renda dos entrevistados
 table(MarStat)
