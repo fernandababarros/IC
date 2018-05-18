@@ -14,11 +14,11 @@ attach(dados_originais)
 #visão geral das variáveis
 summary(dados_originais)
 
-histogram(log(Income), col="grey", probability=TRUE, xlab="Renda",
-          main="Histograma da Renda")
+hist(log(Income), col="grey", probability=TRUE, xlab="Renda",
+     main="Histograma da Renda")
 lines(density(log(Income)), col="blue", lwd=2)
 
-densityplot(log(Income), col="black", xlab="Renda")
+# densityplot(log(Income), col="black", xlab="Renda")
 
 #diferença entre os valores de Renda para homens e mulheres
 #hipótese homens ganham mais do que mulheres?
@@ -30,7 +30,7 @@ boxplot(log(Income) ~ Gender, col="grey",
 boxplot(log(Income) ~ Education, col="#636363",
       main="Boxplot da variável Renda e Anos de Escolaridade",
       xlab="Anos de Escolaridade")
-lines(mean(log(Income)), mean(log(Income)), lty=2)
+abline(h=mean(log(Income)), lty=2)
 
 #avaliar se o estado civil influencia na renda dos entrevistados
 table(MarStat)
