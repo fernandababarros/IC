@@ -1,0 +1,169 @@
+---
+title: "Relatório IC"
+author: "Fernanda Buzza Alves Barros"
+date: "__ de ________ de ____"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+```{r, message=FALSE, echo=FALSE}
+library(mice)
+library(VIM)
+library(CASdatasets)
+```
+
+```{r, message=FALSE, echo=FALSE, results=FALSE}
+load("01-organizando os dados.RData")
+```
+
+
+##1) INTRODUÇÃO
+
+Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
+
+Para a resposta dessa pergunta, temos que o ideal seria ter os dados, porém na falta deles temos que utilizar o método que melhor se ajusta a distribuição dos dados.
+
+Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Groothuis-Oudshoorn (2011), que é conhecido como Imputação Múltipla.
+
+##2) METODOLOGIA
+
+A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
+
+#2.1) Predictive Mean Matching (pmm)
+
+#2.2) Unconditional Mean Imputation (mean)
+
+##3) RESULTADOS
+
+#3.1) Banco de dados
+
+Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando o software estatístico R. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
+
+```{r}
+str(ustermlife)
+```
+
+Porém selecionamos as seguintes variáveis:
+Gênero (gênero do entrevistado);
+Idade (idade do entrevistado);
+Estado Civil (estado civil do entrevistado, sendo 1 para casado, 2 se mora com o parceiro e 0 para outros);
+Escolaridade (número de anos de escolaridade do entrevistado);
+Etnia (etnia);
+Renda (renda anual da família).
+
+O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, fixando a semente em set.seed(0).
+
+Primeiras observações do banco de dados original:
+```{r, echo=FALSE}
+head(dados_originais)
+```
+
+Primeiras observações do banco de dados com dados faltantes na variável Renda:
+```{r, echo=FALSE}
+head(dados)
+```
+
+#3.2) Análise Descritiva
+
+
+
+#3.3) Imputação
+
+Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
+
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+load("02-análise descritiva.RData")
+```
+
+Abaixo temos o output da função de imputação com as principais informações.
+
+```{r, echo=FALSE}
+imp
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+stripplot(log(Income)~.imp, data=com, jit=TRUE, fac=0.8,
+          col=col, pch=20,
+          cex=1.4, xlab="Número de Imputações", ylab="log(Renda)",
+          main="Gráfico com as distribuições dos valores imputados")
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+boxplot(log(Income) ~ .imp, data=com, xlab="Imputações", ylab="log(Renda)",
+        col=c("grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots da variável log(Renda) com os dados ausentes \n e as imputações")
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+impcom = com[-(1:500),-2]
+dados_originais[".imp"] = "0-original"
+dados_originais2 = dados_originais[c(".imp", "Gender", "Age", "MarStat",
+                                    "Education", "Ethnicity", "Income")]
+origcomimp = rbind(dados_originais, impcom)
+```
+
+
+
+```{r, echo=FALSE, message=FALSE}
+boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="log(Renda)",
+        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots dos dados originais e das imputações")
+```
+
+
+
+```{r, echo=FALSE}
+imp0com = com[1:500,]
+imp1com = com[501:1000,]
+imp2com = com[1001:1500,]
+imp3com = com[1501:2000,]
+imp4com = com[2001:2500,]
+imp5com = com[2501:3000,]
+```
+
+
+
+```{r, echo=FALSE}
+qqplot(log(dados_originais$Income), log(imp0com$Income), pch=20,
+       main="QQ-plot das imputações", xlab="Valores originais da log(Renda)",
+       ylab="Valores imputados da log(Renda)")
+imp1 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+imp2 = qqplot(log(dados_originais$Income), log(imp2com$Income), plot.it=FALSE)
+imp3 = qqplot(log(dados_originais$Income), log(imp3com$Income), plot.it=FALSE)
+imp4 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+imp5 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+points(c(imp1, imp2, imp3, imp4, imp5),
+       col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+       pch=20)
+legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+      col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+      pch=20)
+```
+
+
+
+##4) CONCLUSÃO
+
+
+
+##5) REFERÊNCIAS BIBLIOGRÁFICAS
+
+Rubin (1987)
+
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). mice: Multivariate Imputation by Chained Equations in R. Journal of Statistical Software, 45(3), 1-67. [linked phrase](http://www.jstatsoft.org/v45/i03/)
+
+Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
+
+Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
