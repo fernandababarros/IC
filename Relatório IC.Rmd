@@ -68,15 +68,14 @@ head(dados)
 
 #3.2) Análise Descritiva
 
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+load("02-análise descritiva.RData")
+```
 
 
 #3.3) Imputação
 
 Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
-
-```{r, echo=FALSE, message=FALSE, results=FALSE}
-load("02-análise descritiva.RData")
-```
 
 Abaixo temos o output da função de imputação com as principais informações.
 
