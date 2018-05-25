@@ -14,41 +14,48 @@ attach(dados_originais)
 #visão geral das variáveis
 summary(dados_originais)
 
-hist(log(Income), col="grey", probability=TRUE, xlab="log(Renda)",
-     main="Histograma da log(Renda)")
+hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
+     main="Histograma da Log(Renda)")
 lines(density(log(Income)), col="blue", lwd=2)
 
-# densityplot(log(Income), col="black", xlab="log(Renda)")
+# densityplot(log(Income), col="black", xlab="Log(Renda)")
 
 #diferença entre os valores de Renda para homens e mulheres
 #hipótese homens ganham mais do que mulheres?
 table(Gender)
 boxplot(log(Income) ~ Gender, col="grey",
-        xlab="Gênero", main="Boxplot da variável log(Renda) e Gênero")
+        xlab="Gênero", main="Boxplot da Log(Renda) e Gênero")
+#0=mulher, 1=homem
 
 #quanto maior os anos de escolaridade maior a renda?
 boxplot(log(Income) ~ Education, col="grey",
-      main="Boxplot da variável log(Renda) e Anos de Escolaridade",
+      main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
       xlab="Anos de Escolaridade")
-abline(h=mean(log(Income)), lty=2)
+abline(h=mean(log(Income)), lty=2, col="red")
 
 #avaliar se o estado civil influencia na renda dos entrevistados
 table(MarStat)
 boxplot(log(Income) ~ MarStat, col="grey",
-        main="Boxplot da variável log(Renda) e o Estado civil",
+        main="Boxplot da Log(Renda) e o Estado \n Civil",
         xlab="Estado Civil")
 #0=outros, 1=casado(a), 2=morando com o parceiro(a)
 
 #avaliar a etnia com a renda
 table(Ethnicity)
 boxplot(log(Income) ~ Ethnicity, col="grey",
-        main="Boxplot da variável log(Renda) e a Etnia",
+        main="Boxplot da Log(Renda) e a Etnia",
         xlab="Etnia")
-#1=, 2=, 3=, 7=
+#1=white, non-hispanic,
+#2=black, non-hispanic,
+#3=hispanic,
+#7=others
 
 #gráfico de dispersão da renda pela idade com o gênero
-plot(log(Income), Age, xlab="log(Renda)", ylab="Idade",
-     main="Gráfico da log(Renda) x Idade")
+#plot(log(Income), Age, xlab="Log(Renda)", ylab="Idade",
+#     main="Gráfico da Log(Renda) e Idade")
+#plot(Gender, col="red", add=TRUE)
+#abline(h=Gender, col="red")
+
 
 detach(dados_originais)
 
