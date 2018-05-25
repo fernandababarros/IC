@@ -5,8 +5,6 @@ library(mice)
 library(VIM)
 library(CASdatasets)
 
-getwd()
-setwd("C:/Users/ferna/Desktop/IC - MICE/Códigos organizados")
 load("01-organizando os dados.RData")
 
 md.pattern(dados) #quantidade de missing
