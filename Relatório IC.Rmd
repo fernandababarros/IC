@@ -40,7 +40,7 @@ A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltan
 
 #3.1) Banco de dados
 
-Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando o software estatístico R. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
+Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
 
 ```{r}
 str(ustermlife)
@@ -49,7 +49,7 @@ str(ustermlife)
 Porém selecionamos as seguintes variáveis:
 Gênero (gênero do entrevistado);
 Idade (idade do entrevistado);
-Estado Civil (estado civil do entrevistado, sendo 1 para casado, 2 se mora com o parceiro e 0 para outros);
+Estado Civil (estado civil do entrevistado);
 Escolaridade (número de anos de escolaridade do entrevistado);
 Etnia (etnia);
 Renda (renda anual da família).
@@ -72,8 +72,99 @@ head(dados)
 load("02-análise descritiva.RData")
 ```
 
+Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
+- Como está distribuída a variável Renda.
+- Qual é a relação entre a Renda e o Gênero.
+- Com maiores anos de escolaridade há aumento da renda.
+- O estado civil tem influência na renda.
+- Avaliar a relação entre a etnia e a renda.
+
+Primeiramente iremos analisar algumas das principais informações das variáveis, como: mínimo, máximo, média, mediana e quantis. Assim obtemos a tabela abaixo:
+
+Para a variável Idade temos:
+```{r, echo=FALSE}
+attach(dados_originais)
+summary(Age)
+```
+
+Assim para a pesquisa a idade máxima é 85 anos e a idade mínima é 20 anos. A média é 47,16 anos e a mediana 47 anos. O primeiro quantil é de 37 anos e o terceiro é de 58 anos.
+
+Analisando a variável Anos de Escolaridade temos:
+```{r, echo=FALSE}
+summary(Education)
+```
+
+O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
+
+Por fim temos a variável Renda:
+```{r, echo=FALSE}
+summary(Income)
+```
+
+Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
+
+Avaliando as variáveis Estado Civil, Gênero e Etnia temos:
+```{r, echo=FALSE}
+addmargins(table(Gender,Ethnicity,MarStat))
+```
+
+Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondentes do sexo masculino.
+
+## Distribuição da Renda
+
+```{r}
+hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
+     main="Histograma da Log(Renda)")
+lines(density(log(Income)), col="blue", lwd=2)
+```
+
+## Renda e Gênero
+
+```{r}
+boxplot(log(Income) ~ Gender, col="grey",
+        xlab="Gênero", main="Boxplot da Log(Renda) e Gênero",
+        names=c("Mulher","Homem"))
+```
+
+## Renda e Anos de Escolaridade
+
+```{r}
+boxplot(log(Income) ~ Education, col="grey",
+      main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
+      xlab="Anos de Escolaridade")
+abline(h=mean(log(Income)), lty=2, col="red")
+```
+
+## Renda e Estado Civil
+
+```{r}
+boxplot(log(Income) ~ MarStat, col="grey",
+        main="Boxplot da Log(Renda) e o Estado \n Civil",
+        xlab="Estado Civil", names=c("Outros","Casado","Morando Junto"))
+```
+
+## Renda e Etnia
+
+```{r}
+boxplot(log(Income) ~ Ethnicity, col="grey",
+        main="Boxplot da Log(Renda) e a Etnia",
+        xlab="Etnia", names=(c("White","Black","Hispanic","Others")))
+```
+
+
+
+```{r}
+detach(dados_originais)
+```
+
 
 #3.3) Imputação
+
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+setwd("D:/IC/IC - GITHUB")
+load("03-imputação.RData")
+load("04-gráficos imputação.RData")
+```
 
 Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
 
@@ -121,16 +212,6 @@ boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="log(Rend
         main="Box-plots dos dados originais e das imputações")
 ```
 
-
-
-```{r, echo=FALSE}
-imp0com = com[1:500,]
-imp1com = com[501:1000,]
-imp2com = com[1001:1500,]
-imp3com = com[1501:2000,]
-imp4com = com[2001:2500,]
-imp5com = com[2501:3000,]
-```
 
 
 
