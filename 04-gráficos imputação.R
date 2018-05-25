@@ -83,3 +83,4 @@ abline(0,1)
 #View(impcom)
 
 save.image(file = "04-gráficos imputação.RData")
+
