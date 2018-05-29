@@ -42,7 +42,7 @@ A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltan
 
 Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
 
-```{r}
+```{r, echo=FALSE}
 str(ustermlife)
 ```
 
@@ -96,14 +96,14 @@ summary(Education)
 
 O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
 
-Por fim temos a variável Renda:
+Analisando a variável Renda obtemos:
 ```{r, echo=FALSE}
 summary(Income)
 ```
 
 Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
 
-Avaliando as variáveis Estado Civil, Gênero e Etnia temos:
+Por fim, avaliando as variáveis Estado Civil, Gênero e Etnia temos:
 ```{r, echo=FALSE}
 addmargins(table(Gender,Ethnicity,MarStat))
 ```
@@ -112,48 +112,65 @@ Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondente
 
 ## Distribuição da Renda
 
-```{r}
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
      main="Histograma da Log(Renda)")
 lines(density(log(Income)), col="blue", lwd=2)
 ```
 
+Pelo histograma podemos avaliar a distribuição da variável Renda, a partir dos dados retirados do banco de dados original. Observamos uma maior concentração de valores entre o Log(Renda) de 10 a 12. Nas caldas podemos perceber reduções de valores da renda familiar.
+
+
 ## Renda e Gênero
 
-```{r}
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Gender, col="grey",
         xlab="Gênero", main="Boxplot da Log(Renda) e Gênero",
         names=c("Mulher","Homem"))
 ```
 
+Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os valores da renda dos homens comparados com os das mulheres. Nesse caso os homens possuem maiores valores de renda do que as mulheres.
+
+
 ## Renda e Anos de Escolaridade
 
-```{r}
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Education, col="grey",
       main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
       xlab="Anos de Escolaridade")
 abline(h=mean(log(Income)), lty=2, col="red")
 ```
 
+Ao analisar o efeito na quantidade de Anos de Escolaridade e a Renda, percebemos um crescimento na quantidade ganha de renda de acordo com os anos de escolaridade. Observamos que com a inclusão da reta pontilhada em vermelho, que representa a média da variável Log(Renda), a possibilidade de determinar os anos de escolaridade que estão acima da média de valores ganhos de renda. Entre os anos de escolaridade de 2 a 8 anos não percebemos uma relação crescente, sendo que há uma queda em 4, 5 e 8 anos de escolaridade, que pode ser devido a quantidade de entrevistados desses grupos representados no banco de dados; o que pode ser verificado na tabela abaixo:
+
+```{r, echo=FALSE}
+addmargins(table(Education))
+```
+
+
 ## Renda e Estado Civil
 
-```{r}
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ MarStat, col="grey",
         main="Boxplot da Log(Renda) e o Estado \n Civil",
         xlab="Estado Civil", names=c("Outros","Casado","Morando Junto"))
 ```
 
+Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as pessoas casadas possuem uma renda maior, quando comparado com os outros grupos apresentados pelo banco de dados.
+
+
 ## Renda e Etnia
 
-```{r}
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Ethnicity, col="grey",
         main="Boxplot da Log(Renda) e a Etnia",
         xlab="Etnia", names=(c("White","Black","Hispanic","Others")))
 ```
 
+Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores de renda para o grupo white e o others, sendo que os grupos black e hispanic apresentam similaridades nos valores de renda.
 
 
-```{r}
+```{r, echo=FALSE}
 detach(dados_originais)
 ```
 
@@ -161,7 +178,6 @@ detach(dados_originais)
 #3.3) Imputação
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-setwd("D:/IC/IC - GITHUB")
 load("03-imputação.RData")
 load("04-gráficos imputação.RData")
 ```
