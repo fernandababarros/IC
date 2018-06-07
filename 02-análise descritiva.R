@@ -50,11 +50,22 @@ boxplot(log(Income) ~ Ethnicity, col="grey",
 #3=hispanic,
 #7=others
 
+#gráfico de dispersão da renda pela idade
+plot(Age, log(Income), ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Log(Renda) e Idade", pch=20)
+mod= lm(log(Income)~Age)
+abline(mod, lwd=2)
+
+
 #gráfico de dispersão da renda pela idade com o gênero
-plot(log(Income), Age, xlab="Log(Renda)", ylab="Idade",
-     main="Gráfico da Log(Renda) e Idade")
-abline(lm(Age ~ Gender), col="red")
-text(13,80, "Gênero", col = 2, adj = c(-.1, -.1))
+plot(Age, log(Income), ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Log(Renda) e Idade", col=ifelse(Gender==0,2,1), pch=20)
+mod1 = lm(log(Income)~Age, data=dados_originais[Gender==0,])
+mod2 = lm(log(Income)~Age, data=dados_originais[Gender==1,])
+abline(mod1, col=2, lwd=2)
+abline(mod2, col=1, lwd=2)
+legend("topright", leg=c("Masc.", "Fem."), pch=20, col=c(1,2))
+
 
 
 detach(dados_originais)

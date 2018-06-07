@@ -1,8 +1,10 @@
 ---
-title: "Relatório IC"
+title: "RelatÃ³rio IC"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +22,7 @@ load("01-organizando os dados.RData")
 ```
 
 
-##1) INTRODUÇÃO
+## INTRODUÇÃO
 
 Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
 
@@ -28,7 +30,7 @@ Para a resposta dessa pergunta, temos que o ideal seria ter os dados, porém na 
 
 Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Groothuis-Oudshoorn (2011), que é conhecido como Imputação Múltipla.
 
-##2) METODOLOGIA
+## METODOLOGIA
 
 A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
 
@@ -114,7 +116,7 @@ Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondente
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
-     main="Histograma da Log(Renda)")
+     main="Histograma da Log(Renda)", ylim=c(0,0.4))
 lines(density(log(Income)), col="blue", lwd=2)
 ```
 
