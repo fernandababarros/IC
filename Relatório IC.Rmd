@@ -1,8 +1,9 @@
 ---
-title: "RelatÃ³rio IC"
+title: "Relatório IC"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -18,7 +19,7 @@ library(CASdatasets)
 ```
 
 ```{r, message=FALSE, echo=FALSE, results=FALSE}
-load("01-organizando os dados.RData")
+load("01-organizando_os_dados.RData")
 ```
 
 
@@ -71,7 +72,7 @@ head(dados)
 #3.2) Análise Descritiva
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-load("02-análise descritiva.RData")
+load("02-análise_descritiva.RData")
 ```
 
 Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
@@ -115,9 +116,9 @@ Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondente
 ## Distribuição da Renda
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
-     main="Histograma da Log(Renda)", ylim=c(0,0.4))
-lines(density(log(Income)), col="blue", lwd=2)
+# hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
+#     main="Histograma da Log(Renda)", ylim=c(0,0.4))
+# lines(density(log(Income)), col="blue", lwd=2)
 ```
 
 Pelo histograma podemos avaliar a distribuição da variável Renda, a partir dos dados retirados do banco de dados original. Observamos uma maior concentração de valores entre o Log(Renda) de 10 a 12. Nas caldas podemos perceber reduções de valores da renda familiar.
@@ -181,7 +182,7 @@ detach(dados_originais)
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
 load("03-imputação.RData")
-load("04-gráficos imputação.RData")
+load("04-gráficos_imputação.RData")
 ```
 
 Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.

@@ -1,0 +1,279 @@
+---
+title: "Relatório IC"
+author: "Fernanda Buzza Alves Barros"
+date: "__ de ________ de ____"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+```{r, message=FALSE, echo=FALSE}
+library(mice)
+library(VIM)
+library(CASdatasets)
+```
+
+```{r, message=FALSE, echo=FALSE, results=FALSE}
+load("01-organizando_os_dados.RData")
+```
+
+
+## INTRODUÇÃO
+
+Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
+
+Para a resposta dessa pergunta, temos que o ideal seria ter os dados, porém na falta deles temos que utilizar o método que melhor se ajusta a distribuição dos dados.
+
+Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Groothuis-Oudshoorn (2011), que é conhecido como Imputação Múltipla.
+
+## METODOLOGIA
+
+A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
+
+
+### Predictive Mean Matching (pmm)
+
+
+### Unconditional Mean Imputation (mean)
+
+
+
+## RESULTADOS
+
+
+### Banco de dados
+
+Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
+
+```{r, echo=FALSE}
+str(ustermlife)
+```
+
+Porém selecionamos as seguintes variáveis:
+Gênero (gênero do entrevistado);
+Idade (idade do entrevistado);
+Estado Civil (estado civil do entrevistado);
+Escolaridade (número de anos de escolaridade do entrevistado);
+Etnia (etnia);
+Renda (renda anual da família).
+
+O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, fixando a semente em set.seed(0).
+
+Primeiras observações do banco de dados original:
+```{r, echo=FALSE}
+head(dados_originais)
+```
+
+Primeiras observações do banco de dados com dados faltantes na variável Renda:
+```{r, echo=FALSE}
+head(dados)
+```
+
+### Análise Descritiva
+
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+load("02-análise_descritiva.RData")
+```
+
+Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
+
+- Como está distribuída a variável Renda.
+
+- Qual é a relação entre a Renda e o Gênero.
+
+- Com maiores anos de escolaridade há aumento da renda.
+
+- O estado civil tem influência na renda.
+
+- Avaliar a relação entre a etnia e a renda.
+
+
+Primeiramente iremos analisar algumas das principais informações das variáveis, como: mínimo, máximo, média, mediana e quantis. Assim obtemos a tabela abaixo:
+
+Para a variável Idade temos:
+```{r, echo=FALSE}
+attach(dados_originais)
+summary(Age)
+```
+
+Assim para a pesquisa a idade máxima é 85 anos e a idade mínima é 20 anos. A média é 47,16 anos e a mediana 47 anos. O primeiro quantil é de 37 anos e o terceiro é de 58 anos.
+
+Analisando a variável Anos de Escolaridade temos:
+```{r, echo=FALSE}
+summary(Education)
+```
+
+O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
+
+Analisando a variável Renda obtemos:
+```{r, echo=FALSE}
+summary(Income)
+```
+
+Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
+
+Por fim, avaliando as variáveis Estado Civil, Gênero e Etnia temos:
+```{r, echo=FALSE}
+addmargins(table(Gender,Ethnicity,MarStat))
+```
+
+Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondentes do sexo masculino.
+
+## Distribuição da Renda
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
+hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
+     main="Histograma da Log(Renda)", ylim=c(0,0.4))
+lines(density(log(Income)), col="blue", lwd=2)
+```
+
+Pelo histograma podemos avaliar a distribuição da variável Renda, a partir dos dados retirados do banco de dados original. Observamos uma maior concentração de valores entre o Log(Renda) de 10 a 12. Nas caldas podemos perceber reduções de valores da renda familiar.
+
+
+## Renda e Gênero
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
+boxplot(log(Income) ~ Gender, col="grey",
+        xlab="Gênero", main="Boxplot da Log(Renda) e Gênero",
+        names=c("Mulher","Homem"))
+```
+
+Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os valores da renda dos homens comparados com os das mulheres. Nesse caso os homens possuem maiores valores de renda do que as mulheres.
+
+
+## Renda e Anos de Escolaridade
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
+boxplot(log(Income) ~ Education, col="grey",
+      main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
+      xlab="Anos de Escolaridade")
+abline(h=mean(log(Income)), lty=2, col="red")
+```
+
+Ao analisar o efeito na quantidade de Anos de Escolaridade e a Renda, percebemos um crescimento na quantidade ganha de renda de acordo com os anos de escolaridade. Observamos que com a inclusão da reta pontilhada em vermelho, que representa a média da variável Log(Renda), a possibilidade de determinar os anos de escolaridade que estão acima da média de valores ganhos de renda. Entre os anos de escolaridade de 2 a 8 anos não percebemos uma relação crescente, sendo que há uma queda em 4, 5 e 8 anos de escolaridade, que pode ser devido a quantidade de entrevistados desses grupos representados no banco de dados; o que pode ser verificado na tabela abaixo:
+
+```{r, echo=FALSE}
+addmargins(table(Education))
+```
+
+
+## Renda e Estado Civil
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
+boxplot(log(Income) ~ MarStat, col="grey",
+        main="Boxplot da Log(Renda) e o Estado \n Civil",
+        xlab="Estado Civil", names=c("Outros","Casado","Morando Junto"))
+```
+
+Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as pessoas casadas possuem uma renda maior, quando comparado com os outros grupos apresentados pelo banco de dados.
+
+
+## Renda e Etnia
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
+boxplot(log(Income) ~ Ethnicity, col="grey",
+        main="Boxplot da Log(Renda) e a Etnia",
+        xlab="Etnia", names=(c("White","Black","Hispanic","Others")))
+```
+
+Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores de renda para o grupo white e o others, sendo que os grupos black e hispanic apresentam similaridades nos valores de renda.
+
+
+```{r, echo=FALSE}
+detach(dados_originais)
+```
+
+
+### Imputação
+
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+load("03-imputação.RData")
+load("04-gráficos_imputação.RData")
+```
+
+Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
+
+Abaixo temos o output da função de imputação com as principais informações.
+
+```{r, echo=FALSE}
+imp
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+stripplot(log(Income)~.imp, data=com, jit=TRUE, fac=0.8,
+          col=col, pch=20,
+          cex=1.4, xlab="Número de Imputações", ylab="log(Renda)",
+          main="Gráfico com as distribuições dos valores imputados")
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+boxplot(log(Income) ~ .imp, data=com, xlab="Imputações", ylab="log(Renda)",
+        col=c("grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots da variável log(Renda) com os dados ausentes \n e as imputações")
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+impcom = com[-(1:500),-2]
+dados_originais[".imp"] = "0-original"
+dados_originais2 = dados_originais[c(".imp", "Gender", "Age", "MarStat",
+                                    "Education", "Ethnicity", "Income")]
+origcomimp = rbind(dados_originais, impcom)
+```
+
+
+
+```{r, echo=FALSE, message=FALSE}
+boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="log(Renda)",
+        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots dos dados originais e das imputações")
+```
+
+
+
+
+```{r, echo=FALSE}
+qqplot(log(dados_originais$Income), log(imp0com$Income), pch=20,
+       main="QQ-plot das imputações", xlab="Valores originais da log(Renda)",
+       ylab="Valores imputados da log(Renda)")
+imp1 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+imp2 = qqplot(log(dados_originais$Income), log(imp2com$Income), plot.it=FALSE)
+imp3 = qqplot(log(dados_originais$Income), log(imp3com$Income), plot.it=FALSE)
+imp4 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+imp5 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+points(c(imp1, imp2, imp3, imp4, imp5),
+       col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+       pch=20)
+legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+      col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+      pch=20)
+```
+
+
+
+## CONCLUSÃO
+
+
+
+## REFERÊNCIAS BIBLIOGRÁFICAS
+
+Rubin (1987)
+
+Van Buuren, S., Groothuis-Oudshoorn, K. (2011). mice: Multivariate Imputation by Chained Equations in R. Journal of Statistical Software, 45(3), 1-67. [linked phrase](http://www.jstatsoft.org/v45/i03/)
+
+Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
+
+Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
