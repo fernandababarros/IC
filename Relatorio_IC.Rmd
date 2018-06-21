@@ -3,9 +3,10 @@ title: "Relatório IC"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
-  pdf_document: default
   html_document:
+    number_sections: true
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +24,7 @@ load("01-organizando_os_dados.RData")
 ```
 
 
-## INTRODUÇÃO
+# INTRODUÇÃO
 
 Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
 
@@ -31,22 +32,22 @@ Para a resposta dessa pergunta, temos que o ideal seria ter os dados, porém na 
 
 Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Groothuis-Oudshoorn (2011), que é conhecido como Imputação Múltipla.
 
-## METODOLOGIA
+# METODOLOGIA
 
 A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
 
 
-### Predictive Mean Matching (pmm)
+## Predictive Mean Matching (pmm)
 
 
-### Unconditional Mean Imputation (mean)
+## Unconditional Mean Imputation (mean)
 
 
 
-## RESULTADOS
+# RESULTADOS
 
 
-### Banco de dados
+## Banco de dados
 
 Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
 
@@ -74,7 +75,7 @@ Primeiras observações do banco de dados com dados faltantes na variável Renda
 head(dados)
 ```
 
-### Análise Descritiva
+## Análise Descritiva
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
 load("02-análise_descritiva.RData")
@@ -124,18 +125,18 @@ addmargins(table(Gender,Ethnicity,MarStat))
 
 Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondentes do sexo masculino.
 
-## Distribuição da Renda
+### Distribuição da Renda
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
-     main="Histograma da Log(Renda)", ylim=c(0,0.4))
-lines(density(log(Income)), col="blue", lwd=2)
+#grid::grid.newpage()
+#p1.hist
+p1.pryr
 ```
 
 Pelo histograma podemos avaliar a distribuição da variável Renda, a partir dos dados retirados do banco de dados original. Observamos uma maior concentração de valores entre o Log(Renda) de 10 a 12. Nas caldas podemos perceber reduções de valores da renda familiar.
 
 
-## Renda e Gênero
+### Renda e Gênero
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Gender, col="grey",
@@ -146,7 +147,7 @@ boxplot(log(Income) ~ Gender, col="grey",
 Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os valores da renda dos homens comparados com os das mulheres. Nesse caso os homens possuem maiores valores de renda do que as mulheres.
 
 
-## Renda e Anos de Escolaridade
+### Renda e Anos de Escolaridade
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Education, col="grey",
@@ -162,7 +163,7 @@ addmargins(table(Education))
 ```
 
 
-## Renda e Estado Civil
+### Renda e Estado Civil
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ MarStat, col="grey",
@@ -173,7 +174,7 @@ boxplot(log(Income) ~ MarStat, col="grey",
 Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as pessoas casadas possuem uma renda maior, quando comparado com os outros grupos apresentados pelo banco de dados.
 
 
-## Renda e Etnia
+### Renda e Etnia
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 boxplot(log(Income) ~ Ethnicity, col="grey",
@@ -189,7 +190,7 @@ detach(dados_originais)
 ```
 
 
-### Imputação
+## Imputação
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
 load("03-imputação.RData")
@@ -264,11 +265,11 @@ legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
 
 
 
-## CONCLUSÃO
+# CONCLUSÃO
 
 
 
-## REFERÊNCIAS BIBLIOGRÁFICAS
+# REFERÊNCIAS BIBLIOGRÁFICAS
 
 Rubin (1987)
 

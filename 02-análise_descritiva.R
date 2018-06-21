@@ -4,6 +4,9 @@
 library(mice)
 library(VIM)
 library(CASdatasets)
+library(tidyverse)
+library(gridExtra)
+library(pryr)
 
 load("01-organizando_os_dados.RData")
 
@@ -14,11 +17,21 @@ attach(dados_originais)
 #visão geral das variáveis
 summary(dados_originais)
 
-pdf(file= "hist_renda.pdf", width=12, height=10)
-hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
+#pdf(file= "hist_renda.pdf", width=12, height=10)
+#pdf(NULL)
+#dev.control(displaylist="enable")
+p1.pryr %<a-% {hist(log(Income), col="grey", probability=TRUE, xlab="Log(Renda)",
      main="Histograma da Log(Renda)", ylim=c(0,0.4))
 lines(density(log(Income)), col="blue", lwd=2)
-dev.off()
+}
+#p1.hist <- recordPlot()
+#invisible(dev.off())
+#dev.off()
+
+#grid::grid.newpage()
+#p1.hist
+
+p1.pryr
 
 # densityplot(log(Income), col="black", xlab="Log(Renda)")
 
