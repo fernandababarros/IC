@@ -19,4 +19,3 @@ dados = subset(ustermlife, select = c(Gender, Age, MarStat, Education,
 random = rbinom(length(dados$Income), size = 1, prob=0.2)
 dados[,6] = ifelse(random, NA , dados$Income)
 
-save.image(file = "01-organizando os dados.RData")

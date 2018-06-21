@@ -5,7 +5,7 @@ library(mice)
 library(VIM)
 library(CASdatasets)
 
-load("03-imputação.RData")
+source("03-imputação.R")
 
 cores = rgb(t(col2rgb(c("grey","black")))/255,alpha=0.5)
 
@@ -82,5 +82,5 @@ abline(0,1)
 #valores_imputados = impcom[rep(random,6),]
 #View(impcom)
 
-save.image(file = "04-gráficos imputação.RData")
+
 

@@ -3,10 +3,10 @@ title: "Relatório IC"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
+  pdf_document: default
   html_document:
     number_sections: true
     df_print: paged
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +20,7 @@ library(CASdatasets)
 ```
 
 ```{r, message=FALSE, echo=FALSE, results=FALSE}
-load("01-organizando_os_dados.RData")
+source("01-organizando_os_dados.R")
 ```
 
 
@@ -78,7 +78,7 @@ head(dados)
 ## Análise Descritiva
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-load("02-análise_descritiva.RData")
+source("02-análise_descritiva.R")
 ```
 
 Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
@@ -98,29 +98,29 @@ Primeiramente iremos analisar algumas das principais informações das variávei
 
 Para a variável Idade temos:
 ```{r, echo=FALSE}
-attach(dados_originais)
-summary(Age)
+#attach(dados_originais)
+#summary(Age)
 ```
 
 Assim para a pesquisa a idade máxima é 85 anos e a idade mínima é 20 anos. A média é 47,16 anos e a mediana 47 anos. O primeiro quantil é de 37 anos e o terceiro é de 58 anos.
 
 Analisando a variável Anos de Escolaridade temos:
 ```{r, echo=FALSE}
-summary(Education)
+#summary(Education)
 ```
 
 O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
 
 Analisando a variável Renda obtemos:
 ```{r, echo=FALSE}
-summary(Income)
+#summary(Income)
 ```
 
 Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
 
 Por fim, avaliando as variáveis Estado Civil, Gênero e Etnia temos:
 ```{r, echo=FALSE}
-addmargins(table(Gender,Ethnicity,MarStat))
+#addmargins(table(Gender,Ethnicity,MarStat))
 ```
 
 Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondentes do sexo masculino.
@@ -128,8 +128,12 @@ Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondente
 ### Distribuição da Renda
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-#grid::grid.newpage()
-#p1.hist
+grid::grid.newpage()
+p1.hist
+```
+
+
+```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
 p1.pryr
 ```
 
@@ -139,9 +143,9 @@ Pelo histograma podemos avaliar a distribuição da variável Renda, a partir do
 ### Renda e Gênero
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-boxplot(log(Income) ~ Gender, col="grey",
-        xlab="Gênero", main="Boxplot da Log(Renda) e Gênero",
-        names=c("Mulher","Homem"))
+#boxplot(log(Income) ~ Gender, col="grey",
+#        xlab="Gênero", main="Boxplot da Log(Renda) e Gênero",
+#        names=c("Mulher","Homem"))
 ```
 
 Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os valores da renda dos homens comparados com os das mulheres. Nesse caso os homens possuem maiores valores de renda do que as mulheres.
@@ -150,25 +154,25 @@ Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os va
 ### Renda e Anos de Escolaridade
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-boxplot(log(Income) ~ Education, col="grey",
-      main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
-      xlab="Anos de Escolaridade")
-abline(h=mean(log(Income)), lty=2, col="red")
+#boxplot(log(Income) ~ Education, col="grey",
+#      main="Boxplot da Log(Renda) e Anos de \n Escolaridade",
+#      xlab="Anos de Escolaridade")
+#abline(h=mean(log(Income)), lty=2, col="red")
 ```
 
 Ao analisar o efeito na quantidade de Anos de Escolaridade e a Renda, percebemos um crescimento na quantidade ganha de renda de acordo com os anos de escolaridade. Observamos que com a inclusão da reta pontilhada em vermelho, que representa a média da variável Log(Renda), a possibilidade de determinar os anos de escolaridade que estão acima da média de valores ganhos de renda. Entre os anos de escolaridade de 2 a 8 anos não percebemos uma relação crescente, sendo que há uma queda em 4, 5 e 8 anos de escolaridade, que pode ser devido a quantidade de entrevistados desses grupos representados no banco de dados; o que pode ser verificado na tabela abaixo:
 
 ```{r, echo=FALSE}
-addmargins(table(Education))
+#addmargins(table(Education))
 ```
 
 
 ### Renda e Estado Civil
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-boxplot(log(Income) ~ MarStat, col="grey",
-        main="Boxplot da Log(Renda) e o Estado \n Civil",
-        xlab="Estado Civil", names=c("Outros","Casado","Morando Junto"))
+#boxplot(log(Income) ~ MarStat, col="grey",
+#        main="Boxplot da Log(Renda) e o Estado \n Civil",
+#        xlab="Estado Civil", names=c("Outros","Casado","Morando Junto"))
 ```
 
 Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as pessoas casadas possuem uma renda maior, quando comparado com os outros grupos apresentados pelo banco de dados.
@@ -177,24 +181,24 @@ Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as 
 ### Renda e Etnia
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-boxplot(log(Income) ~ Ethnicity, col="grey",
-        main="Boxplot da Log(Renda) e a Etnia",
-        xlab="Etnia", names=(c("White","Black","Hispanic","Others")))
+#boxplot(log(Income) ~ Ethnicity, col="grey",
+#        main="Boxplot da Log(Renda) e a Etnia",
+#        xlab="Etnia", names=(c("White","Black","Hispanic","Others")))
 ```
 
 Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores de renda para o grupo white e o others, sendo que os grupos black e hispanic apresentam similaridades nos valores de renda.
 
 
 ```{r, echo=FALSE}
-detach(dados_originais)
+#detach(dados_originais)
 ```
 
 
 ## Imputação
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-load("03-imputação.RData")
-load("04-gráficos_imputação.RData")
+#source("03-imputação.R")
+#source("04-gráficos_imputação.R")
 ```
 
 Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
@@ -202,65 +206,65 @@ Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Ch
 Abaixo temos o output da função de imputação com as principais informações.
 
 ```{r, echo=FALSE}
-imp
+#imp
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-stripplot(log(Income)~.imp, data=com, jit=TRUE, fac=0.8,
-          col=col, pch=20,
-          cex=1.4, xlab="Número de Imputações", ylab="log(Renda)",
-          main="Gráfico com as distribuições dos valores imputados")
+#stripplot(log(Income)~.imp, data=com, jit=TRUE, fac=0.8,
+#          col=col, pch=20,
+#          cex=1.4, xlab="Número de Imputações", ylab="log(Renda)",
+#          main="Gráfico com as distribuições dos valores imputados")
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-boxplot(log(Income) ~ .imp, data=com, xlab="Imputações", ylab="log(Renda)",
-        col=c("grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots da variável log(Renda) com os dados ausentes \n e as imputações")
+#boxplot(log(Income) ~ .imp, data=com, xlab="Imputações", ylab="log(Renda)",
+#        col=c("grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+#        main="Box-plots da variável log(Renda) com os dados ausentes \n e as imputações")
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-impcom = com[-(1:500),-2]
-dados_originais[".imp"] = "0-original"
-dados_originais2 = dados_originais[c(".imp", "Gender", "Age", "MarStat",
-                                    "Education", "Ethnicity", "Income")]
-origcomimp = rbind(dados_originais, impcom)
+#impcom = com[-(1:500),-2]
+#dados_originais[".imp"] = "0-original"
+#dados_originais2 = dados_originais[c(".imp", "Gender", "Age", "MarStat",
+#                                    "Education", "Ethnicity", "Income")]
+#origcomimp = rbind(dados_originais, impcom)
 ```
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="log(Renda)",
-        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots dos dados originais e das imputações")
+#boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="log(Renda)",
+#        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+#        main="Box-plots dos dados originais e das imputações")
 ```
 
 
 
 
 ```{r, echo=FALSE}
-qqplot(log(dados_originais$Income), log(imp0com$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Valores originais da log(Renda)",
-       ylab="Valores imputados da log(Renda)")
-imp1 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
-imp2 = qqplot(log(dados_originais$Income), log(imp2com$Income), plot.it=FALSE)
-imp3 = qqplot(log(dados_originais$Income), log(imp3com$Income), plot.it=FALSE)
-imp4 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
-imp5 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
-points(c(imp1, imp2, imp3, imp4, imp5),
-       col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
-       pch=20)
-legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
-      col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
-      pch=20)
+#qqplot(log(dados_originais$Income), log(imp0com$Income), pch=20,
+#       main="QQ-plot das imputações", xlab="Valores originais da log(Renda)",
+#       ylab="Valores imputados da log(Renda)")
+#imp1 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+#imp2 = qqplot(log(dados_originais$Income), log(imp2com$Income), plot.it=FALSE)
+#imp3 = qqplot(log(dados_originais$Income), log(imp3com$Income), plot.it=FALSE)
+#imp4 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+#imp5 = qqplot(log(dados_originais$Income), log(imp1com$Income), plot.it=FALSE)
+#points(c(imp1, imp2, imp3, imp4, imp5),
+#       col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+#       pch=20)
+#legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+#      col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
+#      pch=20)
 ```
 
 
