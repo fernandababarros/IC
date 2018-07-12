@@ -78,10 +78,64 @@ Primeiras observações do banco de dados com dados faltantes na variável Renda
 head(dados)
 ```
 
-## Análise Descritiva
+## Análise Descritiva - TABELAS
 
-```{r, echo=FALSE, message=FALSE, results=FALSE}
-source("02-análise_descritiva.R")
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+source("02-analise_descritiva.R")
+tabela1
+tabela2
+tabela3
+tabela4
+tabela5
+tabela6
+tabela7
+tabela8
+tabela9
+tabela10
+```
+
+## Análise Descritiva - GRÁFICOS DO GGPLOT2
+
+```{r, echo=TRUE, message=FALSE}
+source("02-analise_descritiva.R")
+gg1.graf
+gg2.graf
+gg3.graf
+gg4.graf
+gg5.graf
+gg6.graf
+gg7.graf
+gg8.graf
+gg9.graf
+gg10.graf
+gg11.graf
+gg12.graf
+```
+
+## Análise Descritiva - GRÁFICOS
+
+```{r, echo=TRUE, message=FALSE}
+source("02-analise_descritiva.R")
+grid::grid.newpage()
+p1.graf
+p2.graf
+p3.graf
+p4.graf
+p5.graf
+p6.graf
+p7.graf
+p8.graf
+p9.graf
+p10.graf
+p11.graf
+p12.graf
+p13.graf
+p14.graf
+p15.graf
+p16.graf
+p17.graf
+p18.graf
+p19.graf
 ```
 
 Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
@@ -102,28 +156,28 @@ Primeiramente iremos analisar algumas das principais informações das variávei
 Para a variável Idade temos:
 ```{r, echo=FALSE, message=FALSE}
 # attach(dados_originais)
-summary(dados_originais$Age)
+#summary(dados_originais$Age)
 ```
 
 Assim para a pesquisa a idade máxima é 85 anos e a idade mínima é 20 anos. A média é 47,16 anos e a mediana 47 anos. O primeiro quantil é de 37 anos e o terceiro é de 58 anos.
 
 Analisando a variável Anos de Escolaridade temos:
 ```{r, echo=FALSE, message=FALSE}
-summary(dados_originais$Education)
+#summary(dados_originais$Education)
 ```
 
 O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
 
 Analisando a variável Renda obtemos:
 ```{r, echo=FALSE, message=FALSE}
-summary(dados_originais$Income)
+#summary(dados_originais$Income)
 ```
 
 Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
 
 Por fim, avaliando as variáveis Estado Civil, Gênero e Etnia temos:
 ```{r, echo=FALSE, message=FALSE}
-# addmargins(table(Gender,Ethnicity,MarStat))
+
 ```
 
 Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondentes do sexo masculino.
@@ -131,9 +185,7 @@ Sendo assim a pesquisa possui 87 respondentes do sexo feminino e 413 respondente
 ### Distribuição da Renda
 
 ```{r, echo=FALSE, warning=FALSE, results=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-source("02-análise_descritiva.R")
-grid::grid.newpage()
-p1.graf
+
 ```
 
 Pelo histograma podemos avaliar a distribuição da variável Renda, a partir dos dados retirados do banco de dados original. Observamos uma maior concentração de valores entre o Log(Renda) de 10 a 12. Nas caldas podemos perceber reduções de valores da renda familiar.
@@ -142,8 +194,7 @@ Pelo histograma podemos avaliar a distribuição da variável Renda, a partir do
 ### Renda e Gênero
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-grid::grid.newpage()
-p2.graf
+
 ```
 
 Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os valores da renda dos homens comparados com os das mulheres. Nesse caso os homens possuem maiores valores de renda do que as mulheres.
@@ -152,22 +203,20 @@ Ao plotarmos os boxplots da Log(Renda) e o Gênero vemos a relação entre os va
 ### Renda e Anos de Escolaridade
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-grid::grid.newpage()
-p3.graf
+
 ```
 
 Ao analisar o efeito na quantidade de Anos de Escolaridade e a Renda, percebemos um crescimento na quantidade ganha de renda de acordo com os anos de escolaridade. Observamos que com a inclusão da reta pontilhada em vermelho, que representa a média da variável Log(Renda), a possibilidade de determinar os anos de escolaridade que estão acima da média de valores ganhos de renda. Entre os anos de escolaridade de 2 a 8 anos não percebemos uma relação crescente, sendo que há uma queda em 4, 5 e 8 anos de escolaridade, que pode ser devido a quantidade de entrevistados desses grupos representados no banco de dados; o que pode ser verificado na tabela abaixo:
 
 ```{r, echo=FALSE, message=FALSE}
-addmargins(table(dados_originais$Education))
+
 ```
 
 
 ### Renda e Estado Civil
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-grid::grid.newpage()
-p4.graf
+
 ```
 
 Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as pessoas casadas possuem uma renda maior, quando comparado com os outros grupos apresentados pelo banco de dados.
@@ -176,8 +225,7 @@ Para analisar a relação entre o Estado Civil e a Log(Renda) percebemos que as 
 ### Renda e Etnia
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-grid::grid.newpage()
-p5.graf
+
 ```
 
 Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores de renda para o grupo white e o others, sendo que os grupos black e hispanic apresentam similaridades nos valores de renda.
@@ -186,8 +234,7 @@ Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores
 ### Renda, Idade e Gênero
 
 ```{r, echo=FALSE, fig.height=7, fig.width=7, fig.align='center'}
-grid::grid.newpage()
-p6.graf
+
 ```
 
 
