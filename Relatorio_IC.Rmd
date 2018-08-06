@@ -1,12 +1,13 @@
 ---
-title: "Relatório IC"
+title: "RelatÃ³rio IC"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
   pdf_document: default
+  word_document: default
   html_document:
-    number_sections: true
     df_print: paged
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +20,8 @@ library(VIM)
 library(CASdatasets)
 library(tidyverse)
 library(gridExtra)
-library(pryr)
+## library(pryr)
+library(car)
 ```
 
 ```{r, message=FALSE, echo=FALSE, results=FALSE}
@@ -58,87 +60,72 @@ Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life 
 str(ustermlife)
 ```
 
-Porém selecionamos as seguintes variáveis:
+Porém selecionamos as seguintes variáveis para realizar a pesquisa:
 Gênero (gênero do entrevistado);
 Idade (idade do entrevistado);
 Estado Civil (estado civil do entrevistado);
 Escolaridade (número de anos de escolaridade do entrevistado);
-Etnia (etnia);
-Renda (renda anual da família).
-
-O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, fixando a semente em set.seed(0).
+Etnia (etnia do entrevistado);
+Renda (renda anual da família do entrevistado).
 
 Primeiras observações do banco de dados original:
 ```{r, echo=FALSE, message=FALSE}
 head(dados_originais)
 ```
 
-Primeiras observações do banco de dados com dados faltantes na variável Renda:
-```{r, echo=FALSE, message=FALSE}
-head(dados)
+## Análise Descritiva
+
+```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='center'}
+source("02-analise_descritiva.R")
 ```
 
-## Análise Descritiva - TABELAS
+Após a escolha das variáveis para esse estudo, iremos realizar uma análise descritiva de cada uma delas, e assim avaliar as relações existentes entre a variável resposta e as covariáveis do banco de dados. Ao final realizaremos um dos principais objetivos dessa pesquisa, que é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis.
 
-```{r, echo=TRUE, message=FALSE, warning=FALSE}
-source("02-analise_descritiva.R")
-tabela1
-tabela2
-tabela3
-tabela4
-tabela5
-tabela6
-tabela7
-tabela8
-tabela9
-tabela10
+Primeiramente analisaremos as variáveis individualmente, com interesse em suas distribuições e comportamentos. Pelos dados observamos que as variáveis contínuas são: Renda, Idade e Escolaridade, e as variáveis discretas são: Gênero, Estado Civil e Etnia.
+
+```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='left'}
+p100.graf
 ```
 
-## Análise Descritiva - GRÁFICOS DO GGPLOT2
+Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino do que do sexo feminino; para o estado civil temos uma concentração maior de respostas para os entrevistados casados e uma menor quantidade de entrevistados com o estado civil de morando juntos; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco, sendo que as outras etnias possuem valores menores de entrevistados no banco de dados.
 
-```{r, echo=TRUE, message=FALSE}
-source("02-analise_descritiva.R")
-gg1.graf
-gg2.graf
-gg3.graf
-gg4.graf
-gg5.graf
-gg6.graf
-gg7.graf
-gg8.graf
-gg9.graf
-gg10.graf
-gg11.graf
-gg12.graf
+```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='left'}
+p101.graf
 ```
 
-## Análise Descritiva - GRÁFICOS
+Para as variáveis contínuas temos que a variável Idade está bastante distribuída entre os 20 anos e 70 anos, após 70 anos vemos poucos entrevistados no banco de dados; a distribuição dos Anos de Escolaridade possui maior concentração de entrevistados após 10 anos de escolaridade, e para a variável Renda aplicamos o logarítimo para melhor visualização da distribuição, assim percebemos uma aparência com a distribuição normal.
 
-```{r, echo=TRUE, message=FALSE}
+Além da análise da variávei anos de escolaridade, foi realizada a análise dos anos de esolaridade pelos tipos de ensino, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos:
+
+```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
+p102.graf
+```
+
+Avaliando os tipos de ensino percebemos uma maior concentração de entrevistados que possuem o ensino médio e o ensino superior, sendo que quase a metade dos entrevistados possuem ensino superior.
+
+Analisamos também a relação entre a variável resposta (Renda) e as covariáveis presentes no banco de dados escolhido. Assim obtivemos os seguintes resultados:
+
+```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
 source("02-analise_descritiva.R")
-grid::grid.newpage()
-p1.graf
-p2.graf
-p3.graf
-p4.graf
-p5.graf
-p6.graf
-p7.graf
-p8.graf
-p9.graf
-p10.graf
-p11.graf
+p103.graf
+```
+
+Para as variáveis discretas temos os boxplots da Log(Renda) com cada uma das variáveis separadamente. Para o gênero observamos um valor de renda maior para o sexo masculino, comparando com o sexo feminino; já a variável Estado Civil os entrevistados casados possuem uma renda maior, seguido pelos que moram juntos com o parceiro(a) e depois os que estão na categoria de outro tipo de estado civil; na comparaçao entre a Log(Renda) e a Etnia percebemos uma renda maior para a categoria outros da etnia, entretanto como foi observado anteriormente esta categoria representa somente 5% do total do banco de dados.
+
+```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
 p12.graf
-p13.graf
-p14.graf
-p15.graf
-p16.graf
-p17.graf
-p18.graf
-p19.graf
 ```
 
-Analisaremos as relações entre as variáveis selecionadas do banco de dados original. O principal objetivo é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis. Temos interesse em responder as seguintes perguntas:
+Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica que um ganho de renda anual maior pelos entrevistados a medida que aumenta a idade.
+
+```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
+
+```
+
+Avaliando a relação entre as variáveis Log(Renda) e a Escolaridade temos que devido aos anos 
+
+
+Analisaremos as relações entre as variáveis selecionadas do banco de dados original.  Temos interesse em responder as seguintes perguntas:
 
 - Como está distribuída a variável Renda.
 
@@ -249,7 +236,14 @@ Para avaliar a relação entre a Etnia e a Log(Renda) observamos maiores valores
 # source("03-imputacao.R")
 ```
 
-Para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da pmm e da mean da função para comparar os resultados.
+O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
+
+Primeiras observações do banco de dados com dados faltantes na variável Renda:
+```{r, echo=FALSE, message=FALSE}
+head(dados)
+```
+
+Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
 
 Abaixo temos o output da função de imputação com as principais informações.
 
