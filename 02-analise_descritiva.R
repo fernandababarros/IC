@@ -12,7 +12,7 @@ library(ggplot2)
 library(car)
 
 
-source("01-organizando_os_dados.R")
+source(file="01-organizando_os_dados.R", encoding="UTF-8")
 copy_dados_originais <- dados_originais
 
 
@@ -458,14 +458,14 @@ invisible(dev.off())
 ## p20.graf
 pdf(NULL)
 dev.control(displaylist="enable")
-par(mfrow=c(1,2))
+par(mfrow=c(2,1))
 barplot(cont_anosesc, main="Distribuição dos Anos de Escolaridade",
         col="grey", density=60, axis.lty=20, axes=TRUE, space=0)
 abline(v=9)
 abline(v=13)
 text(4,120,"Ensino Fundamental")
-text(11,100,"Ensino Médio")
-text(14.5,100,"Ensino Superior")
+text(11,120,"Ensino Médio")
+text(14.5,120,"Ensino Superior")
 barplot(cont_anosesc_rec, main="Distribuição dos Tipos de Ensino",
         col="grey", density=60, axis.lty=20, axes=TRUE, space=0, ylim=c(0,250))
 text(0.5,20,"7,4%")

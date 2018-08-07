@@ -76,7 +76,7 @@ head(dados_originais)
 ## Análise Descritiva
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='center'}
-source("02-analise_descritiva.R")
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 ```
 
 Após a escolha das variáveis para esse estudo, iremos realizar uma análise descritiva de cada uma delas, e assim avaliar as relações existentes entre a variável resposta e as covariáveis do banco de dados. Ao final realizaremos um dos principais objetivos dessa pesquisa, que é verificar os possíveis questionamentos sobre a Renda a partir das outras variáveis.
@@ -84,45 +84,55 @@ Após a escolha das variáveis para esse estudo, iremos realizar uma análise de
 Primeiramente analisaremos as variáveis individualmente, com interesse em suas distribuições e comportamentos. Pelos dados observamos que as variáveis contínuas são: Renda, Idade e Escolaridade, e as variáveis discretas são: Gênero, Estado Civil e Etnia.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='left'}
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 p100.graf
 ```
 
 Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino do que do sexo feminino; para o estado civil temos uma concentração maior de respostas para os entrevistados casados e uma menor quantidade de entrevistados com o estado civil de morando juntos; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco, sendo que as outras etnias possuem valores menores de entrevistados no banco de dados.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='left'}
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 p101.graf
 ```
 
-Para as variáveis contínuas temos que a variável Idade está bastante distribuída entre os 20 anos e 70 anos, após 70 anos vemos poucos entrevistados no banco de dados; a distribuição dos Anos de Escolaridade possui maior concentração de entrevistados após 10 anos de escolaridade, e para a variável Renda aplicamos o logarítimo para melhor visualização da distribuição, assim percebemos uma aparência com a distribuição normal.
+Para as variáveis contínuas temos que a variável Idade está bastante distribuída entre os 20 anos e 70 anos, após 70 anos vemos poucos entrevistados no banco de dados, sendo também que a idade máxima é `r max(dados_originais$Age)` anos e a idade mínima é `r min(dados_originais$Age)` anos. A média é `r mean(dados_originais$Age)` anos e a mediana `r median(dados_originais$Age)` anos. O primeiro quantil é de `r quantile(dados_originais$Age, 0.25)` anos, representando a idade que deixa 25% das observações abaixo e 75% acima dessa idade. E o terceiro quantil é de `r quantile(dados_originais$Age, 0.75)` anos, representando a idade que possui 75% das observações abaixo dela e 25% das observações acima dela.
 
-Além da análise da variávei anos de escolaridade, foi realizada a análise dos anos de esolaridade pelos tipos de ensino, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos:
+A distribuição da variável Escolaridade possui maior concentração de entrevistados após 10 anos de escolaridade.
+
+E para a variável Renda temos que a renda mínima anual é `r min(dados_originais$Income)` dólares e a renda máxima anual é `r max(dados_originais$Income)` dólares. A mediana e a média são `r median(dados_originais$Income)` dólares e `r mean(dados_originais$Income)` doláres, respectivamente. O primeiro quantil é de `r quantile(dados_originais$Income, 0.25)` dólares, representando o valor de renda anual que deixa 25% das observações abaixo dela e 75% acima deela. E o terceiro quantil é de `r quantile(dados_originais$Income, 0.75)` dólares, representando a renda anual que possui 75% das observações abaixo dela e 25% das observações acima dela. Aplicamos o logarítimo para melhor visualização da distribuição da renda anual através do histograma e percebemos uma aparência com a distribuição normal.
+
+Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos:
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 p102.graf
 ```
 
-Avaliando os tipos de ensino percebemos uma maior concentração de entrevistados que possuem o ensino médio e o ensino superior, sendo que quase a metade dos entrevistados possuem ensino superior.
+Avaliando os tipos de ensino percebemos uma maior concentração de entrevistados que possuem o ensino médio e o ensino superior, sendo que quase a metade dos entrevistados possuem ensino superior, esse valor corresponde a `r cont_anosesc_rec[3]` entrevistados.
 
 Analisamos também a relação entre a variável resposta (Renda) e as covariáveis presentes no banco de dados escolhido. Assim obtivemos os seguintes resultados:
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
-source("02-analise_descritiva.R")
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 p103.graf
 ```
 
-Para as variáveis discretas temos os boxplots da Log(Renda) com cada uma das variáveis separadamente. Para o gênero observamos um valor de renda maior para o sexo masculino, comparando com o sexo feminino; já a variável Estado Civil os entrevistados casados possuem uma renda maior, seguido pelos que moram juntos com o parceiro(a) e depois os que estão na categoria de outro tipo de estado civil; na comparaçao entre a Log(Renda) e a Etnia percebemos uma renda maior para a categoria outros da etnia, entretanto como foi observado anteriormente esta categoria representa somente 5% do total do banco de dados.
+Para as variáveis discretas temos os boxplots da Log(Renda) com cada uma das variáveis separadamente. Para o gênero observamos um valor de renda maior para o sexo masculino, comparando com o sexo feminino; já a variável Estado Civil os entrevistados casados possuem uma renda maior, seguido pelos que moram juntos com o parceiro(a) e depois os que estão na categoria de outro tipo de estado civil. Na comparação entre a Log(Renda) e a Etnia percebemos uma renda maior para a categoria outros da etnia, entretanto, como foi observado anteriormente, esta categoria representa somente 5% do total do banco de dados.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
+source(file="02-analise_descritiva.R", encoding="UTF-8")
 p12.graf
 ```
 
-Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica que um ganho de renda anual maior pelos entrevistados a medida que aumenta a idade.
+Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica um possível ganho de renda anual maior para os entrevistados a medida que aumenta a idade.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
-
+source(file="02-analise_descritiva.R", encoding="UTF-8")
+p21.graf
 ```
 
-Avaliando a relação entre as variáveis Log(Renda) e a Escolaridade temos que devido aos anos 
+Avaliando a relação entre as variáveis Log(Renda) e a recodificação da variável Anos de Escolaridade, variável separada em tipos de ensino para melhor visualização da relação existente, temos que o tipo de ensino influencia na renda dos entrevistados. Assim observamos valores de renda maiores para o Ensino Superior, que possui de 15-17 anos de escolaridade.
+
 
 
 Analisaremos as relações entre as variáveis selecionadas do banco de dados original.  Temos interesse em responder as seguintes perguntas:
@@ -138,27 +148,11 @@ Analisaremos as relações entre as variáveis selecionadas do banco de dados or
 - Avaliar a relação entre a etnia e a renda.
 
 
-Primeiramente iremos analisar algumas das principais informações das variáveis, como: mínimo, máximo, média, mediana e quantis. Assim obtemos a tabela abaixo:
 
-Para a variável Idade temos:
-```{r, echo=FALSE, message=FALSE}
-# attach(dados_originais)
-#summary(dados_originais$Age)
-```
 
-Assim para a pesquisa a idade máxima é 85 anos e a idade mínima é 20 anos. A média é 47,16 anos e a mediana 47 anos. O primeiro quantil é de 37 anos e o terceiro é de 58 anos.
-
-Analisando a variável Anos de Escolaridade temos:
-```{r, echo=FALSE, message=FALSE}
-#summary(dados_originais$Education)
-```
 
 O mínimo de anos de escolaridade é 2 anos e o máximo é 17 anos. A mediana e a média são 14 anos e 14,06 anos, respectivamente. E o primeiro quantil é 12 anos e o terceiro quantil é 16 anos.
 
-Analisando a variável Renda obtemos:
-```{r, echo=FALSE, message=FALSE}
-#summary(dados_originais$Income)
-```
 
 Essa variável possui como renda mínima 260 dólares e renda máxima 75.000.000 dólares. A mediana e a média são 54.000 dólares e 321.022 doláres, respectivamente. E o primeiro e terceiro quantis são 28.000 dólares e 106.000 dólares.
 
