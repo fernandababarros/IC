@@ -313,7 +313,7 @@ mod1 <- lm(log(mulher_dados1$Income)~mulher_dados1$Age, data=mulher_dados1)
 mod2 <- lm(log(homem_dados1$Income)~homem_dados1$Age, data=homem_dados1)
 abline(mod1, col=2, lwd=2)
 abline(mod2, col=1, lwd=2)
-legend("topright", leg=c("Masculino", "Feminino"), pch=20, col=c(1,2))
+legend("topright", leg=c("Masculino", "Feminino"), pch=20, col=c(1,2), horiz=FALSE)
 p17.graf <- recordPlot()
 invisible(dev.off())
 
@@ -567,3 +567,4 @@ gg19.graf = ggplot(data = dados_originais, aes(x = Education, y = log(Income), c
 gg20.graf = ggplot(data = dados_originais, aes(x = Education, y = log(Income), color = Ethnicity)) +
   facet_grid(. ~ Ethnicity) +
   geom_point()
+
