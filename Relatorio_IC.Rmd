@@ -188,7 +188,7 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 ## Imputação
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-# source(file="03-imputacao.R", encoding="UTF-8")
+source(file="03-imputacao.R", encoding="UTF-8")
 ```
 
 O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
@@ -203,22 +203,23 @@ Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation W
 Abaixo temos o output da função de imputação com as principais informações.
 
 ```{r, echo=FALSE, message=FALSE}
-# imp
+imp
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-# source(file="04-gráficos_imputação.R", encoding="UTF-8")
-# p40.pryr
+source(file="04-gráficos_imputação.R", encoding="UTF-8")
+p40.graf
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-# p41.pryr
+source(file="04-gráficos_imputação.R", encoding="UTF-8")
+p41.graf
 ```
 
 
@@ -226,14 +227,16 @@ Abaixo temos o output da função de imputação com as principais informações
 
 
 ```{r, echo=FALSE, message=FALSE}
-# p42.pryr
+source(file="04-gráficos_imputação.R", encoding="UTF-8")
+p42.graf
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-# p43.pryr
+source(file="04-gráficos_imputação.R", encoding="UTF-8")
+p43.graf
 ```
 
 
@@ -251,3 +254,4 @@ Van Buuren, S., Groothuis-Oudshoorn, K. (2011). mice: Multivariate Imputation by
 Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 
 Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
+
