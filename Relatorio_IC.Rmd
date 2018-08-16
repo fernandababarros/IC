@@ -161,21 +161,11 @@ source(file="02-analise_descritiva.R", encoding="UTF-8")
 p17.graf
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.height=4, fig.width=8, fig.align='left'}
-source(file="02-analise_descritiva.R", encoding="UTF-8")
-gg7.graf
-```
-
 Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influencia nos valores da renda anual, por esses gráficos vemos também que existem duas observações de renda para o sexo feminino que estão mais acima no gráfico. O gráfico que possui o ajuste das retas mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o sexo feminino; podemos perceber também uma inclinação na reta, à medida que aumenta a idade, para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=7, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 p18.graf
-```
-
-```{r, echo=FALSE, message=FALSE, fig.height=3, fig.width=7, fig.align='left'}
-source(file="02-analise_descritiva.R", encoding="UTF-8")
-gg9.graf
 ```
 
 Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos observar que os entrevistados casados possuem uma quantidade maior de renda e através da inclinação da reta podemos concluir que a renda aumenta através da idade, já para os entrevistados que estão morando junto e os outros tipos de estado civil as retas e a inclinação estão quase juntas, sendo que possuem pequenas diferenças em algumas idades; o gráfico acima também mostra como está a distribuição por estado civil dos entrevistados.
@@ -185,21 +175,11 @@ source(file="02-analise_descritiva.R", encoding="UTF-8")
 p19.graf
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.height=3, fig.width=8, fig.align='left'}
-source(file="02-analise_descritiva.R", encoding="UTF-8")
-gg11.graf
-```
-
 Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros, os Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 p22.graf
-```
-
-```{r, echo=FALSE, message=FALSE, fig.height=4, fig.width=8, fig.align='left'}
-source(file="02-analise_descritiva.R", encoding="UTF-8")
-gg14.graf
 ```
 
 Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; assim há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio.

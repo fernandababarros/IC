@@ -142,7 +142,7 @@ pdf(NULL)
 dev.control(displaylist="enable")
 hist(log(dados_originais$Income), col="grey", probability=TRUE,
      xlab="Log(Renda)", main="Histograma da Log(Renda)", ylim=c(0,0.4))
-lines(density(log(dados_originais$Income)), col="blue", lwd=2)
+lines(density(log(dados_originais$Income)), col="black", lwd=2)
 p7.graf <- recordPlot()
 invisible(dev.off())
 ## grid::grid.newpage()
@@ -151,7 +151,7 @@ invisible(dev.off())
 ########## Gráfico no Relatório
 ## p4.graf
 ## p5.graf
-## p6.graf
+## p7.graf
 pdf(NULL)
 dev.control(displaylist="enable")
 par(mfrow=c(2,2))
@@ -161,7 +161,7 @@ hist(dados_originais$Education, col="grey", probability=TRUE,
      xlab="Anos de Escolaridade", main="Histograma dos Anos de\n Escolaridade")
 hist(log(dados_originais$Income), col="grey", probability=TRUE,
      xlab="Log(Renda)", main="Histograma da Log(Renda)", ylim=c(0,0.4))
-lines(density(log(dados_originais$Income)), col="blue", lwd=2)
+lines(density(log(dados_originais$Income)), col="black", lwd=2)
 p101.graf <- recordPlot()
 invisible(dev.off())
 ##########
@@ -261,8 +261,28 @@ plot(dados_originais$Age, log(dados_originais$Income), ylab="Log(Renda)",
      xlab="Idade", main="Gráfico da Idade e a Log(Renda)", pch=20)
 ## abline(h=quantile(log(dados_originais$Income)), lty=2, col="purple")
 mod0 = lm(log(dados_originais$Income)~dados_originais$Age)
-abline(mod0, col="red", lwd=2)
+abline(mod0, col="grey55", lwd=2)
 p12.graf <- recordPlot()
+invisible(dev.off())
+
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(dados_originais$Education, log(dados_originais$Income), ylab="Log(Renda)",
+     xlab="Anos de Escolaridade", pch=20,
+     main="Gráfico dos Anos de Escolaridade e a Log(Renda)")
+mod22 = lm(log(dados_originais$Income)~dados_originais$Education)
+abline(mod22, col="grey55", lwd=2)
+p26.graf <- recordPlot()
+invisible(dev.off())
+
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(dados_originais$Education, dados_originais$Age, ylab="Idade",
+     xlab="Anos de Escolaridade", pch=20,
+     main="Gráfico dos Anos de Escolaridade e a Idade")
+mod23 = lm(dados_originais$Age~dados_originais$Education)
+abline(mod23, col="grey55", lwd=2)
+p27.graf <- recordPlot()
 invisible(dev.off())
 
 ## Gênero e Idade
@@ -306,14 +326,15 @@ dev.control(displaylist="enable")
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Gender=='Feminino',2,1), pch=20)
+     col=ifelse(dados_originais$Gender=='Feminino','gray55','black'), pch=20)
 homem_dados1 = dados_originais[dados_originais$Gender=='Masculino',]
 mulher_dados1 = dados_originais[dados_originais$Gender=='Feminino',]
 mod1 <- lm(log(mulher_dados1$Income)~mulher_dados1$Age, data=mulher_dados1)
 mod2 <- lm(log(homem_dados1$Income)~homem_dados1$Age, data=homem_dados1)
-abline(mod1, col=2, lwd=2)
-abline(mod2, col=1, lwd=2)
-legend("topright", leg=c("Masculino", "Feminino"), pch=20, col=c(1,2), horiz=FALSE)
+abline(mod1, col='gray55', lwd=2)
+abline(mod2, col='black', lwd=2)
+legend("topright", leg=c("Masculino", "Feminino"), pch=20, col=c('black','gray55'),
+       horiz=FALSE)
 p17.graf <- recordPlot()
 invisible(dev.off())
 
@@ -387,19 +408,19 @@ dev.control(displaylist="enable")
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$MarStat=='Outros',3,ifelse(dados_originais$MarStat=='Casado',2,1)),
-     pch=20)
+     col=ifelse(dados_originais$MarStat=='Outros','gray55',ifelse(dados_originais$MarStat=='Casado','black','black')),
+     pch=ifelse(dados_originais$MarStat=='Outros',20,ifelse(dados_originais$MarStat=='Casado',20,14)))
 ecoutros_dados1 = dados_originais[dados_originais$MarStat=='Outros',]
 eccasado_dados1 = dados_originais[dados_originais$MarStat=='Casado',]
 ecmorjuntos_dados1 = dados_originais[dados_originais$MarStat=='Morando Juntos',]
 mod3 <- lm(log(ecoutros_dados1$Income)~ecoutros_dados1$Age, data=ecoutros_dados1)
 mod4 <- lm(log(eccasado_dados1$Income)~eccasado_dados1$Age, data=eccasado_dados1)
 mod5 <- lm(log(ecmorjuntos_dados1$Income)~ecmorjuntos_dados1$Age, data=ecmorjuntos_dados1)
-abline(mod3, col=3, lwd=2)
-abline(mod4, col=2, lwd=2)
-abline(mod5, col=1, lwd=2)
+abline(mod3, col='gray55', lwd=2, lty=19)
+abline(mod4, col='black', lwd=2, lty=19)
+abline(mod5, col='black', lwd=2, lty=14)
 legend("topright", leg=c("Outros", "Casado", "Morando Juntos"),
-       pch=20, col=c(3,2,1), cex=0.8)
+       pch=c(20,20,14), col=c('gray55','black','black'), cex=0.8)
 p18.graf <- recordPlot()
 invisible(dev.off())
 
