@@ -177,7 +177,7 @@ p18.graf
 
 Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos observar que os entrevistados casados possuem uma quantidade maior de renda e através da inclinação da reta podemos concluir que a renda aumenta através da idade, já para os entrevistados que estão morando junto e os outros tipos de estado civil as retas e a inclinação estão quase juntas, sendo que possuem pequenas diferenças em algumas idades; o gráfico acima também mostra como está a distribuição por estado civil dos entrevistados.
 
-```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='left'}
+```{r, echo=FALSE, message=FALSE, fig.height=3, fig.width=8, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 p28.graf
 p29.graf
@@ -197,16 +197,12 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 
 ## Imputação
 
-```{r, echo=FALSE, message=FALSE, results=FALSE}
-source(file="03-imputacao.R", encoding="UTF-8")
-```
-
 O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
-```{r, echo=FALSE, message=FALSE}
-source(file="03-imputacao.R", encoding="UTF-8")
-head(dados)
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+#source(file="03-imputacao.R", encoding="UTF-8")
+#head(dados)
 ```
 
 Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
@@ -214,24 +210,24 @@ Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation W
 Abaixo temos o output da função de imputação com as principais informações.
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="03-imputacao.R", encoding="UTF-8")
-imp
+#source(file="03-imputacao.R", encoding="UTF-8")
+#imp_MCAR
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-graficos_imputacao.R", encoding="UTF-8")
-p40.graf
+#source(file="04-graficos_imputacao.R", encoding="UTF-8")
+#p40.graf
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-graficos_imputacao.R", encoding="UTF-8")
-p41.graf
+#source(file="04-graficos_imputacao.R", encoding="UTF-8")
+#p41.graf
 ```
 
 
@@ -239,16 +235,16 @@ p41.graf
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-graficos_imputacao.R", encoding="UTF-8")
-p42.graf
+#source(file="04-graficos_imputacao.R", encoding="UTF-8")
+#p42.graf
 ```
 
 
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-graficos_imputacao.R", encoding="UTF-8")
-p43.graf
+#source(file="04-graficos_imputacao.R", encoding="UTF-8")
+#p43.graf
 ```
 
 
