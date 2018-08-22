@@ -15,19 +15,18 @@ source(file="03-imputacao.R", encoding="UTF-8")
 ## IMPUTAÇÃO MCAR
 cores = rgb(t(col2rgb(c("grey","black")))/255,alpha=0.5)
 
-col <- rep(cores[1+as.numeric(is.na(imp$data$Income))],6)
+col <- rep(cores[1+as.numeric(is.na(imp_MCAR$data$Income))],6)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-attach(com)
 #stripplot(Income~.imp, data=com, jit=TRUE, fac=0.8,
 #          col=col, pch=20,
 #          cex=1.4, xlab="Imputation number")
 pdf(NULL)
 dev.control(displaylist="enable")
-stripplot(log(Income) ~ .imp, data=com, jit=TRUE, fac=0.8,
+stripplot(log(Income)~.imp, data=com_MCAR, jitter.data=TRUE, factor=0.8,
           col=col, pch=20,
-          cex=1.4, xlab="Número de Imputações", ylab="Renda",
+          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
           main="Gráfico com as distribuições dos valores imputados")
 p40.graf <- recordPlot()
 invisible(dev.off())
@@ -36,12 +35,9 @@ invisible(dev.off())
 #plotando os valores dos observados com os imputados percebemos que está próximo
 
 #boxplots da variável Income com os NA e as 5 imputações
-#boxplot(Income ~ .imp, data=com, xlab="Imputações", ylab="Renda",
-#        col=c("grey","white","white","white","white","white"),
-#        main="Box-plots da variável Income com os missings e as imputações")
 pdf(NULL)
 dev.control(displaylist="enable")
-boxplot(log(Income) ~ .imp, data=com, xlab="Imputações", ylab="Renda",
+boxplot(log(Income) ~ .imp, data=com_MCAR, xlab="Imputações", ylab="log(Renda)",
         col=c("grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots da variável Renda com os dados ausentes \n e as imputações")
 p41.graf <- recordPlot()
@@ -49,16 +45,13 @@ invisible(dev.off())
 
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
-impcom = com[-(1:500),-2]
+impcom = com_MCAR[-(1:500),-2]
 dados_originais[".imp"] = "0-original"
 dados_originais2 = dados_originais[c(".imp", "Gender", "Age", "MarStat",
                                      "Education", "Ethnicity", "Income")]
 origcomimp = rbind(dados_originais, impcom)
 
 #boxplots da variável Income dos dados originais e as 5 imputações
-#boxplot(Income ~ .imp, data=origcomimp, xlab="Imputações", ylab="Renda",
-#        col=c("grey","white","white","white","white","white"),
-#        main="Box-plots dos dados originais e das imputações")
 pdf(NULL)
 dev.control(displaylist="enable")
 boxplot(log(Income) ~ .imp, data=origcomimp, xlab="Imputações", ylab="Renda",
@@ -68,12 +61,12 @@ p42.graf <- recordPlot()
 invisible(dev.off())
 
 #QQ-plot
-imp0com = com[1:500,]
-imp1com = com[501:1000,]
-imp2com = com[1001:1500,]
-imp3com = com[1501:2000,]
-imp4com = com[2001:2500,]
-imp5com = com[2501:3000,]
+imp0com_MCAR = com_MCAR[1:500,]
+imp1com_MCAR = com_MCAR[501:1000,]
+imp2com_MCAR = com_MCAR[1001:1500,]
+imp3com_MCAR = com_MCAR[1501:2000,]
+imp4com_MCAR = com_MCAR[2001:2500,]
+imp5com_MCAR = com_MCAR[2501:3000,]
 
 #qqplot(log(dados_originais$Income), log(imp0com$Income), pch=0)
 #qqplot(log(dados_originais$Income), log(imp1com$Income), pch=1)
