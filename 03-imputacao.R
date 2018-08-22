@@ -12,10 +12,9 @@ library(car)
 
 source(file="01-organizando_os_dados.R", encoding="UTF-8")
 
-
-## IMPUTAÇÃO POR NOT MISSING AT RANDOM - NMAR (PERDA NÃO ALEATÓRIA)
-#ocorre quando a probabilidade de perda está relacionada com os valores da
-#própria variável de interesse, que não foram observados.
+## IMPUTAÇÃO POR MISSING COMPLETE AT RANDOM - MCAR (PERDA COMPLETAMENTE ALEATÓRIA)
+#a probabilidade de perda não depende das variáveis presentes no estudo, sendo
+#portanto, constante para todos os indivíduos.
 md.pattern(dados) #quantidade de missing
 #md.pairs(novo_dados) #quantidade de missing em pares de variáveis
 
@@ -26,7 +25,7 @@ imp
 #diagnóstico = verificar se os valores imputados são plausíveis
 diag = imp$imp$Income
 
-com <- complete(imp, "long", inc=T) #complete extrai o banco de dados 
+com <- mice::complete(imp, "all", include=T) #complete extrai o banco de dados 
 #original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
 
 
@@ -35,6 +34,9 @@ com <- complete(imp, "long", inc=T) #complete extrai o banco de dados
 #não com a variável de interesse, ou seja, a probabilidade de perda está
 #relacionada com um subconjunto conhecido dos dados.
 
-## IMPUTAÇÃO POR MISSING COMPLETE AT RANDOM - MCAR (PERDA COMPLETAMENTE ALEATÓRIA)
-#a probabilidade de perda não depende das variáveis presentes no estudo, sendo
-#portanto, constante para todos os indivíduos.
+
+
+
+## IMPUTAÇÃO POR NOT MISSING AT RANDOM - NMAR (PERDA NÃO ALEATÓRIA)
+#ocorre quando a probabilidade de perda está relacionada com os valores da
+#própria variável de interesse, que não foram observados.

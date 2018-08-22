@@ -88,7 +88,7 @@ source(file="02-analise_descritiva.R", encoding="UTF-8")
 p100.graf
 ```
 
-Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino (413 entrevistados) do que do sexo feminino (87 entrevistados); para o estado civil temos uma concentração maior de respostas para os entrevistados Casados (333 entrevistados) e a menor quantidade de entrevistados pertence ao estado civil de Morando Juntos (31 entrevistados), sendo que o estado civil Outros possui 136 entrevistados; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco (365 entrevistados), sendo que as outras etnias possuem valores menores de entrevistados no banco de dados: Hispânico (40 entrevistados), Negro (70 entrevistados) e Outros (25 entrevistados).
+Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino (413 entrevistados) do que do sexo feminino (87 entrevistadas); para o estado civil temos uma concentração maior de respostas para os entrevistados Casados (333 entrevistados) e a menor quantidade de entrevistados pertence ao estado civil de Morando Juntos (31 entrevistados), sendo que o estado civil Outros possui 136 entrevistados; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco (365 entrevistados), sendo que as outras etnias possuem valores menores de entrevistados no banco de dados: Hispânico (40 entrevistados), Negro (70 entrevistados) e Outros (25 entrevistados).
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
@@ -147,6 +147,13 @@ p12.graf
 
 Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica um possível ganho de renda anual maior para os entrevistados a medida que aumenta a idade.
 
+```{r, echo=FALSE, message=FALSE, fig.height=4, fig.width=10, fig.align='left'}
+source(file="02-analise_descritiva.R", encoding="UTF-8")
+p27.graf
+```
+
+Analisando as variáveis Anos de Escolaridade e a Idade, percebemos uma inclinação quando aumenta os anos de escolaridade e as idades dos entrevistados, ou seja, os entrevistados possuem maior anos de escolaridade à medida que aumentam as idade, o que condiz com a realidade dos ensinos visto anteiormente. Embora quantidades de anos de escolaridade maior possuem grande concentração de pessoas em diversas idades, para os anos de escolaridade entre 2-10 percebemos a presença de variabilidade.
+
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 p21.graf
@@ -154,14 +161,14 @@ p21.graf
 
 Avaliando a relação entre as variáveis Log(Renda) e a recodificação da variável Anos de Escolaridade, variável separada em tipos de ensino para melhor visualização da relação existente, temos que o tipo de ensino influencia na renda dos entrevistados. Assim observamos valores de renda maiores para o Ensino Superior, que possui de 15-17 anos de escolaridade.
 
-Após a apresentação das variáveis individualmente e em pares com a variável de interesse da renda anual, realizamos a análise das variáveis em trios, como por exemplo a Log(Renda), Idade e o Gênero. As análises da relação dessas variáveis permitem fazer suposições sobre os modelos a serem estudados e verificar a influência de cada covariável na variável resposta.
+Após a apresentação das variáveis individualmente e em pares com a variável de interesse renda anual, realizamos a análise das variáveis em trios, como por exemplo a Log(Renda), Idade e o Gênero. As análises da relação dessas variáveis permitem fazer suposições sobre os modelos a serem estudados e verificar a influência de cada covariável na variável resposta.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 p17.graf
 ```
 
-Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influencia nos valores da renda anual, por esses gráficos vemos também que existem duas observações de renda para o sexo feminino que estão mais acima no gráfico. O gráfico que possui o ajuste das retas mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o sexo feminino; podemos perceber também uma inclinação na reta, à medida que aumenta a idade, para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena.
+Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influenciam nos valores da renda anual. O gráfico possui o ajuste das retas e mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o do sexo feminino; podemos perceber também uma inclinação na reta, à medida que aumenta a idade, para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena ou inexistente.
 
 ```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=7, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
@@ -172,7 +179,10 @@ Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos ob
 
 ```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='left'}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
-p19.graf
+p28.graf
+p29.graf
+p30.graf
+p31.graf
 ```
 
 Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros, os Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
@@ -195,6 +205,7 @@ O banco de dados não possui dados faltantes, portanto para avaliar a Renda (var
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
 ```{r, echo=FALSE, message=FALSE}
+source(file="03-imputacao.R", encoding="UTF-8")
 head(dados)
 ```
 
@@ -203,6 +214,7 @@ Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation W
 Abaixo temos o output da função de imputação com as principais informações.
 
 ```{r, echo=FALSE, message=FALSE}
+source(file="03-imputacao.R", encoding="UTF-8")
 imp
 ```
 
@@ -210,7 +222,7 @@ imp
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-gráficos_imputação.R", encoding="UTF-8")
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
 p40.graf
 ```
 
@@ -218,7 +230,7 @@ p40.graf
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-gráficos_imputação.R", encoding="UTF-8")
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
 p41.graf
 ```
 
@@ -227,7 +239,7 @@ p41.graf
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-gráficos_imputação.R", encoding="UTF-8")
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
 p42.graf
 ```
 
@@ -235,7 +247,7 @@ p42.graf
 
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-gráficos_imputação.R", encoding="UTF-8")
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
 p43.graf
 ```
 

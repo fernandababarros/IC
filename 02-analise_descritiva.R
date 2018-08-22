@@ -24,7 +24,7 @@ summary(dados_originais)
 ## organizando as variáveis categóricas
 dados_originais$Gender <- ifelse(dados_originais$Gender==0, "Feminino", "Masculino")
 dados_originais$MarStat <- ifelse(dados_originais$MarStat==0,"Outros",ifelse(dados_originais$MarStat==1,"Casado","Morando Juntos"))
-dados_originais$Ethnicity<- ifelse(dados_originais$Ethnicity==1, "Branco", ifelse(dados_originais$Ethnicity==2, "Negro", ifelse(dados_originais$Ethnicity==3, "Hispânico", "Outros")))
+dados_originais$Ethnicity <- ifelse(dados_originais$Ethnicity==1, "Branco", ifelse(dados_originais$Ethnicity==2, "Negro", ifelse(dados_originais$Ethnicity==3, "Hispânico", "Outros")))
 
 ## DISTRIBUIÇÕES MARGINAIS
 ## tabelas de frequência para variáveis categóricas
@@ -449,6 +449,51 @@ legend("topright", leg=c("Branco", "Negro", "Hispânico", "Outros"),
 p19.graf <- recordPlot()
 invisible(dev.off())
 
+## Etnia Branco, Idade e Renda
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(etniabranco_dados1$Age, log(etniabranco_dados1$Income),
+     ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Idade e a Log(Renda)",
+     col='black', pch=20, ylim=c(0,20))
+abline(mod6, col='black', lwd=2)
+legend("topright", leg="Branco", pch=20, col='black', ncol=2, cex=0.75)
+p28.graf <- recordPlot()
+invisible(dev.off())
+## Etnia Hispânico, Idade e Renda
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(etniahisp_dados1$Age, log(etniahisp_dados1$Income),
+     ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Idade e a Log(Renda)",
+     col='grey60', pch=20, ylim=c(0,20))
+abline(mod6, col='grey60', lwd=2)
+legend("topright", leg="Hispânico", pch=20, col='grey60', ncol=2, cex=0.75)
+p29.graf <- recordPlot()
+invisible(dev.off())
+## Etnia Negro, Idade e Renda
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(etnianegro_dados1$Age, log(etnianegro_dados1$Income),
+     ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Idade e a Log(Renda)",
+     col='black', pch=14, ylim=c(0,20))
+abline(mod6, col='black', lwd=2, lty=14)
+legend("topright", leg="Negro", pch=14, col='black', ncol=2, cex=0.75)
+p30.graf <- recordPlot()
+invisible(dev.off())
+## Etnia Outros, Idade e Renda
+pdf(NULL)
+dev.control(displaylist="enable")
+plot(etniaoutros_dados1$Age, log(etniaoutros_dados1$Income),
+     ylab="Log(Renda)", xlab="Idade",
+     main="Gráfico da Idade e a Log(Renda)",
+     col='black', pch=13, ylim=c(0,20))
+abline(mod6, col='black', lwd=2, lty=6)
+legend("topright", leg="Outros", pch=13, col='black', ncol=2, cex=0.75)
+p31.graf <- recordPlot()
+invisible(dev.off())
+
 ## Recodificação da Variável Anos de Escolaridade
 ## Separando em tipo de Ensino
 dados_originais$Education2 <- Recode(dados_originais$Education, "2:10='Ensino Fundamental'; 11:14='Ensino Médio'; 15:17='Ensino Superior'")
@@ -502,19 +547,19 @@ dev.control(displaylist="enable")
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Education2=='Ensino Fundamental',3,ifelse(dados_originais$Education2=='Ensino Médio',2,1)),
-     pch=20)
+     col=ifelse(dados_originais$Education2=='Ensino Fundamental','black',ifelse(dados_originais$Education2=='Ensino Médio','grey60','black')),
+     pch=ifelse(dados_originais$Education2=='Ensino Fundamental',14,ifelse(dados_originais$Education2=='Ensino Médio',20,20)))
 ed.ef_dados = dados_originais[dados_originais$Education2=='Ensino Fundamental',]
 ed.em_dados = dados_originais[dados_originais$Education2=='Ensino Médio',]
 ed.es_dados = dados_originais[dados_originais$Education2=='Ensino Superior',]
 mod10 <- lm(log(ed.ef_dados$Income)~ed.ef_dados$Age, data=ed.ef_dados)
 mod11 <- lm(log(ed.em_dados$Income)~ed.em_dados$Age, data=ed.em_dados)
 mod12 <- lm(log(ed.es_dados$Income)~ed.es_dados$Age, data=ed.es_dados)
-abline(mod10, col=3, lwd=2)
-abline(mod11, col=2, lwd=2)
-abline(mod12, col=1, lwd=2)
+abline(mod10, col='black', lwd=2, lty=14)
+abline(mod11, col='grey60', lwd=2, lty=19)
+abline(mod12, col='black', lwd=2, lty=19)
 legend("topright", leg=c("Ensino Fundamental", "Ensino Médio", "Ensino Superior"),
-       pch=20, col=c(3,2,1), cex=0.8)
+       pch=c(14,20,20), col=c('black','grey60','black'), cex=0.8)
 ## possui uma observação do ensino superior com a legenda por cima!!! conferir no relatório
 p22.graf <- recordPlot()
 invisible(dev.off())
