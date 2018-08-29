@@ -10,9 +10,14 @@ library(gridExtra)
 library(ggplot2)
 ## library(pryr)
 library(car)
+library(knitr)
 
 
-source(file="01-organizando_os_dados.R", encoding="UTF-8")
+## source(file="01-organizando_os_dados.R", encoding="UTF-8")
+data(ustermlife)
+head(ustermlife)
+dados_originais = subset(ustermlife, select = c(Gender, Age, MarStat,
+                                                Education, Ethnicity, Income))
 copy_dados_originais <- dados_originais
 
 
@@ -79,8 +84,7 @@ invisible(dev.off())
 ## p1.graf
 ## p2.graf
 ## p3.graf
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p100-graf.pdf", width=14, height=10, pointsize=24)
 par(mfrow=c(2,2))
 barplot(cont_gen, main="Distribuição do Gênero", col="grey", density=60,
         axis.lty=20, axes=TRUE)
@@ -97,8 +101,7 @@ text(0.7,340,"73%")
 text(1.95,57,"8%")
 text(3.1,95,"14%")
 text(4.3,50,"5%")
-p100.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 ##########
 
 ## Idade
@@ -152,8 +155,7 @@ invisible(dev.off())
 ## p4.graf
 ## p5.graf
 ## p7.graf
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p101-graf.pdf", width=14, height=10, pointsize=24)
 par(mfrow=c(2,2))
 hist(dados_originais$Age, col="grey", probability=TRUE,
      xlab="Idade", main="Histograma da Idade")
@@ -161,9 +163,8 @@ hist(dados_originais$Education, col="grey", probability=TRUE,
      xlab="Anos de Escolaridade", main="Histograma dos Anos de\n Escolaridade")
 hist(log(dados_originais$Income), col="grey", probability=TRUE,
      xlab="Log(Renda)", main="Histograma da Log(Renda)", ylim=c(0,0.4))
-lines(density(log(dados_originais$Income)), col="black", lwd=2)
-p101.graf <- recordPlot()
-invisible(dev.off())
+lines(density(log(dados_originais$Income)), col="black", lwd=3)
+dev.off()
 ##########
 
 ## DISTRIBUIÇÕES CONJUNTAS
@@ -231,8 +232,7 @@ invisible(dev.off())
 ## p8.graf
 ## p10.graf
 ## p11.graf
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p103-graf.pdf", width=20, height=16, pointsize=24)
 par(mfrow=c(1,3))
 boxplot(log(dados_originais$Income) ~ dados_originais$Gender,
         col="grey", xlab="Gênero", ylab="Log(Renda)",
@@ -243,8 +243,7 @@ boxplot(log(dados_originais$Income) ~ dados_originais$MarStat,
 boxplot(log(dados_originais$Income) ~ dados_originais$Ethnicity,
         col="grey", xlab="Etnia", ylab="Log(Renda)",
         main="Boxplot da Etnia\ne a Log(Renda)")
-p103.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 ##########
 
 
@@ -255,15 +254,13 @@ invisible(dev.off())
 ## tabela10 <- addmargins(table(dados_originais$Ethnicity, dados_originais$Education), FUN=sum)
 
 ## Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p12-graf.pdf", width=16, height=8, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income), ylab="Log(Renda)",
      xlab="Idade", main="Gráfico da Idade e a Log(Renda)", pch=20)
 ## abline(h=quantile(log(dados_originais$Income)), lty=2, col="purple")
 mod0 = lm(log(dados_originais$Income)~dados_originais$Age)
-abline(mod0, col="grey55", lwd=2)
-p12.graf <- recordPlot()
-invisible(dev.off())
+abline(mod0, col="red3", lwd=3)
+dev.off()
 
 pdf(NULL)
 dev.control(displaylist="enable")
@@ -275,15 +272,13 @@ abline(mod22, col="grey55", lwd=2)
 p26.graf <- recordPlot()
 invisible(dev.off())
 
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p27-graf.pdf", width=16, height=8, pointsize=24)
 plot(dados_originais$Education, dados_originais$Age, ylab="Idade",
      xlab="Anos de Escolaridade", pch=20,
      main="Gráfico dos Anos de Escolaridade e a Idade")
 mod23 = lm(dados_originais$Age~dados_originais$Education)
-abline(mod23, col="grey55", lwd=2)
-p27.graf <- recordPlot()
-invisible(dev.off())
+abline(mod23, col="red3", lwd=3)
+dev.off()
 
 ## Gênero e Idade
 pdf(NULL)
@@ -321,22 +316,21 @@ p16.graf <- recordPlot()
 invisible(dev.off())
 
 ## Gênero, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p17-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Gender=='Feminino','gray55','black'), pch=20)
+     col=ifelse(dados_originais$Gender=='Feminino','red3','black'),
+     pch=ifelse(dados_originais$Gender=='Feminino',1,20))
 homem_dados1 = dados_originais[dados_originais$Gender=='Masculino',]
 mulher_dados1 = dados_originais[dados_originais$Gender=='Feminino',]
 mod1 <- lm(log(mulher_dados1$Income)~mulher_dados1$Age, data=mulher_dados1)
 mod2 <- lm(log(homem_dados1$Income)~homem_dados1$Age, data=homem_dados1)
-abline(mod1, col='gray55', lwd=2)
-abline(mod2, col='black', lwd=2)
-legend("topright", leg=c("Masculino", "Feminino"), pch=20, col=c('black','gray55'),
+abline(mod1, col='red3', lwd=3, lty=4)
+abline(mod2, col='black', lwd=3, lty=1)
+legend("topright", leg=c("Feminino", "Masculino"), pch=c(1,20), col=c('red3', 'black'),
        horiz=FALSE)
-p17.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 
 ## Gênero, Anos de Escolaridade, Renda
 pdf(NULL)
@@ -403,26 +397,24 @@ p25.graf <- recordPlot()
 invisible(dev.off())
 
 ## Estado Civil, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p18-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$MarStat=='Outros','gray55',ifelse(dados_originais$MarStat=='Casado','black','black')),
-     pch=ifelse(dados_originais$MarStat=='Outros',20,ifelse(dados_originais$MarStat=='Casado',20,14)))
+     col=ifelse(dados_originais$MarStat=='Outros','red3',ifelse(dados_originais$MarStat=='Casado','black','royalblue3')),
+     pch=ifelse(dados_originais$MarStat=='Outros',1,ifelse(dados_originais$MarStat=='Casado',20,8)))
 ecoutros_dados1 = dados_originais[dados_originais$MarStat=='Outros',]
 eccasado_dados1 = dados_originais[dados_originais$MarStat=='Casado',]
 ecmorjuntos_dados1 = dados_originais[dados_originais$MarStat=='Morando Juntos',]
 mod3 <- lm(log(ecoutros_dados1$Income)~ecoutros_dados1$Age, data=ecoutros_dados1)
 mod4 <- lm(log(eccasado_dados1$Income)~eccasado_dados1$Age, data=eccasado_dados1)
 mod5 <- lm(log(ecmorjuntos_dados1$Income)~ecmorjuntos_dados1$Age, data=ecmorjuntos_dados1)
-abline(mod3, col='gray55', lwd=2, lty=19)
-abline(mod4, col='black', lwd=2, lty=19)
-abline(mod5, col='black', lwd=2, lty=14)
-legend("topright", leg=c("Outros", "Casado", "Morando Juntos"),
-       pch=c(20,20,14), col=c('gray55','black','black'), cex=0.8)
-p18.graf <- recordPlot()
-invisible(dev.off())
+abline(mod3, col='red3', lwd=3, lty=4)
+abline(mod4, col='black', lwd=3, lty=2)
+abline(mod5, col='royalblue3', lwd=3, lty=1)
+legend("topright", leg=c("Casado", "Morando Juntos", "Outros"),
+       pch=c(20,8,1), col=c('black','royalblue3','red3'), cex=0.8)
+dev.off()
 
 ## Etnia, Idade e Renda
 pdf(NULL)
@@ -449,50 +441,33 @@ legend("topright", leg=c("Branco", "Negro", "Hispânico", "Outros"),
 p19.graf <- recordPlot()
 invisible(dev.off())
 
+pdf("p28-graf.pdf", width=12, height=12, pointsize=24)
+par(mfrow=c(2,2))
 ## Etnia Branco, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
 plot(etniabranco_dados1$Age, log(etniabranco_dados1$Income),
-     ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
-     col='black', pch=20, ylim=c(0,20))
-abline(mod6, col='black', lwd=2)
-legend("topright", leg="Branco", pch=20, col='black', ncol=2, cex=0.75)
-p28.graf <- recordPlot()
-invisible(dev.off())
-## Etnia Hispânico, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
-plot(etniahisp_dados1$Age, log(etniahisp_dados1$Income),
-     ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
-     col='grey60', pch=20, ylim=c(0,20))
-abline(mod6, col='grey60', lwd=2)
-legend("topright", leg="Hispânico", pch=20, col='grey60', ncol=2, cex=0.75)
-p29.graf <- recordPlot()
-invisible(dev.off())
+     ylab="Log(Renda)", xlab="Idade", col='black', pch=20,
+     ylim=c(0,20), xlim=c(20,80))
+abline(mod6, col='black', lwd=3, lty=1)
+legend("bottomleft", leg="Branco", pch=20, col='black', ncol=2, cex=0.75)
 ## Etnia Negro, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
 plot(etnianegro_dados1$Age, log(etnianegro_dados1$Income),
-     ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
-     col='black', pch=14, ylim=c(0,20))
-abline(mod6, col='black', lwd=2, lty=14)
-legend("topright", leg="Negro", pch=14, col='black', ncol=2, cex=0.75)
-p30.graf <- recordPlot()
-invisible(dev.off())
+     ylab="Log(Renda)", xlab="Idade", col='red2', pch=1,
+     ylim=c(0,20), xlim=c(20,80))
+abline(mod7, col='red2', lwd=3, lty=1)
+legend("bottomleft", leg="Negro", pch=1, col='red2', ncol=2, cex=0.75)
+## Etnia Hispânico, Idade e Renda
+plot(etniahisp_dados1$Age, log(etniahisp_dados1$Income),
+     ylab="Log(Renda)", xlab="Idade", col='royalblue3', pch=17,
+     ylim=c(0,20), xlim=c(20,80))
+abline(mod8, col='royalblue3', lwd=3, lty=1)
+legend("bottomleft", leg="Hispânico", pch=17, col='royalblue3', ncol=2, cex=0.75)
 ## Etnia Outros, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
 plot(etniaoutros_dados1$Age, log(etniaoutros_dados1$Income),
-     ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
-     col='black', pch=13, ylim=c(0,20))
-abline(mod6, col='black', lwd=2, lty=6)
-legend("topright", leg="Outros", pch=13, col='black', ncol=2, cex=0.75)
-p31.graf <- recordPlot()
-invisible(dev.off())
+     ylab="Log(Renda)", xlab="Idade", col='gray55', pch=8,
+     ylim=c(0,20), xlim=c(20,80))
+abline(mod9, col='gray55', lwd=3, lty=1)
+legend("bottomleft", leg="Outros", pch=8, col='gray55', ncol=2, cex=0.75)
+dev.off()
 
 ## Recodificação da Variável Anos de Escolaridade
 ## Separando em tipo de Ensino
@@ -511,19 +486,16 @@ p20.graf <- recordPlot()
 invisible(dev.off())
 
 ## boxplot Ensino e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p21-graf.pdf", width=12, height=12, pointsize=24)
 boxplot(log(dados_originais$Income) ~ dados_originais$Education2,
         col="grey", xlab="Tipos de Ensino", ylab="Log(Renda)",
         main="Boxplot dos Tipos de Ensino e a Log(Renda)")
-p21.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 
 ########## Gráfico no Relatório
 ## p6.graf
 ## p20.graf
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p102-graf.pdf", width=16, height=12, pointsize=24)
 par(mfrow=c(2,1))
 barplot(cont_anosesc, main="Distribuição dos Anos de Escolaridade",
         col="grey", density=60, axis.lty=20, axes=TRUE, space=0)
@@ -537,32 +509,29 @@ barplot(cont_anosesc_rec, main="Distribuição dos Tipos de Ensino",
 text(0.5,20,"7,4%")
 text(1.5,190,"43,0%")
 text(2.5,230,"49,6%")
-p102.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 ##########
 
 ## Ensino, Idade e Renda
-pdf(NULL)
-dev.control(displaylist="enable")
+pdf("p22-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Education2=='Ensino Fundamental','black',ifelse(dados_originais$Education2=='Ensino Médio','grey60','black')),
-     pch=ifelse(dados_originais$Education2=='Ensino Fundamental',14,ifelse(dados_originais$Education2=='Ensino Médio',20,20)))
+     col=ifelse(dados_originais$Education2=='Ensino Fundamental','royalblue3',ifelse(dados_originais$Education2=='Ensino Médio','red3','black')),
+     pch=ifelse(dados_originais$Education2=='Ensino Fundamental',8,ifelse(dados_originais$Education2=='Ensino Médio',1,20)))
 ed.ef_dados = dados_originais[dados_originais$Education2=='Ensino Fundamental',]
 ed.em_dados = dados_originais[dados_originais$Education2=='Ensino Médio',]
 ed.es_dados = dados_originais[dados_originais$Education2=='Ensino Superior',]
 mod10 <- lm(log(ed.ef_dados$Income)~ed.ef_dados$Age, data=ed.ef_dados)
 mod11 <- lm(log(ed.em_dados$Income)~ed.em_dados$Age, data=ed.em_dados)
 mod12 <- lm(log(ed.es_dados$Income)~ed.es_dados$Age, data=ed.es_dados)
-abline(mod10, col='black', lwd=2, lty=14)
-abline(mod11, col='grey60', lwd=2, lty=19)
-abline(mod12, col='black', lwd=2, lty=19)
+abline(mod10, col='royalblue3', lwd=3, lty=1)
+abline(mod11, col='red3', lwd=3, lty=4)
+abline(mod12, col='black', lwd=3, lty=2)
 legend("topright", leg=c("Ensino Fundamental", "Ensino Médio", "Ensino Superior"),
-       pch=c(14,20,20), col=c('black','grey60','black'), cex=0.8)
+       pch=c(8,1,20), col=c('royalblue3','red3','black'), cex=0.8)
 ## possui uma observação do ensino superior com a legenda por cima!!! conferir no relatório
-p22.graf <- recordPlot()
-invisible(dev.off())
+dev.off()
 
 ## GGPLOT GRÁFICOS
 gg1.graf = ggplot(data = dados_originais) + 
