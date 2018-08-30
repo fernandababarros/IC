@@ -76,7 +76,7 @@ head(dados_originais)
 
 ## Análise Descritiva
 
-```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='center'}
+```{r, echo=FALSE, message=FALSE}
 source(file="02-analise_descritiva.R", encoding="UTF-8")
 ```
 
@@ -84,13 +84,13 @@ Após a escolha das variáveis para esse estudo, iremos realizar uma análise de
 
 Primeiramente analisaremos as variáveis individualmente, com interesse em suas distribuições e comportamentos. Pelos dados observamos que as variáveis contínuas são: Renda, Idade e Escolaridade, e as variáveis discretas são: Gênero, Estado Civil e Etnia.
 
-```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p100-graf.pdf")
 ```
 
 Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino (413 entrevistados) do que do sexo feminino (87 entrevistadas); para o estado civil temos uma concentração maior de respostas para os entrevistados Casados (333 entrevistados) e a menor quantidade de entrevistados pertence ao estado civil de Morando Juntos (31 entrevistados), sendo que o estado civil Outros possui 136 entrevistados; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco (365 entrevistados), sendo que as outras etnias possuem valores menores de entrevistados no banco de dados: Hispânico (40 entrevistados), Negro (70 entrevistados) e Outros (25 entrevistados).
 
-```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=6, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p101-graf.pdf")
 ```
 
@@ -122,7 +122,7 @@ E para a variável Renda temos que a renda mínima anual é `r min_renda` dólar
 
 Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos:
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='center', out.width = "85%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p102-graf.pdf")
 ```
 
@@ -130,25 +130,25 @@ Avaliando os tipos de ensino percebemos uma maior concentração de entrevistado
 
 Analisamos também a relação entre a variável resposta (Renda) e as covariáveis presentes no banco de dados escolhido. Assim obtivemos os seguintes resultados:
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='center', out.width = "80%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p103-graf.pdf")
 ```
 
 Para as variáveis discretas temos os boxplots da Log(Renda) com cada uma das variáveis separadamente. Para o gênero observamos um valor de renda maior para o sexo masculino, comparando com o sexo feminino; já a variável Estado Civil os entrevistados casados possuem uma renda maior, sendo que a mediana da renda dos que moram juntos com o parceiro(a) e outros estão bastante próximas, porém são inferiores aos valores de renda dos entrevistados casados. Na comparação entre a Log(Renda) e a Etnia percebemos uma amplitude da renda maior para as etnias Branco e Outros, entretanto, como foi observado anteriormente, essas etnias correspondem a 73% e 5%, respectivamente, do total do banco de dados.
 
-```{r, echo=FALSE, message=FALSE, fig.height=4, fig.width=10, fig.align='center', out.width = "85%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p12-graf.pdf")
 ```
 
 Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica um possível ganho de renda anual maior para os entrevistados a medida que aumenta a idade.
 
-```{r, echo=FALSE, message=FALSE, fig.height=4, fig.width=10, fig.align='center', out.width = "85%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p27-graf.pdf")
 ```
 
 Analisando as variáveis Anos de Escolaridade e a Idade, percebemos uma inclinação quando aumenta os anos de escolaridade e as idades dos entrevistados, ou seja, os entrevistados possuem maior anos de escolaridade à medida que aumentam as idade, o que condiz com a realidade dos ensinos visto anteiormente. Embora quantidades de anos de escolaridade maior possuem grande concentração de pessoas em diversas idades, para os anos de escolaridade entre 2-10 percebemos a presença de variabilidade.
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=10, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p21-graf.pdf")
 ```
 
@@ -156,25 +156,25 @@ Avaliando a relação entre as variáveis Log(Renda) e a recodificação da vari
 
 Após a apresentação das variáveis individualmente e em pares com a variável de interesse renda anual, realizamos a análise das variáveis em trios, como por exemplo a Log(Renda), Idade e o Gênero. As análises da relação dessas variáveis permitem fazer suposições sobre os modelos a serem estudados e verificar a influência de cada covariável na variável resposta.
 
-```{r, echo=FALSE, message=FALSE, fig.height=5, fig.width=8, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p17-graf.pdf")
 ```
 
 Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influenciam nos valores da renda anual. O gráfico possui o ajuste das retas e mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o do sexo feminino; podemos perceber também uma inclinação na reta, à medida que aumenta a idade, para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena ou inexistente.
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=7, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p18-graf.pdf")
 ```
 
 Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos observar que os entrevistados casados possuem uma quantidade maior de renda e através da inclinação da reta podemos concluir que a renda aumenta através da idade, já para os entrevistados que estão morando junto e os outros tipos de estado civil as retas e a inclinação estão quase juntas, sendo que possuem pequenas diferenças em algumas idades; o gráfico acima também mostra como está a distribuição por estado civil dos entrevistados.
 
-```{r, echo=FALSE, message=FALSE, fig.height=3, fig.width=8, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p28-graf.pdf")
 ```
 
 Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros, os Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='center', out.width = "70%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p22-graf.pdf")
 ```
 
@@ -183,54 +183,85 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 
 ## Imputação
 
+```{r, echo=FALSE, message=FALSE, results=FALSE}
+source(file="03-imputacao.R", encoding="UTF-8")
+```
+
 O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-#source(file="03-imputacao.R", encoding="UTF-8")
-#head(dados)
+head(dados)
 ```
 
 Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
 
-Abaixo temos o output da função de imputação com as principais informações.
-
 ```{r, echo=FALSE, message=FALSE}
-#source(file="03-imputacao.R", encoding="UTF-8")
-#imp_MCAR
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
 
+### Missing Complete at Random
 
-
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='left', out.width = "70%", purl=FALSE}
-#source(file="04-graficos_imputacao.R", encoding="UTF-8")
-#p40.graf
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p40-graf.pdf")
 ```
 
 
-
-
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='left', out.width = "70%", purl=FALSE}
-#source(file="04-graficos_imputacao.R", encoding="UTF-8")
-#p41.graf
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p41-graf.pdf")
 ```
 
 
-
-
-
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='left', out.width = "70%", purl=FALSE}
-#source(file="04-graficos_imputacao.R", encoding="UTF-8")
-#p42.graf
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p42-graf.pdf")
 ```
 
 
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p43-graf.pdf")
+```
 
 
-```{r, echo=FALSE, message=FALSE, fig.height=6, fig.width=8, fig.align='left', out.width = "70%", purl=FALSE}
-#source(file="04-graficos_imputacao.R", encoding="UTF-8")
-#p43.graf
+### Missing at Random
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p45-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p46-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p47-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p48-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p50-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p51-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p52-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p53-graf.pdf")
 ```
 
 

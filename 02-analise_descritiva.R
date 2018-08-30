@@ -13,23 +13,12 @@ library(car)
 library(knitr)
 
 
-## source(file="01-organizando_os_dados.R", encoding="UTF-8")
-data(ustermlife)
-head(ustermlife)
-dados_originais = subset(ustermlife, select = c(Gender, Age, MarStat,
-                                                Education, Ethnicity, Income))
-copy_dados_originais <- dados_originais
-
+source(file="01-organizando_os_dados.R", encoding="UTF-8")
 
 ## interesse em analisar as correlações entre as covariáveis e a variável resposta
 
 ## visão geral das variáveis
 summary(dados_originais)
-
-## organizando as variáveis categóricas
-dados_originais$Gender <- ifelse(dados_originais$Gender==0, "Feminino", "Masculino")
-dados_originais$MarStat <- ifelse(dados_originais$MarStat==0,"Outros",ifelse(dados_originais$MarStat==1,"Casado","Morando Juntos"))
-dados_originais$Ethnicity <- ifelse(dados_originais$Ethnicity==1, "Branco", ifelse(dados_originais$Ethnicity==2, "Negro", ifelse(dados_originais$Ethnicity==3, "Hispânico", "Outros")))
 
 ## DISTRIBUIÇÕES MARGINAIS
 ## tabelas de frequência para variáveis categóricas

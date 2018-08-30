@@ -51,3 +51,4 @@ com_MAR_ensino <- mice::complete(imp_MAR_ensino, "long", include=T)
 ## IMPUTAÇÃO POR NOT MISSING AT RANDOM - NMAR (PERDA NÃO ALEATÓRIA)
 #ocorre quando a probabilidade de perda está relacionada com os valores da
 #própria variável de interesse, que não foram observados.
+
