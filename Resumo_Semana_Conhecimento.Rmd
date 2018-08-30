@@ -6,6 +6,9 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## TÍTULO
+## Resumo
+
+Problemas de dados faltantes em pesquisas são recorrentes e geram a questão principal de como inferir informações com dados faltantes. Para a resposta dessa pergunta pesquisadores desenvolveram métodos para tratamento de informações ausentes. Um dos métodos que foi muito utilizado é o de exclusão da informação faltante, entretanto essa ação pode comprometer as informações das análises proporcionadas pela pesquisa. Outro método criado por Rubin(1987), que está sendo utilizado nesse estudo, chama-se Imputação Múltipla. Em que os dados ausentes são imputados no banco de dados através das informações de dados que estão presentes no banco; uma das maiores contribuições desse método é a conservação da informação completa da pesquisa. Nessa pesquisa utilizamos o método de imputação múltipla do banco de dados *ustermlife* retirado do pacote *CASDatasets* do software *R*; o banco de dados é uma amostra de 500 domicílios retirados da pesquisa *Survey of Consumer Finances (SCF)* aplicada em 2004 nos Estados Unidos da América, cujo objetivo é avaliar os valores de indenizações de seguros. A principal variável do estudo é a Renda, em que utilizando as variáveis auxiliares Gênero, Idade, Estado Civil, Anos de Escolaridade e Etnia, podemos inferir sobre a Renda dos entrevistados do banco de dados. 
 
 
+Colocar sobre MCAR, MAR e NMAR.
