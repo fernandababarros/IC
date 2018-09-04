@@ -9,6 +9,7 @@ library(gridExtra)
 library(ggplot2)
 ## library(pryr)
 library(car)
+library(knitr)
 
 #carregando o banco de dados
 data(ustermlife)

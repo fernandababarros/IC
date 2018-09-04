@@ -26,7 +26,7 @@ imp_MCAR <- mice(dados_MCAR, seed=2018)
 valores_imp = imp_MCAR$imp$Income
 #valores_imp possui somente os valores imputados
 
-com_MCAR <- mice::complete(imp_MCAR, "long", include=T) #complete extrai o banco de dados 
+com_MCAR <- mice::complete(imp_MCAR, "long", include=TRUE) #complete extrai o banco de dados 
 #original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
 
 ## IMPUTAÇÃO POR MISSING AT RANDOM - MAR (PERDA ALEATÓRIA)
