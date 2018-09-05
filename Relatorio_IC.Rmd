@@ -184,20 +184,20 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 ## Imputação
 
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-source(file="03-imputacao.R", encoding="UTF-8")
+## source(file="03-imputacao.R", encoding="UTF-8")
 ```
 
 O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
 ```{r, echo=FALSE, message=FALSE, results=FALSE}
-head(dados)
+## head(dados)
 ```
 
 Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
 
 ```{r, echo=FALSE, message=FALSE}
-source(file="04-graficos_imputacao.R", encoding="UTF-8")
+## source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
 
@@ -223,7 +223,7 @@ include_graphics("p43-graf.pdf")
 ```
 
 
-### Missing at Random
+### Missing at Random - Gender
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p45-graf.pdf")
@@ -244,6 +244,8 @@ include_graphics("p47-graf.pdf")
 include_graphics("p48-graf.pdf")
 ```
 
+
+### Missing at Random - Education
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p50-graf.pdf")
