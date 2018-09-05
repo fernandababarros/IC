@@ -9,6 +9,7 @@ library(gridExtra)
 library(ggplot2)
 ## library(pryr)
 library(car)
+library(knitr)
 
 source(file="01-organizando_os_dados.R", encoding="UTF-8")
 

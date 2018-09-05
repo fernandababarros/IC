@@ -3,6 +3,7 @@
 #carregando os pacotes
 library(mice)
 library(VIM)
+## install.packages("CASdatasets", repos = "http://cas.uqam.ca/pub/R/", type="source")
 library(CASdatasets)
 library(tidyverse)
 library(gridExtra)
@@ -31,7 +32,8 @@ set.seed(0)
 dados_MCAR = dados_originais
 random_MCAR = rbinom(length(dados_MCAR$Income), size = 1, prob=0.2)
 dados_MCAR[,6] = ifelse(random_MCAR, NA, dados_MCAR$Income)
-
+#valores_ext_MCAR = dados_MCAR[,6]
+#valores_ext_MCAR = ifelse(random_MCAR, dados_MCAR$Income, 0)
 
 ## BANCO DE DADOS PARA IMPUTAÇÃO MAR
 #gênero feminino

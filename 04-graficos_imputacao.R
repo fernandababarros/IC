@@ -9,6 +9,7 @@ library(gridExtra)
 library(ggplot2)
 ## library(pryr)
 library(car)
+library(knitr)
 
 source(file="03-imputacao.R", encoding="UTF-8")
 
@@ -28,7 +29,6 @@ stripplot(log(Income)~.imp, data=com_MCAR, jitter.data=TRUE, factor=0.8,
           cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
           main="Gráfico com as distribuições dos valores imputados")
 dev.off()
-
 
 #plotando os valores dos observados com os imputados percebemos que está próximo
 
@@ -88,8 +88,11 @@ abline(0,1)
 dev.off()
 
 #fazer box-plot das 96 observações retiradas do banco original e as imputadas
-
-
+#pdf("p44-graf.pdf", width=10, height=10, pointsize=24)
+#boxplot(valores_ext_MCAR ~ valores_imp, xlab="Imputações", ylab="Renda",
+#        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+#        main="Box-plots das imputações")
+#dev.off()
 
 
 ## IMPUTAÇÃO MAR
