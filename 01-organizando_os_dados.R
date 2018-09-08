@@ -31,9 +31,8 @@ dados_originais$Education2 <- Recode(dados_originais$Education, "2:10='Ensino Fu
 set.seed(0)
 dados_MCAR = dados_originais
 random_MCAR = rbinom(length(dados_MCAR$Income), size = 1, prob=0.2)
+valores_ext_MCAR = dados_originais[random_MCAR,6]
 dados_MCAR[,6] = ifelse(random_MCAR, NA, dados_MCAR$Income)
-#valores_ext_MCAR = dados_MCAR[,6]
-#valores_ext_MCAR = ifelse(random_MCAR, dados_MCAR$Income, 0)
 
 ## BANCO DE DADOS PARA IMPUTAÇÃO MAR
 #gênero feminino
@@ -41,26 +40,31 @@ set.seed(0)
 dados_MAR = dados_originais
 dados_MAR_fem = dados_MAR[dados_originais$Gender=='Feminino',]
 random_MAR_fem = rbinom(length(dados_MAR_fem$Income), size = 1, prob=0.1)
+valores_ext_MAR_fem = dados_originais[random_MAR_fem,6]
 dados_MAR_fem[,6] = ifelse(random_MAR_fem, NA, dados_MAR_fem$Income)
 
 #gênero masculino
 dados_MAR_masc = dados_MAR[dados_originais$Gender=='Masculino',]
 random_MAR_masc = rbinom(length(dados_MAR_masc$Income), size = 1, prob=0.3)
+valores_ext_MAR_masc = dados_originais[random_MAR_masc,6]
 dados_MAR_masc[,6] = ifelse(random_MAR_masc, NA, dados_MAR_masc$Income)
 
 #ensino fundamental
 dados_MAR_ef = dados_MAR[dados_originais$Education2=='Ensino Fundamental',]
 random_MAR_ef = rbinom(length(dados_MAR_ef$Income), size = 1, prob=0.05)
+valores_ext_MAR_ef = dados_originais[random_MAR_ef,6]
 dados_MAR_ef[,6] = ifelse(random_MAR_ef, NA, dados_MAR_ef$Income)
 
 #ensino médio
 dados_MAR_em = dados_MAR[dados_originais$Education2=='Ensino Médio',]
 random_MAR_em = rbinom(length(dados_MAR_em$Income), size = 1, prob=0.2)
+valores_ext_MAR_em = dados_originais[random_MAR_em,6]
 dados_MAR_em[,6] = ifelse(random_MAR_em, NA, dados_MAR_em$Income)
 
 #ensino superior
 dados_MAR_es = dados_MAR[dados_originais$Education2=='Ensino Superior',]
 random_MAR_es = rbinom(length(dados_MAR_es$Income), size = 1, prob=0.4)
+valores_ext_MAR_es = dados_originais[random_MAR_es,6]
 dados_MAR_es[,6] = ifelse(random_MAR_es, NA, dados_MAR_es$Income)
 
 #banco completo com os missings na renda pelas probabilidades de feminino
@@ -70,4 +74,9 @@ dados_MAR_genero = rbind(dados_MAR_fem,dados_MAR_masc)
 #banco completo com os missings na renda pelas probabilidades de ensino fundamental,
 #ensino médio e ensino superior
 dados_MAR_ensino = rbind(dados_MAR_ef,dados_MAR_em,dados_MAR_es)
+
+#valores originais extraídos do banco de dados para criação do missing no gênero
+
+
+#valores originais extraídos do banco de dados para criação do missing no ensino
 
