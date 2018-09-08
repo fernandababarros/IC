@@ -150,6 +150,9 @@ hist(dados_originais$Age, col="grey", probability=TRUE,
      xlab="Idade", main="Histograma da Idade")
 hist(dados_originais$Education, col="grey", probability=TRUE,
      xlab="Anos de Escolaridade", main="Histograma dos Anos de\n Escolaridade")
+hist(dados_originais$Income, col="grey", probability=TRUE,
+     xlab="Renda", main="Histograma da Renda")
+#lines(density(dados_originais$Income), col="black", lwd=3)
 hist(log(dados_originais$Income), col="grey", probability=TRUE,
      xlab="Log(Renda)", main="Histograma da Log(Renda)", ylim=c(0,0.4))
 lines(density(log(dados_originais$Income)), col="black", lwd=3)
@@ -309,15 +312,15 @@ pdf("p17-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Gender=='Feminino','red3','black'),
-     pch=ifelse(dados_originais$Gender=='Feminino',1,20))
+     col=ifelse(dados_originais$Gender=='Feminino','black','gray50'),
+     pch=ifelse(dados_originais$Gender=='Feminino',20,20))
 homem_dados1 = dados_originais[dados_originais$Gender=='Masculino',]
 mulher_dados1 = dados_originais[dados_originais$Gender=='Feminino',]
 mod1 <- lm(log(mulher_dados1$Income)~mulher_dados1$Age, data=mulher_dados1)
 mod2 <- lm(log(homem_dados1$Income)~homem_dados1$Age, data=homem_dados1)
-abline(mod1, col='red3', lwd=3, lty=4)
-abline(mod2, col='black', lwd=3, lty=1)
-legend("topright", leg=c("Feminino", "Masculino"), pch=c(1,20), col=c('red3', 'black'),
+abline(mod1, col='black', lwd=3, lty=4)
+abline(mod2, col='gray50', lwd=3, lty=1)
+legend("topright", leg=c("Feminino", "Masculino"), pch=c(20,20), col=c('black', 'gray50'),
        horiz=FALSE)
 dev.off()
 
@@ -390,7 +393,7 @@ pdf("p18-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$MarStat=='Outros','red3',ifelse(dados_originais$MarStat=='Casado','black','royalblue3')),
+     col=ifelse(dados_originais$MarStat=='Outros','black',ifelse(dados_originais$MarStat=='Casado','gray50','red')),
      pch=ifelse(dados_originais$MarStat=='Outros',1,ifelse(dados_originais$MarStat=='Casado',20,8)))
 ecoutros_dados1 = dados_originais[dados_originais$MarStat=='Outros',]
 eccasado_dados1 = dados_originais[dados_originais$MarStat=='Casado',]
@@ -398,11 +401,11 @@ ecmorjuntos_dados1 = dados_originais[dados_originais$MarStat=='Morando Juntos',]
 mod3 <- lm(log(ecoutros_dados1$Income)~ecoutros_dados1$Age, data=ecoutros_dados1)
 mod4 <- lm(log(eccasado_dados1$Income)~eccasado_dados1$Age, data=eccasado_dados1)
 mod5 <- lm(log(ecmorjuntos_dados1$Income)~ecmorjuntos_dados1$Age, data=ecmorjuntos_dados1)
-abline(mod3, col='red3', lwd=3, lty=4)
-abline(mod4, col='black', lwd=3, lty=2)
-abline(mod5, col='royalblue3', lwd=3, lty=1)
+abline(mod3, col='black', lwd=3, lty=4)
+abline(mod4, col='gray50', lwd=3, lty=2)
+abline(mod5, col='red', lwd=3, lty=1)
 legend("topright", leg=c("Casado", "Morando Juntos", "Outros"),
-       pch=c(20,8,1), col=c('black','royalblue3','red3'), cex=0.8)
+       pch=c(20,8,1), col=c('gray50','red','black'), cex=0.8)
 dev.off()
 
 ## Etnia, Idade e Renda
@@ -506,19 +509,19 @@ pdf("p22-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
      main="Gráfico da Idade e a Log(Renda)",
-     col=ifelse(dados_originais$Education2=='Ensino Fundamental','royalblue3',ifelse(dados_originais$Education2=='Ensino Médio','red3','black')),
-     pch=ifelse(dados_originais$Education2=='Ensino Fundamental',8,ifelse(dados_originais$Education2=='Ensino Médio',1,20)))
+     col=ifelse(dados_originais$Education2=='Ensino Fundamental','black',ifelse(dados_originais$Education2=='Ensino Médio','red','gray50')),
+     pch=ifelse(dados_originais$Education2=='Ensino Fundamental',1,ifelse(dados_originais$Education2=='Ensino Médio',8,20)))
 ed.ef_dados = dados_originais[dados_originais$Education2=='Ensino Fundamental',]
 ed.em_dados = dados_originais[dados_originais$Education2=='Ensino Médio',]
 ed.es_dados = dados_originais[dados_originais$Education2=='Ensino Superior',]
 mod10 <- lm(log(ed.ef_dados$Income)~ed.ef_dados$Age, data=ed.ef_dados)
 mod11 <- lm(log(ed.em_dados$Income)~ed.em_dados$Age, data=ed.em_dados)
 mod12 <- lm(log(ed.es_dados$Income)~ed.es_dados$Age, data=ed.es_dados)
-abline(mod10, col='royalblue3', lwd=3, lty=1)
-abline(mod11, col='red3', lwd=3, lty=4)
-abline(mod12, col='black', lwd=3, lty=2)
+abline(mod10, col='black', lwd=3, lty=1)
+abline(mod11, col='red', lwd=3, lty=4)
+abline(mod12, col='gray50', lwd=3, lty=2)
 legend("topright", leg=c("Ensino Fundamental", "Ensino Médio", "Ensino Superior"),
-       pch=c(8,1,20), col=c('royalblue3','red3','black'), cex=0.8)
+       pch=c(1,8,20), col=c('black','red','gray50'), cex=0.8)
 ## possui uma observação do ensino superior com a legenda por cima!!! conferir no relatório
 dev.off()
 
