@@ -248,9 +248,4 @@ dev.off()
 
 
 
-
-
-
-
-
 ## IMPUTAÇÃO NMAR

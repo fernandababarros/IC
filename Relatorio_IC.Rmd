@@ -1,5 +1,5 @@
 ---
-title: "Relatório IC"
+title: "Aplicação de métodos de simulação de dados sintéticos"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
@@ -187,24 +187,26 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 ## source(file="03-imputacao.R", encoding="UTF-8")
 ```
 
-O banco de dados não possui dados faltantes, portanto para avaliar a Renda (variável de interesse) foi necessário gerar os dados faltantes. Sendo assim utilizamos uma distribuição binomial com probabilidade de sucesso de 0.2 para a criar dos dados faltantes na variável Renda, e utilizamos a função de fixa a semente ao gerar os números aleatórios.
+O banco de dados escolhido para aplicação da imputação não possui dados faltantes, portanto para avaliar os casos de imputação foi necessário gerar os dados faltantes. Os casos de imputação múltipla existentes são: perda completamente aleatória, perda aleatória e perda não aleatória. Sendo que na perda completamente aleatória o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na perda aleatória a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na perda não aleatória o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
 
-Primeiras observações do banco de dados com dados faltantes na variável Renda:
-```{r, echo=FALSE, message=FALSE, results=FALSE}
-## head(dados)
-```
-
-Assim para realizar a imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
+Para realização da imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
 
 ```{r, echo=FALSE, message=FALSE}
 ## source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
 
-### Missing Complete at Random
+### Perda Completamente Aleatória
+
+Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Sendo assim para o caso de perda completamente aleatória utilizamos uma distribuição binomial com probabilidade de sucesso de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
+
+Primeiras observações do banco de dados com dados faltantes na variável Renda:
+```{r, echo=FALSE, message=FALSE}
+head(dados_MCAR)
+```
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p40-graf.pdf")
+##include_graphics("p40-graf.pdf")
 ```
 
 
@@ -223,10 +225,16 @@ include_graphics("p43-graf.pdf")
 ```
 
 
-### Missing at Random - Gender
+### Perda Aleatória
+
+Para os casos de perda aleatória avaliamos com as variáveis Gênero e Tipo de Ensino.
+
+#### Gênero
+
+Para gerar os dados ausentes na variável renda, pelo caso de perda aleatória com a variável gênero, utilizamos uma distribuição binomial com probabilidade de sucesso de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p45-graf.pdf")
+## include_graphics("p45-graf.pdf")
 ```
 
 
@@ -245,10 +253,12 @@ include_graphics("p48-graf.pdf")
 ```
 
 
-### Missing at Random - Education
+#### Tipo de Ensino
+
+Para gerar os dados ausentes na variável renda, pelo caso de perda aleatória em conjunto com a variável tipo de ensino, utilizamos uma distribuição binomial com probabilidade de sucesso de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p50-graf.pdf")
+##include_graphics("p50-graf.pdf")
 ```
 
 
