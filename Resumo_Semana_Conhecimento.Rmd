@@ -6,9 +6,9 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Título do Resumo: Aplicação de métodos de simulação de dados sintéticos
+## Título do Resumo: Comparação de métodos de imputação de dados ausentes sob diferentes mecanismos
 
-Palavras Chave: Dados faltantes, Imputação Múltipla.
+Palavras Chave: Dados faltantes, Imputação Múltipla, Perda Aleatória, Perda Não-Aleatória.
 
 Dados faltantes em pesquisas são recorrentes e geram problema de como inferir informações a partir de bases de dados com valores ausentes. Para lidar com esse problema, pesquisadores desenvolveram métodos para tratamento de informações faltantes ou não-resposta em algumas perguntas. Um dos métodos que foi muito utilizado é o de exclusão das observações com valores ausentes e análise dos casos completos. Entretanto, essa ação pode comprometer as informações das análises proporcionadas pela pesquisa. Outro método criado por Rubin(1987), que está sendo utilizado nesse estudo, chama-se Imputação Múltipla. Neste método, valores para os dados ausentes são imputados através das informações de outros dados que estão presentes no banco; uma das maiores contribuições desse método é a conservação da informação completa da pesquisa.
 
