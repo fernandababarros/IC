@@ -24,9 +24,9 @@ col <- rep(cores[1+as.numeric(is.na(imp_MCAR$data$Income))],7)
 #          col=col, pch=20,
 #          cex=1.4, xlab="Imputation number")
 pdf("p40-graf.pdf", width=8, height=8, pointsize=24)
-stripplot(log(Income)~.imp, data=com_MCAR, jitter.data=TRUE, factor=0.8,
+mice::stripplot(log(Income)~.imp, data=com_MCAR, jitter.data=TRUE, factor=0.8,
           col=col, pch=20,
-          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
+          cex=1.4, xlab="Número da Imputação", ylab="Log(Renda)",
           main="Gráfico com as distribuições dos valores imputados")
 dev.off()
 

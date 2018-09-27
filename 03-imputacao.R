@@ -29,6 +29,8 @@ valores_imp = imp_MCAR$imp$Income
 
 com_MCAR <- mice::complete(imp_MCAR, "long", include=TRUE) #complete extrai o banco de dados 
 #original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
+com_MCAR$Imputed <- factor(com_MCAR$.imp >0,labels = c("Observado","Imputado"))
+ggplot(com_MCAR, aes(x=log(Income), colour=Imputed, group=.imp)) + geom_density()
 
 ## IMPUTAÇÃO POR MISSING AT RANDOM - MAR (PERDA ALEATÓRIA)
 #a probabilidade de perda está relacionada com outras variáveis do estudo, mas

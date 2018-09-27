@@ -80,3 +80,9 @@ dados_MAR_ensino = rbind(dados_MAR_ef,dados_MAR_em,dados_MAR_es)
 
 #valores originais extraídos do banco de dados para criação do missing no ensino
 
+
+
+## BANCO DE DADOS PARA IMPUTAÇÃO MNAR
+
+
+
