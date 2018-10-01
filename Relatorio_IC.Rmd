@@ -227,7 +227,7 @@ include_graphics("p43-graf.pdf")
 
 ### Perda Aleatória
 
-Para os casos de perda aleatória avaliamos com as variáveis Gênero e Tipo de Ensino.
+Para os casos de perda aleatória avaliamos conjuntamente com as variáveis Gênero e Tipo de Ensino.
 
 #### Gênero
 
@@ -275,6 +275,9 @@ include_graphics("p52-graf.pdf")
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p53-graf.pdf")
 ```
+
+
+### Perda Não Aleatória
 
 
 

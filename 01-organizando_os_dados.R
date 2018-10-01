@@ -31,7 +31,7 @@ dados_originais$Education2 <- Recode(dados_originais$Education, "2:10='Ensino Fu
 set.seed(0)
 dados_MCAR = dados_originais
 random_MCAR = rbinom(length(dados_MCAR$Income), size = 1, prob=0.2)
-valores_ext_MCAR = dados_originais[random_MCAR,6]
+#valores_ext_MCAR = dados_originais[random_MCAR,6]
 dados_MCAR[,6] = ifelse(random_MCAR, NA, dados_MCAR$Income)
 
 ## BANCO DE DADOS PARA IMPUTAÇÃO MAR
