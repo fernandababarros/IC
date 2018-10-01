@@ -45,7 +45,12 @@ md.pattern(dados_MAR_genero)
 #gerando as m=5 imputações pelo método default pmm
 imp_MAR_genero <- mice(dados_MAR_genero, seed=2018)
 valores_imp_genero = imp_MAR_genero$imp$Income
-com_MAR_genero <- mice::complete(imp_MAR_genero, "long", include=T)
+com_MAR_genero <- mice::complete(imp_MAR_genero, "long", include=T) #complete extrai o banco de dados 
+#original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
+com_MAR_genero$Imputed <- factor(com_MAR_genero$.imp >0,labels = c("Observado","Imputado"))
+com_MAR_genero$Missing <- factor(is.na(com_MAR_genero$Income), labels=c("Observado","Ausente"))
+vetor_MAR_genero = com_MAR_genero[1:500,11]
+com_MAR_genero$Missing = rep(vetor_MAR_genero,6)
 
 
 #imputação pelo missing relacionado ao tipo de ensino
@@ -53,7 +58,12 @@ md.pattern(dados_MAR_ensino)
 #gerando as m=5 imputações pelo método default pmm
 imp_MAR_ensino <- mice(dados_MAR_ensino, seed=2018)
 valores_imp_ensino = imp_MAR_ensino$imp$Income
-com_MAR_ensino <- mice::complete(imp_MAR_ensino, "long", include=T)
+com_MAR_ensino <- mice::complete(imp_MAR_ensino, "long", include=T) #complete extrai o banco de dados 
+#original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
+com_MAR_ensino$Imputed <- factor(com_MAR_ensino$.imp >0,labels = c("Observado","Imputado"))
+com_MAR_ensino$Missing <- factor(is.na(com_MAR_ensino$Income), labels=c("Observado","Ausente"))
+vetor_MAR_ensino = com_MAR_ensino[1:500,11]
+com_MAR_ensino$Missing = rep(vetor_MAR_ensino,6)
 
 
 ## IMPUTAÇÃO POR NOT MISSING AT RANDOM - NMAR (PERDA NÃO ALEATÓRIA)
