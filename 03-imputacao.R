@@ -47,6 +47,7 @@ imp_MAR_genero <- mice(dados_MAR_genero, seed=2018)
 valores_imp_genero = imp_MAR_genero$imp$Income
 com_MAR_genero <- mice::complete(imp_MAR_genero, "long", include=T)
 
+
 #imputação pelo missing relacionado ao tipo de ensino
 md.pattern(dados_MAR_ensino)
 #gerando as m=5 imputações pelo método default pmm

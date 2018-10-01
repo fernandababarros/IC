@@ -36,7 +36,7 @@ gg23.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Imputed)) +
 #e os observados mais os ausentes imputados
 gg24.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Missing)) +
   geom_density()
-gg25.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Missing, group=.imp)) +
+#gg25.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Missing, group=.imp)) +
   geom_density()
 gg26.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point(position=position_dodge(0.3))
@@ -96,7 +96,8 @@ gg33.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indica
               geom_point(position=position_dodge(0.3))
 gg34.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indication)) +
               geom_point() +
-              geom_jitter(width = 0.15, height = 0.3)
+              geom_jitter(width = 0.15, height = 0.3) +
+              scale_color_manual( values=c("gray45","black"))
 
 #QQ-plot
 imp0com_MCAR = com_MCAR[1:500,]
@@ -108,8 +109,8 @@ imp5com_MCAR = com_MCAR[2501:3000,]
 
 pdf("p43-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MCAR$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Renda",
-       ylab="Quantil imputado da Renda")
+       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       ylab="Quantil imputado da Log(Renda)")
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MCAR$Income), plot.it=FALSE)
 imp2 = qqplot(log(dados_originais$Income), log(imp2com_MCAR$Income), plot.it=FALSE)
 imp3 = qqplot(log(dados_originais$Income), log(imp3com_MCAR$Income), plot.it=FALSE)
@@ -140,17 +141,17 @@ gg36.graf = ggplot(data = somente_val_origeimp, aes(x=.imp, y=log(Income))) +
               geom_jitter(width = 0.05, height = 0.3)
 
 
-## IMPUTAÇÃO MAR
+## IMPUTAÇÃO MAR - gênero
 col <- rep(cores[1+as.numeric(is.na(imp_MAR_genero$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-pdf("p45-graf.pdf", width=8, height=8, pointsize=24)
-stripplot(log(Income)~.imp, data=com_MAR_genero, jitter.data=TRUE, factor=0.8,
-          col=col, pch=20,
-          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
-          main="Gráfico com as distribuições dos valores imputados")
-dev.off()
+#pdf("p45-graf.pdf", width=8, height=8, pointsize=24)
+#stripplot(log(Income)~.imp, data=com_MAR_genero, jitter.data=TRUE, factor=0.8,
+#          col=col, pch=20,
+#          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
+#          main="Gráfico com as distribuições dos valores imputados")
+#dev.off()
 
 
 #plotando os valores dos observados com os imputados percebemos que está próximo
@@ -186,13 +187,6 @@ imp3com_MAR_genero = com_MAR_genero[1501:2000,]
 imp4com_MAR_genero = com_MAR_genero[2001:2500,]
 imp5com_MAR_genero = com_MAR_genero[2501:3000,]
 
-#qqplot(log(dados_originais$Income), log(imp0com$Income), pch=0)
-#qqplot(log(dados_originais$Income), log(imp1com$Income), pch=1)
-#qqplot(log(dados_originais$Income), log(imp2com$Income), pch=2)
-#qqplot(log(dados_originais$Income), log(imp3com$Income), pch=3)
-#qqplot(log(dados_originais$Income), log(imp4com$Income), pch=4)
-#qqplot(log(dados_originais$Income), log(imp5com$Income), pch=5)
-#qqplot(log(dados_originais2$Income), log(com$Income), pch=0:6)
 pdf("p48-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MAR_genero$Income), pch=20,
        main="QQ-plot das imputações", xlab="Quantil original da Renda",
@@ -219,17 +213,17 @@ dev.off()
 #fazer box-plot das 96 observações retiradas do banco original e as imputadas
 
 
-## IMPUTAÇÃO MAR
+## IMPUTAÇÃO MAR - tipo de ensino
 col <- rep(cores[1+as.numeric(is.na(imp_MAR_ensino$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-pdf("p50-graf.pdf", width=8, height=8, pointsize=24)
-stripplot(log(Income)~.imp, data=com_MAR_ensino, jitter.data=TRUE, factor=0.8,
-          col=col, pch=20,
-          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
-          main="Gráfico com as distribuições dos valores imputados")
-dev.off()
+#pdf("p50-graf.pdf", width=8, height=8, pointsize=24)
+#stripplot(log(Income)~.imp, data=com_MAR_ensino, jitter.data=TRUE, factor=0.8,
+#          col=col, pch=20,
+#          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
+#          main="Gráfico com as distribuições dos valores imputados")
+#dev.off()
 
 
 #plotando os valores dos observados com os imputados percebemos que está próximo

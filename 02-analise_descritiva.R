@@ -307,6 +307,7 @@ boxplot(dados_originais$Age ~ dados_originais$Ethnicity, col="grey",
 p16.graf <- recordPlot()
 invisible(dev.off())
 
+par(mfrow=c(1,1))
 ## Gênero, Idade e Renda
 pdf("p17-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
