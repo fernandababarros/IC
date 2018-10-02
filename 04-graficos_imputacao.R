@@ -20,12 +20,7 @@ col <- rep(cores[1+as.numeric(is.na(imp_MCAR$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-## pdf("p40-graf.pdf", width=8, height=8, pointsize=24)
-## mice::stripplot(log(Income)~.imp, data=com_MCAR, jitter.data=TRUE, factor=0.8,
-##           col=col, pch=20,
-##           cex=1.4, xlab="Número da Imputação", ylab="Log(Renda)",
-##           main="Gráfico com as distribuições dos valores imputados")
-## dev.off()
+
 gg21.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Imputed)) +
               geom_density()
 gg22.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Imputed, group=.imp)) +
@@ -37,7 +32,7 @@ gg23.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Imputed)) +
 gg24.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Missing)) +
   geom_density()
 #gg25.graf = ggplot(com_MCAR, aes(x=log(Income), colour=Missing, group=.imp)) +
-  geom_density()
+#  geom_density()
 gg26.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point(position=position_dodge(0.3))
 gg27.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
@@ -62,7 +57,8 @@ origcomimp_MCAR = rbind(dados_originais2, impcom_MCAR)
 
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p42-graf.pdf", width=10, height=10, pointsize=24)
-boxplot(log(Income) ~ .imp, data=origcomimp_MCAR, xlab="Imputações", ylab="Renda",
+boxplot(log(Income) ~ .imp, data=origcomimp_MCAR, xlab="Imputações",
+        ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
 dev.off()
@@ -73,12 +69,6 @@ origcomimp_MCAR = cbind(origcomimp_MCAR,com_MCAR$Missing)
 
 colnames(origcomimp_MCAR) <- c(".imp","Gender","Age","MarStat","Education",
                                "Ethnicity","Income","Education2","Indication")
-
-#originais = origcomimp_MCAR[1:500,]
-#originais$Indication <- factor(originais$.imp == '0-original',labels=c("Observado","Original"))
-#originais = ifelse(originais$Indication=='Ausente','Original','Observado')
-#origcomimp_MCAR = ifelse(origcomimp_MCAR$Indication[1:500,]=='Ausente','Original',ifelse(origcomimp_MCAR$Indication[501:3000,]=='Ausente', 'Imputado','Observado'))
-#origcomimp_MCAR$`com_MCAR$Missing`[500:3000,] = ifelse(origcomimp_MCAR$`com_MCAR$Missing`=='Ausente','Imputado','Observado')
 
 gg28.graf = ggplot(origcomimp_MCAR, aes(x=log(Income), colour=Indication)) +
               geom_density()
@@ -126,17 +116,18 @@ abline(0,1)
 dev.off()
 
 #box-plot das 96 observações retiradas do banco original e as imputadas
-somente_val_origeimp <- subset(origcomimp_MCAR, Indication=='Ausente')
+somente_valorigeimp_MCAR <- subset(origcomimp_MCAR, Indication=='Ausente')
 
 pdf("p44-graf.pdf", width=10, height=10, pointsize=24)
-boxplot(log(Income) ~ .imp, data=somente_val_origeimp, xlab="Imputações", ylab="Renda",
+boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MCAR, xlab="Imputações",
+        ylab="Renda",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots das imputações")
 dev.off()
 
-gg35.graf = ggplot(data = somente_val_origeimp, aes(x=.imp, y=log(Income))) +
+gg35.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
               geom_point()
-gg36.graf = ggplot(data = somente_val_origeimp, aes(x=.imp, y=log(Income))) +
+gg36.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
               geom_point() +
               geom_jitter(width = 0.05, height = 0.3)
 
@@ -146,15 +137,22 @@ col <- rep(cores[1+as.numeric(is.na(imp_MAR_genero$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-#pdf("p45-graf.pdf", width=8, height=8, pointsize=24)
-#stripplot(log(Income)~.imp, data=com_MAR_genero, jitter.data=TRUE, factor=0.8,
-#          col=col, pch=20,
-#          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
-#          main="Gráfico com as distribuições dos valores imputados")
-#dev.off()
+gg40.graf = ggplot(com_MAR_genero, aes(x=log(Income), colour=Imputed)) +
+  geom_density()
+gg41.graf = ggplot(com_MAR_genero, aes(x=log(Income), colour=Imputed, group=.imp)) +
+  geom_density()
+gg42.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Imputed)) +
+  geom_point()
+#plotando os valores dos observados com os 96 valores ausentes
+#e os observados mais os ausentes imputados
+gg43.graf = ggplot(com_MAR_genero, aes(x=log(Income), colour=Missing)) +
+  geom_density()
+gg44.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing)) +
+  geom_point(position=position_dodge(0.3))
+gg45.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing)) +
+  geom_point() +
+  geom_jitter(width = 0.15, height = 0.3)
 
-
-#plotando os valores dos observados com os imputados percebemos que está próximo
 #boxplots da variável Income com os NA e as 5 imputações
 pdf("p46-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=com_MAR_genero, xlab="Imputações",
@@ -165,11 +163,12 @@ dev.off()
 
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
-impcom_MAR_genero = com_MAR_genero[-(1:500),-2]
+impcom_MAR_genero = com_MAR_genero[-(1:500),c(-2,-10,-11)]
 dados_originais[".imp"] = "0-original"
-dados_originais2 = dados_originais[c(".imp","Gender","Age","MarStat",
-                                     "Education","Ethnicity","Income","Education2")]
-origcomimp_MAR_genero = rbind(dados_originais, impcom_MAR_genero)
+dados_originais3 = dados_originais[c(".imp","Gender","Age","MarStat","Education",
+                                     "Ethnicity","Income","Education2")]
+
+origcomimp_MAR_genero = rbind(dados_originais3, impcom_MAR_genero)
 
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p47-graf.pdf", width=10, height=10, pointsize=24)
@@ -178,6 +177,29 @@ boxplot(log(Income) ~ .imp, data=origcomimp_MAR_genero, xlab="Imputações",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
 dev.off()
+
+#stripplot do banco original com os valores observados e o banco com os valores
+#imputados
+origcomimp_MAR_genero = cbind(origcomimp_MAR_genero,com_MAR_genero$Missing)
+
+colnames(origcomimp_MAR_genero) <- c(".imp","Gender","Age","MarStat","Education",
+                                    "Ethnicity","Income","Education2","Indication")
+
+gg46.graf = ggplot(origcomimp_MAR_genero, aes(x=log(Income), colour=Indication)) +
+  geom_density()
+gg47.graf = ggplot(data=origcomimp_MAR_genero, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point()
+#plotando os valores dos observados com os 96 valores ausentes
+#e os observados mais os ausentes imputados
+gg48.graf = ggplot(origcomimp_MAR_genero, aes(x=log(Income), colour=Indication)) +
+  geom_density()
+gg49.graf = ggplot(data=origcomimp_MAR_genero, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point(position=position_dodge(0.3))
+gg50.graf = ggplot(data=origcomimp_MAR_genero, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point() +
+  geom_jitter(width = 0.15, height = 0.3) +
+  scale_color_manual( values=c("gray45","black"))
+
 
 #QQ-plot
 imp0com_MAR_genero = com_MAR_genero[1:500,]
@@ -210,7 +232,21 @@ legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
 abline(0,1)
 dev.off()
 
-#fazer box-plot das 96 observações retiradas do banco original e as imputadas
+#box-plot das 96 observações retiradas do banco original e as imputadas
+somente_valorigeimp_MARgen <- subset(origcomimp_MAR_genero, Indication=='Ausente')
+
+pdf("p49-graf.pdf", width=10, height=10, pointsize=24)
+boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MARgen, xlab="Imputações",
+        ylab="Renda",
+        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots das imputações")
+dev.off()
+
+gg51.graf = ggplot(data=somente_valorigeimp_MARgen, aes(x=.imp, y=log(Income))) +
+  geom_point()
+gg52.graf = ggplot(data=somente_valorigeimp_MARgen, aes(x=.imp, y=log(Income))) +
+  geom_point() +
+  geom_jitter(width = 0.05, height = 0.3)
 
 
 ## IMPUTAÇÃO MAR - tipo de ensino
@@ -218,15 +254,22 @@ col <- rep(cores[1+as.numeric(is.na(imp_MAR_ensino$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
-#pdf("p50-graf.pdf", width=8, height=8, pointsize=24)
-#stripplot(log(Income)~.imp, data=com_MAR_ensino, jitter.data=TRUE, factor=0.8,
-#          col=col, pch=20,
-#          cex=1.4, xlab="Número de Imputações", ylab="Log(Renda)",
-#          main="Gráfico com as distribuições dos valores imputados")
-#dev.off()
+gg55.graf = ggplot(com_MAR_ensino, aes(x=log(Income), colour=Imputed)) +
+  geom_density()
+gg56.graf = ggplot(com_MAR_ensino, aes(x=log(Income), colour=Imputed, group=.imp)) +
+  geom_density()
+gg57.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Imputed)) +
+  geom_point()
+#plotando os valores dos observados com os 96 valores ausentes
+#e os observados mais os ausentes imputados
+gg58.graf = ggplot(com_MAR_ensino, aes(x=log(Income), colour=Missing)) +
+  geom_density()
+gg59.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing)) +
+  geom_point(position=position_dodge(0.3))
+gg60.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing)) +
+  geom_point() +
+  geom_jitter(width = 0.15, height = 0.3)
 
-
-#plotando os valores dos observados com os imputados percebemos que está próximo
 #boxplots da variável Income com os NA e as 5 imputações
 pdf("p51-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=com_MAR_ensino, xlab="Imputações",
@@ -237,19 +280,43 @@ dev.off()
 
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
-impcom_MAR_ensino = com_MAR_ensino[-(1:500),-2]
+impcom_MAR_ensino = com_MAR_ensino[-(1:500),c(-2,-10,-11)]
 dados_originais[".imp"] = "0-original"
-dados_originais2 = dados_originais[c(".imp","Gender","Age","MarStat",
-                                     "Education","Ethnicity","Income","Education2")]
-origcomimp_MAR_ensino = rbind(dados_originais, impcom_MAR_ensino)
+dados_originais4 = dados_originais[c(".imp","Gender","Age","MarStat","Education",
+                                     "Ethnicity","Income","Education2")]
+
+origcomimp_MAR_ensino = rbind(dados_originais4, impcom_MAR_ensino)
 
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p52-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=origcomimp_MAR_ensino, xlab="Imputações",
-        ylab="Renda",
+        ylab="log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
 dev.off()
+
+#stripplot do banco original com os valores observados e o banco com os valores
+#imputados
+origcomimp_MAR_ensino = cbind(origcomimp_MAR_ensino,com_MAR_ensino$Missing)
+
+colnames(origcomimp_MAR_ensino) <- c(".imp","Gender","Age","MarStat","Education",
+                                     "Ethnicity","Income","Education2","Indication")
+
+gg61.graf = ggplot(origcomimp_MAR_ensino, aes(x=log(Income), colour=Indication)) +
+  geom_density()
+gg62.graf = ggplot(data=origcomimp_MAR_ensino, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point()
+#plotando os valores dos observados com os 96 valores ausentes
+#e os observados mais os ausentes imputados
+gg63.graf = ggplot(origcomimp_MAR_ensino, aes(x=log(Income), colour=Indication)) +
+  geom_density()
+gg64.graf = ggplot(data=origcomimp_MAR_ensino, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point(position=position_dodge(0.3))
+gg65.graf = ggplot(data=origcomimp_MAR_ensino, aes(x=.imp, y=log(Income), color=Indication)) +
+  geom_point() +
+  geom_jitter(width = 0.15, height = 0.3) +
+  scale_color_manual( values=c("gray45","black"))
+
 
 #QQ-plot
 imp0com_MAR_ensino = com_MAR_ensino[1:500,]
@@ -282,9 +349,21 @@ legend(x=16.5,y=14.5,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
 abline(0,1)
 dev.off()
 
-#fazer box-plot das 96 observações retiradas do banco original e as imputadas
+#box-plot das 96 observações retiradas do banco original e as imputadas
+somente_valorigeimp_MARens <- subset(origcomimp_MAR_ensino, Indication=='Ausente')
 
+pdf("p54-graf.pdf", width=10, height=10, pointsize=24)
+boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MARens, xlab="Imputações",
+        ylab="log(Renda)",
+        col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Box-plots das imputações")
+dev.off()
 
+gg66.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) +
+  geom_point()
+gg67.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) +
+  geom_point() +
+  geom_jitter(width = 0.05, height = 0.3)
 
 
 ## IMPUTAÇÃO NMAR
