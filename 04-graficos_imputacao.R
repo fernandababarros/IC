@@ -370,5 +370,5 @@ gg67.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) 
   geom_jitter(width = 0.05, height = 0.3)
 
 
-## IMPUTAÇÃO NMAR
+## IMPUTAÇÃO MNAR
 

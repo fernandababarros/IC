@@ -12,6 +12,7 @@ library(ggplot2)
 library(car)
 library(knitr)
 
+
 #carregando o banco de dados
 data(ustermlife)
 head(ustermlife)
@@ -25,6 +26,7 @@ dados_originais$Ethnicity <- ifelse(dados_originais$Ethnicity==1, "Branco", ifel
 ## Separando em tipo de Ensino
 dados_originais$Education2 <- Recode(dados_originais$Education, "2:10='Ensino Fundamental'; 11:14='Ensino Médio'; 15:17='Ensino Superior'")
 
+
 ## BANCO DE DADOS PARA IMPUTAÇÃO MCAR
 #gerando NA's na variável Income
 #e criando um novo banco de dados com os valores faltantes
@@ -34,41 +36,42 @@ random_MCAR = rbinom(length(dados_MCAR$Income), size = 1, prob=0.2)
 #valores_ext_MCAR = dados_originais[random_MCAR,6]
 dados_MCAR[,6] = ifelse(random_MCAR, NA, dados_MCAR$Income)
 
+
 ## BANCO DE DADOS PARA IMPUTAÇÃO MAR
 #gênero feminino
 set.seed(0)
 dados_MAR = dados_originais
 dados_MAR_fem = dados_MAR[dados_originais$Gender=='Feminino',]
 random_MAR_fem = rbinom(length(dados_MAR_fem$Income), size = 1, prob=0.1)
-valores_ext_MAR_fem = dados_originais[random_MAR_fem,6]
+#valores_ext_MAR_fem = dados_originais[random_MAR_fem,6]
 dados_MAR_fem[,6] = ifelse(random_MAR_fem, NA, dados_MAR_fem$Income)
 
 #gênero masculino
 set.seed(0)
 dados_MAR_masc = dados_MAR[dados_originais$Gender=='Masculino',]
 random_MAR_masc = rbinom(length(dados_MAR_masc$Income), size = 1, prob=0.3)
-valores_ext_MAR_masc = dados_originais[random_MAR_masc,6]
+#valores_ext_MAR_masc = dados_originais[random_MAR_masc,6]
 dados_MAR_masc[,6] = ifelse(random_MAR_masc, NA, dados_MAR_masc$Income)
 
 #ensino fundamental
 set.seed(0)
 dados_MAR_ef = dados_MAR[dados_originais$Education2=='Ensino Fundamental',]
 random_MAR_ef = rbinom(length(dados_MAR_ef$Income), size = 1, prob=0.05)
-valores_ext_MAR_ef = dados_originais[random_MAR_ef,6]
+#valores_ext_MAR_ef = dados_originais[random_MAR_ef,6]
 dados_MAR_ef[,6] = ifelse(random_MAR_ef, NA, dados_MAR_ef$Income)
 
 #ensino médio
 set.seed(0)
 dados_MAR_em = dados_MAR[dados_originais$Education2=='Ensino Médio',]
 random_MAR_em = rbinom(length(dados_MAR_em$Income), size = 1, prob=0.2)
-valores_ext_MAR_em = dados_originais[random_MAR_em,6]
+#valores_ext_MAR_em = dados_originais[random_MAR_em,6]
 dados_MAR_em[,6] = ifelse(random_MAR_em, NA, dados_MAR_em$Income)
 
 #ensino superior
 set.seed(0)
 dados_MAR_es = dados_MAR[dados_originais$Education2=='Ensino Superior',]
 random_MAR_es = rbinom(length(dados_MAR_es$Income), size = 1, prob=0.4)
-valores_ext_MAR_es = dados_originais[random_MAR_es,6]
+#valores_ext_MAR_es = dados_originais[random_MAR_es,6]
 dados_MAR_es[,6] = ifelse(random_MAR_es, NA, dados_MAR_es$Income)
 
 #banco completo com os missings na renda pelas probabilidades de feminino
@@ -79,14 +82,26 @@ dados_MAR_genero = rbind(dados_MAR_fem,dados_MAR_masc)
 #ensino médio e ensino superior
 dados_MAR_ensino = rbind(dados_MAR_ef,dados_MAR_em,dados_MAR_es)
 
-#valores originais extraídos do banco de dados para criação do missing no gênero
-
-
-#valores originais extraídos do banco de dados para criação do missing no ensino
-
-
 
 ## BANCO DE DADOS PARA IMPUTAÇÃO MNAR
+set.seed(0)
+dados_MNAR = dados_originais
+dados_MNAR_min = dados_MNAR[dados_originais$Income==min(dados_originais$Income),]
+#random_MNAR_min = rbinom(length(dados_MNAR_min$Income), size = 1, prob=0.1)
+#dados_MNAR_min[,6] = ifelse(random_MNAR_min, NA, dados_MNAR_min$Income)
+#minimo da renda possui 2 observações no banco de dados
+
+set.seed(0)
+dados_MNAR_max = dados_MNAR[dados_originais$Income==max(dados_originais$Income),]
+#random_MNAR_max = rbinom(length(dados_MNAR_max$Income), size = 1, prob=0.7)
+#dados_MNAR_max[,6] = ifelse(random_MNAR_max, NA, dados_MNAR_max$Income)
+#máximo da renda possui 1 observação no banco de dados
+
+set.seed(0)
+dados_MNAR_mediana = dados_MNAR[dados_originais$Income==median(dados_originais$Income),]
+#random_MNAR_mediana = rbinom(length(dados_MNAR_mediana$Income), size = 1, prob=0.2)
+#dados_MNAR_mediana[,6] = ifelse(random_MNAR_mediana, NA, dados_MNAR_mediana$Income)
+#mediana da renda possui 4 observações no banco de dados
 
 
 
