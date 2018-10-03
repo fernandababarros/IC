@@ -37,7 +37,8 @@ gg26.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point(position=position_dodge(0.3))
 gg27.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3)
+  geom_jitter(width = 0.15, height = 0.3) +
+  scale_color_manual( values=c("gray45","black"))
 
 #boxplots da variável Income com os NA e as 5 imputações
 pdf("p41-graf.pdf", width=12, height=12, pointsize=24)
@@ -151,7 +152,8 @@ gg44.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing
   geom_point(position=position_dodge(0.3))
 gg45.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3)
+  geom_jitter(width = 0.15, height = 0.3) +
+  scale_color_manual( values=c("gray45","black"))
 
 #boxplots da variável Income com os NA e as 5 imputações
 pdf("p46-graf.pdf", width=10, height=10, pointsize=24)
@@ -211,8 +213,8 @@ imp5com_MAR_genero = com_MAR_genero[2501:3000,]
 
 pdf("p48-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MAR_genero$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Renda",
-       ylab="Quantil imputado da Renda")
+       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       ylab="Quantil imputado da Log(Renda)")
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MAR_genero$Income),
               plot.it=FALSE)
 imp2 = qqplot(log(dados_originais$Income), log(imp2com_MAR_genero$Income),
@@ -268,7 +270,9 @@ gg59.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing
   geom_point(position=position_dodge(0.3))
 gg60.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3)
+  geom_jitter(width = 0.15, height = 0.3) +
+  scale_color_manual( values=c("gray45","black"))
+
 
 #boxplots da variável Income com os NA e as 5 imputações
 pdf("p51-graf.pdf", width=10, height=10, pointsize=24)
@@ -328,8 +332,8 @@ imp5com_MAR_ensino = com_MAR_ensino[2501:3000,]
 
 pdf("p53-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MAR_ensino$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Renda",
-       ylab="Quantil imputado da Renda")
+       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       ylab="Quantil imputado da Log(Renda)")
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MAR_ensino$Income),
               plot.it=FALSE)
 imp2 = qqplot(log(dados_originais$Income), log(imp2com_MAR_ensino$Income),
