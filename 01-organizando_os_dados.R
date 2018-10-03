@@ -44,24 +44,28 @@ valores_ext_MAR_fem = dados_originais[random_MAR_fem,6]
 dados_MAR_fem[,6] = ifelse(random_MAR_fem, NA, dados_MAR_fem$Income)
 
 #gênero masculino
+set.seed(0)
 dados_MAR_masc = dados_MAR[dados_originais$Gender=='Masculino',]
 random_MAR_masc = rbinom(length(dados_MAR_masc$Income), size = 1, prob=0.3)
 valores_ext_MAR_masc = dados_originais[random_MAR_masc,6]
 dados_MAR_masc[,6] = ifelse(random_MAR_masc, NA, dados_MAR_masc$Income)
 
 #ensino fundamental
+set.seed(0)
 dados_MAR_ef = dados_MAR[dados_originais$Education2=='Ensino Fundamental',]
 random_MAR_ef = rbinom(length(dados_MAR_ef$Income), size = 1, prob=0.05)
 valores_ext_MAR_ef = dados_originais[random_MAR_ef,6]
 dados_MAR_ef[,6] = ifelse(random_MAR_ef, NA, dados_MAR_ef$Income)
 
 #ensino médio
+set.seed(0)
 dados_MAR_em = dados_MAR[dados_originais$Education2=='Ensino Médio',]
 random_MAR_em = rbinom(length(dados_MAR_em$Income), size = 1, prob=0.2)
 valores_ext_MAR_em = dados_originais[random_MAR_em,6]
 dados_MAR_em[,6] = ifelse(random_MAR_em, NA, dados_MAR_em$Income)
 
 #ensino superior
+set.seed(0)
 dados_MAR_es = dados_MAR[dados_originais$Education2=='Ensino Superior',]
 random_MAR_es = rbinom(length(dados_MAR_es$Income), size = 1, prob=0.4)
 valores_ext_MAR_es = dados_originais[random_MAR_es,6]

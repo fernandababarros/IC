@@ -367,3 +367,4 @@ gg67.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) 
 
 
 ## IMPUTAÇÃO NMAR
+
