@@ -90,6 +90,8 @@ dados_MNAR$Minimo = ifelse(dados_MNAR$Income==min(dados_MNAR$Income),NA,1)
 dados_MNAR$Maximo = ifelse(dados_MNAR$Income==max(dados_MNAR$Income),NA,1)
 dados_MNAR$Mediana = ifelse(dados_MNAR$Income==median(dados_MNAR$Income),NA,1)
 
+min(log(dados_MNAR$Income))
+max(log(dados_MNAR$Income))
 
 #Mínimo
 ##set.seed(0)
