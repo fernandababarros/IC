@@ -86,22 +86,41 @@ dados_MAR_ensino = rbind(dados_MAR_ef,dados_MAR_em,dados_MAR_es)
 ## BANCO DE DADOS PARA IMPUTAÇÃO MNAR
 set.seed(0)
 dados_MNAR = dados_originais
-dados_MNAR_min = dados_MNAR[dados_originais$Income==min(dados_originais$Income),]
-#random_MNAR_min = rbinom(length(dados_MNAR_min$Income), size = 1, prob=0.1)
+dados_MNAR$Minimo = ifelse(dados_MNAR$Income==min(dados_MNAR$Income),NA,1)
+dados_MNAR$Maximo = ifelse(dados_MNAR$Income==max(dados_MNAR$Income),NA,1)
+dados_MNAR$Mediana = ifelse(dados_MNAR$Income==median(dados_MNAR$Income),NA,1)
+
+
+#Mínimo
+##set.seed(0)
+##dados_MNAR = dados_originais
+##dados_MNAR$Minimo = ifelse(dados_MNAR$Income==min(dados_MNAR$Income),NA,1)
+#random_MNAR_min = rbinom(length(dados_MNAR$Income), size = 1, prob=0.1)
 #dados_MNAR_min[,6] = ifelse(random_MNAR_min, NA, dados_MNAR_min$Income)
 #minimo da renda possui 2 observações no banco de dados
 
-set.seed(0)
-dados_MNAR_max = dados_MNAR[dados_originais$Income==max(dados_originais$Income),]
-#random_MNAR_max = rbinom(length(dados_MNAR_max$Income), size = 1, prob=0.7)
-#dados_MNAR_max[,6] = ifelse(random_MNAR_max, NA, dados_MNAR_max$Income)
+#Máximo
+##set.seed(0)
+##dados_MNAR$Maximo = ifelse(dados_MNAR$Income==max(dados_MNAR$Income),NA,1)
+#random_MNAR_max = rbinom(length(dados_MNAR$Income), size = 1, prob=0.7)
+#dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
 #máximo da renda possui 1 observação no banco de dados
 
-set.seed(0)
-dados_MNAR_mediana = dados_MNAR[dados_originais$Income==median(dados_originais$Income),]
-#random_MNAR_mediana = rbinom(length(dados_MNAR_mediana$Income), size = 1, prob=0.2)
-#dados_MNAR_mediana[,6] = ifelse(random_MNAR_mediana, NA, dados_MNAR_mediana$Income)
+##set.seed(0)
+##dados_MNAR$Mediana = ifelse(dados_MNAR$Income==median(dados_MNAR$Income),NA,1)
+#random_MNAR_mediana = rbinom(length(dados_MNAR$Income), size = 1, prob=0.2)
+#dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
 #mediana da renda possui 4 observações no banco de dados
+
+set.seed(0)
+dados_MNAR = dados_originais
+head(dados_MNAR)
+summary(dados_MNAR)
+sapply(dados_MNAR, sd)
+
+PIi <- glm(Income ~ Gender + Age + MarStat + Education + Ethnicity + Education2,
+               data=dados_MNAR, family="binomial")
+
 
 
 
