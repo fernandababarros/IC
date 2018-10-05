@@ -86,41 +86,21 @@ dados_MAR_ensino = rbind(dados_MAR_ef,dados_MAR_em,dados_MAR_es)
 ## BANCO DE DADOS PARA IMPUTAÇÃO MNAR
 set.seed(0)
 dados_MNAR = dados_originais
-min(log(dados_MNAR$Income))
-max(log(dados_MNAR$Income))
+minimo = min(log(dados_MNAR$Income))
+maximo = max(log(dados_MNAR$Income))
 
+beta0 = 0.085
+beta1 = 0.034
 
+resultado_minimo = exp(beta0 + (beta1*minimo)) / (1 + exp(beta0 + (beta1*minimo)))
+resultado_minimo
+round(resultado_minimo, digits=1)
 
-#Mínimo
-##set.seed(0)
-##dados_MNAR = dados_originais
-##dados_MNAR$Minimo = ifelse(dados_MNAR$Income==min(dados_MNAR$Income),NA,1)
-#random_MNAR_min = rbinom(length(dados_MNAR$Income), size = 1, prob=0.1)
-#dados_MNAR_min[,6] = ifelse(random_MNAR_min, NA, dados_MNAR_min$Income)
-#minimo da renda possui 2 observações no banco de dados
+resultado_maximo = exp(beta0 + (beta1*maximo)) / (1 + exp(beta0 + (beta1*maximo)))
+resultado_maximo
+round(resultado_maximo, digits=1)
 
-#Máximo
-##set.seed(0)
-##dados_MNAR$Maximo = ifelse(dados_MNAR$Income==max(dados_MNAR$Income),NA,1)
-#random_MNAR_max = rbinom(length(dados_MNAR$Income), size = 1, prob=0.7)
-#dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
-#máximo da renda possui 1 observação no banco de dados
-
-##set.seed(0)
-##dados_MNAR$Mediana = ifelse(dados_MNAR$Income==median(dados_MNAR$Income),NA,1)
-#random_MNAR_mediana = rbinom(length(dados_MNAR$Income), size = 1, prob=0.2)
-#dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
-#mediana da renda possui 4 observações no banco de dados
-
-set.seed(0)
-dados_MNAR = dados_originais
-head(dados_MNAR)
-summary(dados_MNAR)
-sapply(dados_MNAR, sd)
-
-PIi <- glm(Income ~ Gender + Age + MarStat + Education + Ethnicity + Education2,
-               data=dados_MNAR, family="binomial")
-
-
-
-
+PIi = logit(beta0 + beta1*log(dados_MNAR$Income))
+random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
+dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
+#View(dados_MNAR)
