@@ -10,6 +10,7 @@ library(ggplot2)
 ## library(pryr)
 library(car)
 library(knitr)
+library(boot)
 
 source(file="03-imputacao.R", encoding="UTF-8")
 
@@ -436,7 +437,6 @@ gg78.graf = ggplot(origcomimp_MNAR, aes(x=log(Income), colour=Indication)) +
   geom_density()
 gg79.graf = ggplot(data=origcomimp_MNAR, aes(x=.imp, y=log(Income), color=Indication)) +
   geom_point(position=position_dodge(0.3))
-set.seed(0)
 gg80.graf = ggplot(data=origcomimp_MNAR, aes(x=.imp, y=log(Income), color=Indication)) +
   geom_point() +
   geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +

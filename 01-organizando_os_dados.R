@@ -11,6 +11,7 @@ library(ggplot2)
 ## library(pryr)
 library(car)
 library(knitr)
+library(boot)
 
 
 #carregando o banco de dados
@@ -89,18 +90,10 @@ dados_MNAR = dados_originais
 minimo = min(log(dados_MNAR$Income))
 maximo = max(log(dados_MNAR$Income))
 
-beta0 = 0.085
-beta1 = 0.034
+beta0 = -2.75
+beta1 = 0.10
 
-resultado_minimo = exp(beta0 + (beta1*minimo)) / (1 + exp(beta0 + (beta1*minimo)))
-resultado_minimo
-round(resultado_minimo, digits=1)
-
-resultado_maximo = exp(beta0 + (beta1*maximo)) / (1 + exp(beta0 + (beta1*maximo)))
-resultado_maximo
-round(resultado_maximo, digits=1)
-
-PIi = logit(beta0 + beta1*log(dados_MNAR$Income))
+PIi = inv.logit(beta0 + beta1*log(dados_MNAR$Income))
 random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
 dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
-#View(dados_MNAR)
+View(dados_MNAR)
