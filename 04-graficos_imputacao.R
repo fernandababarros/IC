@@ -37,7 +37,7 @@ gg26.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point(position=position_dodge(0.3))
 gg27.graf = ggplot(data=com_MCAR, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3) +
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
   scale_color_manual( values=c("gray45","black"))
 
 #boxplots da variável Income com os NA e as 5 imputações
@@ -85,9 +85,10 @@ gg31.graf = ggplot(origcomimp_MCAR, aes(x=log(Income), colour=Indication)) +
 #              geom_density()
 gg33.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indication)) +
               geom_point(position=position_dodge(0.3))
+set.seed(0)
 gg34.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indication)) +
               geom_point() +
-              geom_jitter(width = 0.15, height = 0.3) +
+              geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
               scale_color_manual( values=c("gray45","black"))
 
 #QQ-plot
@@ -130,7 +131,7 @@ gg35.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
               geom_point()
 gg36.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
               geom_point() +
-              geom_jitter(width = 0.05, height = 0.3)
+              geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018))
 
 
 ## IMPUTAÇÃO MAR - gênero
@@ -152,7 +153,7 @@ gg44.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing
   geom_point(position=position_dodge(0.3))
 gg45.graf = ggplot(data=com_MAR_genero, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3) +
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
   scale_color_manual( values=c("gray45","black"))
 
 #boxplots da variável Income com os NA e as 5 imputações
@@ -199,7 +200,7 @@ gg49.graf = ggplot(data=origcomimp_MAR_genero, aes(x=.imp, y=log(Income), color=
   geom_point(position=position_dodge(0.3))
 gg50.graf = ggplot(data=origcomimp_MAR_genero, aes(x=.imp, y=log(Income), color=Indication)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3) +
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
   scale_color_manual( values=c("gray45","black"))
 
 
@@ -248,7 +249,7 @@ gg51.graf = ggplot(data=somente_valorigeimp_MARgen, aes(x=.imp, y=log(Income))) 
   geom_point()
 gg52.graf = ggplot(data=somente_valorigeimp_MARgen, aes(x=.imp, y=log(Income))) +
   geom_point() +
-  geom_jitter(width = 0.05, height = 0.3)
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018))
 
 
 ## IMPUTAÇÃO MAR - tipo de ensino
@@ -270,7 +271,7 @@ gg59.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing
   geom_point(position=position_dodge(0.3))
 gg60.graf = ggplot(data=com_MAR_ensino, aes(x=.imp, y=log(Income), color=Missing)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3) +
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
   scale_color_manual( values=c("gray45","black"))
 
 
@@ -318,7 +319,7 @@ gg64.graf = ggplot(data=origcomimp_MAR_ensino, aes(x=.imp, y=log(Income), color=
   geom_point(position=position_dodge(0.3))
 gg65.graf = ggplot(data=origcomimp_MAR_ensino, aes(x=.imp, y=log(Income), color=Indication)) +
   geom_point() +
-  geom_jitter(width = 0.15, height = 0.3) +
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
   scale_color_manual( values=c("gray45","black"))
 
 
@@ -367,7 +368,7 @@ gg66.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) 
   geom_point()
 gg67.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) +
   geom_point() +
-  geom_jitter(width = 0.05, height = 0.3)
+  geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018))
 
 
 ## IMPUTAÇÃO MNAR
