@@ -90,8 +90,8 @@ dados_MNAR = dados_originais
 minimo = min(log(dados_MNAR$Income))
 maximo = max(log(dados_MNAR$Income))
 
-beta0 = -2.75
-beta1 = 0.10
+beta0 = -3.5
+beta1 = 0.24
 
 PIi = inv.logit(beta0 + beta1*log(dados_MNAR$Income))
 random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
