@@ -87,7 +87,6 @@ gg31.graf = ggplot(origcomimp_MCAR, aes(x=log(Income), colour=Indication)) +
 #              geom_density()
 gg33.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indication)) +
               geom_point(position=position_dodge(0.3))
-set.seed(0)
 gg34.graf = ggplot(data=origcomimp_MCAR, aes(x=.imp, y=log(Income), color=Indication)) +
               geom_point() +
               geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018)) +
@@ -124,7 +123,7 @@ somente_valorigeimp_MCAR <- subset(origcomimp_MCAR, Indication=='Ausente')
 
 pdf("p44-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MCAR, xlab="Imputações",
-        ylab="Renda",
+        ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots das imputações")
 dev.off()
@@ -134,6 +133,12 @@ gg35.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
 gg36.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
               geom_point() +
               geom_jitter( position=position_jitter(width=0.15, height=0.3, seed=2018))
+
+## GRÁFICOS DO PACOTE MICE
+par(mfrow=c(1,1))
+plot(imp_MCAR)
+plot(imp_MCAR2)
+
 
 ################
 ## IMPUTAÇÃO MAR - gênero

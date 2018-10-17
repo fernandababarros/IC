@@ -29,7 +29,6 @@ library(knitr)
 source("01-organizando_os_dados.R")
 ```
 
-
 # INTRODUÇÃO
 
 Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
@@ -42,16 +41,11 @@ Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Gr
 
 A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
 
-
 ## Predictive Mean Matching (pmm)
-
 
 ## Unconditional Mean Imputation (mean)
 
-
-
 # RESULTADOS
-
 
 ## Banco de dados
 
@@ -180,78 +174,88 @@ include_graphics("p22-graf.pdf")
 
 Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; assim há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio.
 
-
 ## Imputação
-
-```{r, echo=FALSE, message=FALSE, results=FALSE}
-## source(file="03-imputacao.R", encoding="UTF-8")
-```
 
 O banco de dados escolhido para aplicação da imputação não possui dados faltantes, portanto para avaliar os casos de imputação foi necessário gerar os dados faltantes. Os casos de imputação múltipla existentes são: perda completamente aleatória, perda aleatória e perda não aleatória. Sendo que na perda completamente aleatória o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na perda aleatória a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na perda não aleatória o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
 
-Para realização da imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* da função para comparar os resultados.
-
-```{r, echo=FALSE, message=FALSE}
-## source(file="04-graficos_imputacao.R", encoding="UTF-8")
-```
-
+Para realização da imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* para comparar os resultados.
 
 ### Perda Completamente Aleatória
 
-Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Sendo assim para o caso de perda completamente aleatória utilizamos uma distribuição binomial com probabilidade de sucesso de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
+Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Para tanto o mecanismo de Perda Completamente Aleatória consiste em que o motivo pelo qual os dados estão ausentes não está relacionado as variáveis do estudo. Sendo assim para esse mecanismo utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
 ```{r, echo=FALSE, message=FALSE}
 head(dados_MCAR)
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-##include_graphics("p40-graf.pdf")
-```
-
-
+Pelos box-plots abaixo podemos verificar os valores da Renda com os dados ausentes e as imputações geradas.
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p41-graf.pdf")
 ```
 
+Nos box-plots acima percebemos que as 5 imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes.
 
+Como possuímos o banco de dados original realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+gg34.graf
+```
+
+Pelo gráfico de dispersão acima, temos que os valores orignais e os valores imputados estão bastante próximos, o que pode ser verificado também pelos box-plots abaixo, que analisa o banco de dados original e as imputações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p42-graf.pdf")
 ```
 
-
+Para realizar a adequação do modelo temos o gráfico QQ-plot abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p43-graf.pdf")
 ```
 
+Pelo QQ-plot podemos chegar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
+
+Como dito anteriormente para gerar o mecanismo de perda completamente aleatória criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p44-graf.pdf")
+```
 
 ### Perda Aleatória
 
-Para os casos de perda aleatória avaliamos conjuntamente com as variáveis Gênero e Tipo de Ensino.
+O mecanismo de perda aleatória consiste em que a razão para um valor estar ausente está relacionada às outras variáveis do observadas, mas não está relacionada à variável em que há valores ausentes. Para gerar os dados ausentes desse mecanismo avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
 
 #### Gênero
 
-Para gerar os dados ausentes na variável renda, pelo caso de perda aleatória com a variável gênero, utilizamos uma distribuição binomial com probabilidade de sucesso de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de perda aleatória conjuntamente com o gênero, utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-## include_graphics("p45-graf.pdf")
-```
-
-
+Os box-plots abaixo indicam como estão a distribuição dos valores da renda para o banco de dados com valores ausentes na renda e as imputações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p46-graf.pdf")
 ```
 
+Pelos box-plots podemos verificar que há pequenos desvios entre eles, porém as imputações possuem bastante proximidade com o banco de dados com valores faltantes.
 
+Como possuímos o banco de dados original realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+gg50.graf
+```
+
+Pelo gráfico de dispersão acima percebemos melhor a distribuição verificada no gráfico dos box-plots anterior, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5 sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
+
+Para verificar esses pequenos desvios nas imputações com o banco original temos os box-plot abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p47-graf.pdf")
 ```
 
-
+Por esses box-plots percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto abaixo temos o QQ-plot no intuito de checar a adequação do ajuste:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p48-graf.pdf")
 ```
 
+Pelo QQ-plot acima percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
+
+Como dito anteriormente para gerar o mecanismo de perda completamente aleatória criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p49-graf.pdf")
+```
 
 #### Tipo de Ensino
 
@@ -261,21 +265,17 @@ Para gerar os dados ausentes na variável renda, pelo caso de perda aleatória e
 ##include_graphics("p50-graf.pdf")
 ```
 
-
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p51-graf.pdf")
 ```
-
 
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p52-graf.pdf")
 ```
 
-
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p53-graf.pdf")
 ```
-
 
 ### Perda Não Aleatória
 
@@ -287,11 +287,10 @@ include_graphics("p53-graf.pdf")
 
 # REFERÊNCIAS BIBLIOGRÁFICAS
 
-Rubin (1987)
+Little, R.J.A. and Rubin, D.B. (1987). Statistical Analysis with Missing Data. John Wiley & Sons, New York.
 
 Van Buuren, S., Groothuis-Oudshoorn, K. (2011). mice: Multivariate Imputation by Chained Equations in R. Journal of Statistical Software, 45(3), 1-67. [linked phrase](http://www.jstatsoft.org/v45/i03/)
 
 Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 
 Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
-

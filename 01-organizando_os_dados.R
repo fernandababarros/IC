@@ -96,4 +96,4 @@ beta1 = 0.24
 PIi = inv.logit(beta0 + beta1*log(dados_MNAR$Income))
 random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
 dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
-View(dados_MNAR)
+#View(dados_MNAR)

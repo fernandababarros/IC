@@ -25,6 +25,11 @@ md.pattern(dados_MCAR) #quantidade de missing
 #gerando as m=5 imputações pelo método default pmm
 imp_MCAR <- mice(dados_MCAR, seed=2018)
 #imp_MCAR
+meth_MCAR <- imp_MCAR$meth
+imp_MCAR2 <- mice(dados_MCAR, meth=meth_MCAR, maxit=20)
+fit_MCAR <- with(imp_MCAR, lm(log(Income)~Gender+Age+MarStat+Education+Ethnicity+Education2))
+resumo_MCAR <- summary(fit_MCAR)
+est_MCAR <- pool(fit_MCAR)
 
 #diagnóstico = verificar se os valores imputados são plausíveis
 valores_imp = imp_MCAR$imp$Income
