@@ -22,3 +22,5 @@ pryr
 carData
 car
 knitr
+boot
+bindrcpp

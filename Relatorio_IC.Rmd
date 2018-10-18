@@ -182,6 +182,10 @@ Para realização da imputação utilizamos o pacote *Multivariate Imputation Wi
 
 ### Perda Completamente Aleatória
 
+```{r, echo=FALSE, message=FALSE}
+source(file="04-graficos_imputacao.R", encoding="UTF-8")
+```
+
 Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Para tanto o mecanismo de Perda Completamente Aleatória consiste em que o motivo pelo qual os dados estão ausentes não está relacionado as variáveis do estudo. Sendo assim para esse mecanismo utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
