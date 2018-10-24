@@ -125,7 +125,7 @@ pdf("p44-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MCAR, xlab="Imputações",
         ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots das imputações")
+        main="Box-plots dos valores imputados")
 dev.off()
 
 gg35.graf = ggplot(data=somente_valorigeimp_MCAR, aes(x=.imp, y=log(Income))) +
@@ -247,9 +247,9 @@ somente_valorigeimp_MARgen <- subset(origcomimp_MAR_genero, Indication=='Ausente
 
 pdf("p49-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MARgen, xlab="Imputações",
-        ylab="Renda",
+        ylab="log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots das imputações")
+        main="Box-plots dos valores imputados")
 dev.off()
 
 gg51.graf = ggplot(data=somente_valorigeimp_MARgen, aes(x=.imp, y=log(Income))) +
@@ -368,7 +368,7 @@ pdf("p54-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MARens, xlab="Imputações",
         ylab="log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots das imputações")
+        main="Box-plots dos valores imputados")
 dev.off()
 
 gg66.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) +
@@ -480,7 +480,7 @@ pdf("p63-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=somente_valorigeimp_MNAR, xlab="Imputações",
         ylab="Renda",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Box-plots das imputações")
+        main="Box-plots dos valores imputados")
 dev.off()
 
 gg81.graf = ggplot(data=somente_valorigeimp_MNAR, aes(x=.imp, y=log(Income))) +

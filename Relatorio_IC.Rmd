@@ -217,7 +217,7 @@ include_graphics("p43-graf.pdf")
 
 Pelo QQ-plot podemos chegar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
 
-Como dito anteriormente para gerar o mecanismo de perda completamente aleatória criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
+Como dito anteriormente, para gerar o mecanismo de perda completamente aleatória, criamos os valores ausentes na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais codificados como ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p44-graf.pdf")
 ```
@@ -256,34 +256,73 @@ include_graphics("p48-graf.pdf")
 
 Pelo QQ-plot acima percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
 
-Como dito anteriormente para gerar o mecanismo de perda completamente aleatória criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
+Como dito anteriormente, para gerar o mecanismo de perda aleatória conjuntamente com o gênero, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 127 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 127 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p49-graf.pdf")
 ```
 
 #### Tipo de Ensino
 
-Para gerar os dados ausentes na variável renda, pelo caso de perda aleatória em conjunto com a variável tipo de ensino, utilizamos uma distribuição binomial com probabilidade de sucesso de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de perda aleatória conjuntamente com o tipo de ensino, utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-##include_graphics("p50-graf.pdf")
-```
-
+Os box-plots abaixo estão indicando a distribuição entre os valores da renda com dados faltantes e as 5 imputações realizadas:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p51-graf.pdf")
 ```
 
+Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots.
+
+Como temos o banco de dados com os valores originais da renda, o gráfico abaixo demonstra a distribuição dos pontos para os dados originais e os imputados da renda:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+gg65.graf
+```
+
+Pelo gráfico de dispersão percebemos que a imputação nº 5 não possui valores imputados para rendas menores, sendo que a original possui valores pequenos de renda, e as outras 4 imputações obtiveram valores imputados para rendas ao redor do valor da Log(renda) igual a 5. Percebemos também que somente as imputações de nº 1 e 5 possuem valores altos de renda imputados. É interessante observar o comportamento da imputação de nº 5, dado que não segue exatamente a distribuição das outras imputações, uma vez que não houve imputação de valores para Log(renda) ao redor de 5 e houveram imputações para Log(renda) ao redor de 15.
+
+Para analisar as variações mencionadas anteriormente, temos abaixo os box-plots do banco de dados com os valores originais da renda e o banco de dados com os valores imputados da renda:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p52-graf.pdf")
 ```
 
+Pelos box-plots confirmamos a variação maior encontrada na imputação nº 5, quando está é comparada com os dados originais da renda.
+
+Abaixo temos o QQ-plot:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p53-graf.pdf")
 ```
 
+O intuito principal do QQ-plot acima é checar a adequação da distribuição. Por ele percebemos deslocamentos do ajuste da reta para valores de Log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
+
+Como dito anteriormente, para gerar o mecanismo de perda aleatória conjuntamente com o tipo de ensino, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 137 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 137 observações:
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p54-graf.pdf")
+```
+
 ### Perda Não Aleatória
 
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p60-graf.pdf")
+```
 
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+gg80.graf
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p61-graf.pdf")
+```
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p62-graf.pdf")
+```
+
+144
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("p63-graf.pdf")
+```
 
 # CONCLUSÃO
 
