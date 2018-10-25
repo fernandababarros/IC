@@ -19,11 +19,11 @@ source(file="01-organizando_os_dados.R", encoding="UTF-8")
 ## IMPUTAÇÃO POR MISSING COMPLETE AT RANDOM - MCAR (PERDA COMPLETAMENTE ALEATÓRIA)
 #a probabilidade de perda não depende das variáveis presentes no estudo, sendo
 #portanto, constante para todos os indivíduos.
-md.pattern(dados_MCAR) #quantidade de missing
+#md.pattern(dados_MCAR) #quantidade de missing
 #md.pairs(novo_dados) #quantidade de missing em pares de variáveis
 
 #gerando as m=5 imputações pelo método default pmm
-imp_MCAR <- mice(dados_MCAR, seed=2018)
+imp_MCAR <- mice(dados_MCAR, seed=2018, printFlag=FALSE)
 #imp_MCAR
 meth_MCAR <- imp_MCAR$meth
 imp_MCAR2 <- mice(dados_MCAR, meth=meth_MCAR, maxit=20)
@@ -50,9 +50,9 @@ com_MCAR$Missing = rep(vetor,6)
 #relacionada com um subconjunto conhecido dos dados.
 
 #imputação pelo missing relacionado ao gênero
-md.pattern(dados_MAR_genero)
+#md.pattern(dados_MAR_genero)
 #gerando as m=5 imputações pelo método default pmm
-imp_MAR_genero <- mice(dados_MAR_genero, seed=2018)
+imp_MAR_genero <- mice(dados_MAR_genero, seed=2018, printFlag=FALSE)
 valores_imp_genero = imp_MAR_genero$imp$Income
 com_MAR_genero <- mice::complete(imp_MAR_genero, "long", include=T) #complete extrai o banco de dados 
 #original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
@@ -62,9 +62,9 @@ vetor_MAR_genero = com_MAR_genero[1:500,11]
 com_MAR_genero$Missing = rep(vetor_MAR_genero,6)
 
 #imputação pelo missing relacionado ao tipo de ensino
-md.pattern(dados_MAR_ensino)
+#md.pattern(dados_MAR_ensino)
 #gerando as m=5 imputações pelo método default pmm
-imp_MAR_ensino <- mice(dados_MAR_ensino, seed=2018)
+imp_MAR_ensino <- mice(dados_MAR_ensino, seed=2018, printFlag=FALSE)
 valores_imp_ensino = imp_MAR_ensino$imp$Income
 com_MAR_ensino <- mice::complete(imp_MAR_ensino, "long", include=T) #complete extrai o banco de dados 
 #original com os 5 bancos de dados de imputações, gerando uma matriz com 6*500=3000
@@ -78,11 +78,11 @@ com_MAR_ensino$Missing = rep(vetor_MAR_ensino,6)
 ## IMPUTAÇÃO POR MISSING NOT AT RANDOM - MNAR (PERDA NÃO ALEATÓRIA)
 #ocorre quando a probabilidade de perda está relacionada com os valores da
 #própria variável de interesse, que não foram observados.
-md.pattern(dados_MNAR) #quantidade de missing
+#md.pattern(dados_MNAR) #quantidade de missing
 #md.pairs(novo_dados) #quantidade de missing em pares de variáveis
 
 #gerando as m=5 imputações pelo método default pmm
-imp_MNAR <- mice(dados_MNAR, seed=2018)
+imp_MNAR <- mice(dados_MNAR, seed=2018, printFlag=FALSE)
 #imp_MCAR
 
 #diagnóstico = verificar se os valores imputados são plausíveis

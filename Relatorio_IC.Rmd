@@ -182,7 +182,7 @@ Para realização da imputação utilizamos o pacote *Multivariate Imputation Wi
 
 ### Perda Completamente Aleatória
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
