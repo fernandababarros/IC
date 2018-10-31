@@ -380,7 +380,7 @@ gg67.graf = ggplot(data=somente_valorigeimp_MARens, aes(x=.imp, y=log(Income))) 
 
 #################
 ## IMPUTAÇÃO MNAR
-col <- rep(cores[1+as.numeric(is.na(imp_MNAR$data$Income))],7)
+#col <- rep(cores[1+as.numeric(is.na(imp_MNAR$data$Income))],7)
 #separa os valores observados=cinza e os imputados=preto para a 
 #variável Income_missing
 
