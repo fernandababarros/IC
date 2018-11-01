@@ -165,3 +165,15 @@ random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
 dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
 sum(is.na(dados_MNAR$Income))
 #quantidade de na=189
+
+#####
+#CENÁRIO 7
+#3ºquantil=0,9
+#media=0,3
+beta1 = (log(0.9/0.1)-log(0.3/0.7)) / (quantil3-media) #2.872487e-05
+beta0 = log(0.9/0.1) - (beta1*quantil3) #-0.8476117
+PIi = inv.logit(beta0 + beta1*log(dados_MNAR$Income))
+random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
+dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
+sum(is.na(dados_MNAR$Income))
+#quantidade de na=146
