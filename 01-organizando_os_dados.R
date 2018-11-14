@@ -177,3 +177,51 @@ random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
 dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
 sum(is.na(dados_MNAR$Income))
 #quantidade de na=146
+
+#####
+#CENÁRIO 8
+#máximo sem outlier=0,9
+#media sem outlier=0,3
+maximo = max(log(dados_MNAR[-111,]$Income)) #16.1181
+media = mean(log(dados_MNAR[-111,]$Income)) #10.9101
+beta1 = (log(0.9/0.1)-log(0.3/0.7)) / (maximo-media) #0.5845858
+beta0 = log(0.9/0.1) - (beta1*maximo) #-7.225185
+PIi = inv.logit(beta0 + beta1*log(dados_MNAR$Income))
+random_MNAR = rbinom(length(dados_MNAR$Income), size = 1, prob=PIi)
+dados_MNAR[,6] = ifelse(random_MNAR, NA, dados_MNAR$Income)
+sum(is.na(dados_MNAR$Income))
+#quantidade de na=158
+
+#método determinístico dos quantis
+quantile(dados_MNAR$Income,0.00)
+quantil0_minimo = 260
+quantile(dados_MNAR$Income,0.25)
+quantil1 = 28000
+quantile(dados_MNAR$Income,0.50)
+quantil2_mediana = 54000
+quantile(dados_MNAR$Income,0.75)
+quantil3 = 106000
+quantile(dados_MNAR$Income,1.00)
+quantil4_maximo = 75000000
+
+set.seed(0)
+dados_MNAR_01 = dados_MNAR[dados_MNAR$Income >= 260 & dados_MNAR$Income <= 28000,]
+random_MNAR_01 = rbinom(length(dados_MNAR_01$Income), size = 1, prob=0.10)
+dados_MNAR_01[,6] = ifelse(random_MNAR_01, NA, dados_MNAR_01$Income)
+
+set.seed(0)
+dados_MNAR_02 = dados_MNAR[dados_MNAR$Income > 28000 & dados_MNAR$Income <= 54000,]
+random_MNAR_02 = rbinom(length(dados_MNAR_02$Income), size = 1, prob=0.25)
+dados_MNAR_02[,6] = ifelse(random_MNAR_02, NA, dados_MNAR_02$Income)
+
+set.seed(0)
+dados_MNAR_03 = dados_MNAR[dados_MNAR$Income > 54000 & dados_MNAR$Income <= 106000,]
+random_MNAR_03 = rbinom(length(dados_MNAR_03$Income), size = 1, prob=0.35)
+dados_MNAR_03[,6] = ifelse(random_MNAR_03, NA, dados_MNAR_03$Income)
+
+set.seed(0)
+dados_MNAR_04 = dados_MNAR[dados_MNAR$Income > 106000 & dados_MNAR$Income <= 75000000,]
+random_MNAR_04 = rbinom(length(dados_MNAR_04$Income), size = 1, prob=0.70)
+dados_MNAR_04[,6] = ifelse(random_MNAR_04, NA, dados_MNAR_04$Income)
+
+dados_MNAR = rbind(dados_MNAR_01,dados_MNAR_02,dados_MNAR_03,dados_MNAR_04)

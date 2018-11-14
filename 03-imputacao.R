@@ -83,7 +83,7 @@ com_MAR_ensino$Missing = rep(vetor_MAR_ensino,6)
 
 #gerando as m=5 imputações pelo método default pmm
 imp_MNAR <- mice(dados_MNAR, seed=2018, printFlag=FALSE)
-#imp_MCAR
+#imp_MNAR
 
 #diagnóstico = verificar se os valores imputados são plausíveis
 valores_imp_MNAR = imp_MNAR$imp$Income
