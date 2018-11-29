@@ -52,18 +52,29 @@ dev.off()
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
 impcom_MCAR = com_MCAR[-(1:500),c(-2,-10,-11)]
-dados_originais[".imp"] = "0-original"
+com_MCAR[1:500,".imp"] = "Obs."
+dados_originais[".imp"] = "Orig."
 dados_originais2 = dados_originais[c(".imp","Gender","Age","MarStat",
                                      "Education","Ethnicity","Income","Education2")]
 
 origcomimp_MCAR = rbind(dados_originais2, impcom_MCAR)
-
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p42-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=origcomimp_MCAR, xlab="Imputações",
         ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
+dev.off()
+
+dados_comp_MCAR = rbind(dados_originais2, com_MCAR[,c(-2,-10,-11)])
+dados_comp_MCAR[,".imp"] = factor(dados_comp_MCAR[,".imp"],levels=c("Orig.","Obs.","1","2","3","4","5"),
+                                        labels=c("Orig.","Obs.","1","2","3","4","5"))
+
+#boxplots da variável Income dos dados originais, dados com NA e as 5 imputações
+pdf("p57-graf.pdf", width=10, height=10, pointsize=24)
+boxplot(log(Income) ~ .imp, data=dados_comp_MCAR, xlab="Imputações", ylab="Log(Renda)",
+        col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Dados originais, Observados \n com NA e imputações")
 dev.off()
 
 #stripplot do banco original com os valores observados e o banco com os valores
@@ -174,19 +185,31 @@ dev.off()
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
 impcom_MAR_genero = com_MAR_genero[-(1:500),c(-2,-10,-11)]
-dados_originais[".imp"] = "0-original"
-dados_originais3 = dados_originais[c(".imp","Gender","Age","MarStat","Education",
-                                     "Ethnicity","Income","Education2")]
+com_MAR_genero[1:500,".imp"] = "Obs."
+dados_originais[".imp"] = "Orig."
+dados_originais3 = dados_originais[c(".imp","Gender","Age","MarStat",
+                                     "Education","Ethnicity","Income","Education2")]
 
 origcomimp_MAR_genero = rbind(dados_originais3, impcom_MAR_genero)
-
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p47-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=origcomimp_MAR_genero, xlab="Imputações",
-        ylab="Renda",
+        ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
 dev.off()
+
+dados_comp_MAR_genero = rbind(dados_originais3, com_MAR_genero[,c(-2,-10,-11)])
+dados_comp_MAR_genero[,".imp"] = factor(dados_comp_MAR_genero[,".imp"],levels=c("Orig.","Obs.","1","2","3","4","5"),
+                                        labels=c("Orig.","Obs.","1","2","3","4","5"))
+
+#boxplots da variável Income dos dados originais, dados com NA e as 5 imputações
+pdf("p56-graf.pdf", width=10, height=10, pointsize=24)
+boxplot(log(Income) ~ .imp, data=dados_comp_MAR_genero, xlab="Imputações", ylab="Log(Renda)",
+        col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Dados originais, Observados \n com NA e imputações")
+dev.off()
+
 
 #stripplot do banco original com os valores observados e o banco com os valores
 #imputados
@@ -293,19 +316,31 @@ dev.off()
 #criando o banco de dados com as 500 linhas dos dados originais e 
 #as 2500 linhas com as 5 imputações
 impcom_MAR_ensino = com_MAR_ensino[-(1:500),c(-2,-10,-11)]
-dados_originais[".imp"] = "0-original"
-dados_originais4 = dados_originais[c(".imp","Gender","Age","MarStat","Education",
-                                     "Ethnicity","Income","Education2")]
+com_MAR_ensino[1:500,".imp"] = "Obs."
+dados_originais[".imp"] = "Orig."
+dados_originais4 = dados_originais[c(".imp","Gender","Age","MarStat",
+                                     "Education","Ethnicity","Income","Education2")]
 
 origcomimp_MAR_ensino = rbind(dados_originais4, impcom_MAR_ensino)
-
 #boxplots da variável Income dos dados originais e as 5 imputações
 pdf("p52-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=origcomimp_MAR_ensino, xlab="Imputações",
-        ylab="log(Renda)",
+        ylab="Log(Renda)",
         col=c("white","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
         main="Box-plots dos dados originais e das imputações")
 dev.off()
+
+dados_comp_MAR_ensino = rbind(dados_originais4, com_MAR_ensino[,c(-2,-10,-11)])
+dados_comp_MAR_ensino[,".imp"] = factor(dados_comp_MAR_ensino[,".imp"],levels=c("Orig.","Obs.","1","2","3","4","5"),
+                                  labels=c("Orig.","Obs.","1","2","3","4","5"))
+
+#boxplots da variável Income dos dados originais, dados com NA e as 5 imputações
+pdf("p55-graf.pdf", width=10, height=10, pointsize=24)
+boxplot(log(Income) ~ .imp, data=dados_comp_MAR_ensino, xlab="Imputações", ylab="Log(Renda)",
+        col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
+        main="Dados originais, Observados \n com NA e imputações")
+dev.off()
+
 
 #stripplot do banco original com os valores observados e o banco com os valores
 #imputados
@@ -415,7 +450,6 @@ com_MNAR[1:500,".imp"] = "Obs."
 dados_originais[".imp"] = "Orig."
 dados_originais5 = dados_originais[c(".imp","Gender","Age","MarStat",
                                      "Education","Ethnicity","Income","Education2")]
-
 
 origcomimp_MNAR = rbind(dados_originais5, impcom_MNAR)
 #boxplots da variável Income dos dados originais e as 5 imputações
