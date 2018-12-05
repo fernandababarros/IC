@@ -25,6 +25,7 @@ library(ggplot2)
 library(car)
 library(knitr)
 library(boot)
+library(plyr)
 ```
 
 ```{r, message=FALSE, echo=FALSE, results=FALSE}
@@ -45,7 +46,6 @@ A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltan
 
 ## Predictive Mean Matching (pmm)
 
-## Unconditional Mean Imputation (mean)
 
 # RESULTADOS
 
@@ -322,6 +322,45 @@ include_graphics("p63-graf.pdf")
 
 ## Regressão
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
+source(file="05-regressao.R", encoding="UTF-8")
+```
+
+Dados Originais:
+```{r, echo=TRUE, message=FALSE}
+resumo_orig
+```
+
+Imputações pelo mecanismo PCA:
+```{r, echo=TRUE, message=FALSE}
+#est_MCAR <- pool(fit_MCAR)
+#reg_MCAR <- summary(pool(fit_MCAR))
+est_MCAR
+reg_MCAR
+```
+
+Imputações pelo mecanismo PA gênero:
+```{r, echo=TRUE, message=FALSE}
+est_MAR_genero
+reg_MAR_genero
+```
+
+Imputações pelo mecanismo PA ensino:
+```{r, echo=TRUE, message=FALSE}
+est_MAR_ensino
+reg_MAR_ensino
+```
+
+Imputações pelo mecanismo PNA:
+```{r, echo=TRUE, message=FALSE}
+est_MNAR
+reg_MNAR
+```
+
+```{r, echo=TRUE, message=FALSE}
+lista <- ldply(list(pool(fit_MNAR),pool(fit_MCAR)), summary)
+lista
+```
 
 
 # CONCLUSÃO

@@ -123,7 +123,7 @@ imp5 = qqplot(log(dados_originais$Income), log(imp5com_MCAR$Income), plot.it=FAL
 points(c(imp1, imp2, imp3, imp4, imp5),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
-legend(x=17.0,y=14.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+legend(x=17.0,y=10.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
 abline(0,1)
@@ -259,7 +259,7 @@ imp5 = qqplot(log(dados_originais$Income), log(imp5com_MAR_genero$Income),
 points(c(imp1, imp2, imp3, imp4, imp5),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
-legend(x=17.0,y=14.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+legend(x=17.0,y=10.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
 abline(0,1)
@@ -390,7 +390,7 @@ imp5 = qqplot(log(dados_originais$Income), log(imp5com_MAR_ensino$Income),
 points(c(imp1, imp2, imp3, imp4, imp5),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
-legend(x=17.0,y=14.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+legend(x=17.0,y=10.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
 abline(0,1)
@@ -513,7 +513,7 @@ imp5 = qqplot(log(dados_originais$Income), log(imp5com_MNAR$Income), plot.it=FAL
 points(c(imp1, imp2, imp3, imp4, imp5),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
-legend(x=17.0,y=14.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
+legend(x=17.0,y=10.8,c("imp0", "imp1", "imp2", "imp3", "imp4", "imp5"),
        col=c("black", "#d7191c", "#fdae61","#e78ac3","#abdda4","#2b83ba"),
        pch=20)
 abline(0,1)
