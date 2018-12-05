@@ -1,5 +1,5 @@
 ---
-title: "Aplicação de métodos de simulação de dados sintéticos"
+title: "Comparação de métodos de imputação de dados ausentes sob diferentes mecanismos"
 author: "Fernanda Buzza Alves Barros"
 date: "__ de ________ de ____"
 output:
@@ -20,9 +20,11 @@ library(VIM)
 library(CASdatasets)
 library(tidyverse)
 library(gridExtra)
+library(ggplot2)
 ## library(pryr)
 library(car)
 library(knitr)
+library(boot)
 ```
 
 ```{r, message=FALSE, echo=FALSE, results=FALSE}
@@ -176,150 +178,135 @@ Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, conf
 
 ## Imputação
 
-O banco de dados escolhido para aplicação da imputação não possui dados faltantes, portanto para avaliar os casos de imputação foi necessário gerar os dados faltantes. Os casos de imputação múltipla existentes são: perda completamente aleatória, perda aleatória e perda não aleatória. Sendo que na perda completamente aleatória o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na perda aleatória a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na perda não aleatória o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
+O banco de dados escolhido para aplicação dos mecanismos de dados ausentes através da imputação não possui dados faltantes, portanto para avaliar os mecanismos foi necessário gerar os dados faltantes. Os mecanismos de dados faltantes existentes são: Perda Completamente Aleatória (PCA), Perda Aleatória (PA) e Perda Não Aleatória (PNA). Sendo que na PCA o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na PA a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na PNA o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
 
-Para realização da imputação utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) tanto para o método da *PMM* e da *Mean* para comparar os resultados.
+Para realização das imputações utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) utilizando o método da *PMM* e comparamos os resultados para os três mecanismos de dados ausentes utilizados.
 
 ### Perda Completamente Aleatória
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
-Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Para tanto o mecanismo de Perda Completamente Aleatória consiste em que o motivo pelo qual os dados estão ausentes não está relacionado as variáveis do estudo. Sendo assim para esse mecanismo utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
+Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Portanto, no mecanismo de PCA utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
 
 Primeiras observações do banco de dados com dados faltantes na variável Renda:
 ```{r, echo=FALSE, message=FALSE}
 head(dados_MCAR)
 ```
 
-Pelos box-plots abaixo podemos verificar os valores da Renda com os dados ausentes e as imputações geradas.
+Pelos box-plots abaixo podemos verificar os valores da Renda do banco de dados original, do banco de dados gerado com valores ausentes (através do mecanismo PCA) e as cinco imputações geradas.
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p41-graf.pdf")
+include_graphics("p57-graf.pdf")
 ```
 
-Nos box-plots acima percebemos que as 5 imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes.
+Nos box-plots acima percebemos que as cinco imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes. Temos também que os valores originais e os valores imputados estão bastante próximos. Podemos verificar também através da distribuição do banco de dados original com os bancos de dados das imputações através do gráfico abaixo:
 
-Como possuímos o banco de dados original realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 gg34.graf
 ```
 
-Pelo gráfico de dispersão acima, temos que os valores orignais e os valores imputados estão bastante próximos, o que pode ser verificado também pelos box-plots abaixo, que analisa o banco de dados original e as imputações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p42-graf.pdf")
-```
+Pelo gráfico de dispersão acima, confirmamos que os valores orignais e os valores imputados estão bastante próximos.
 
 Para realizar a adequação do modelo temos o gráfico QQ-plot abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p43-graf.pdf")
 ```
 
-Pelo QQ-plot podemos chegar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
+Pelo QQ-plot podemos checar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
 
-Como dito anteriormente, para gerar o mecanismo de perda completamente aleatória, criamos os valores ausentes na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais codificados como ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
+Como dito anteriormente, para gerar o mecanismo de PCA, criamos os valores ausentes na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais codificados como ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p44-graf.pdf")
 ```
 
 ### Perda Aleatória
 
-O mecanismo de perda aleatória consiste em que a razão para um valor estar ausente está relacionada às outras variáveis do observadas, mas não está relacionada à variável em que há valores ausentes. Para gerar os dados ausentes desse mecanismo avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
+Para gerar os dados ausentes do mecanismo de PA avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
 
 #### Gênero
 
-Para gerar os dados ausentes na renda, pelo caso de perda aleatória conjuntamente com o gênero, utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
 
-Os box-plots abaixo indicam como estão a distribuição dos valores da renda para o banco de dados com valores ausentes na renda e as imputações:
+Os box-plots abaixo indicam como estão a distribuição dos valores da renda para o banco de dados original, o banco de dados com valores ausentes na renda e as cinco imputações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p46-graf.pdf")
+include_graphics("p56-graf.pdf")
 ```
 
-Pelos box-plots podemos verificar que há pequenos desvios entre eles, porém as imputações possuem bastante proximidade com o banco de dados com valores faltantes.
+Pelos box-plots podemos verificar que há pequenos desvios entre eles, porém as imputações possuem bastante proximidade com o banco de dados original.
 
-Como possuímos o banco de dados original realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
+Realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 gg50.graf
 ```
 
-Pelo gráfico de dispersão acima percebemos melhor a distribuição verificada no gráfico dos box-plots anterior, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5 sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
+Pelo gráfico de dispersão acima percebemos melhor a distribuição verificada no gráfico dos box-plots anterior, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5, sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
 
-Para verificar esses pequenos desvios nas imputações com o banco original temos os box-plot abaixo:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p47-graf.pdf")
-```
-
-Por esses box-plots percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto abaixo temos o QQ-plot no intuito de checar a adequação do ajuste:
+Assim percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto abaixo temos o QQ-plot no intuito de checar a adequação do ajuste:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p48-graf.pdf")
 ```
 
 Pelo QQ-plot acima percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
 
-Como dito anteriormente, para gerar o mecanismo de perda aleatória conjuntamente com o gênero, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 127 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 127 observações:
+Como dito anteriormente, para gerar o mecanismo de PA conjuntamente com o gênero, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 127 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 127 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p49-graf.pdf")
 ```
 
 #### Tipo de Ensino
 
-Para gerar os dados ausentes na renda, pelo caso de perda aleatória conjuntamente com o tipo de ensino, utilizamos uma distribuição bernoulli com probabilidade de sucesso de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
 
-Os box-plots abaixo estão indicando a distribuição entre os valores da renda com dados faltantes e as 5 imputações realizadas:
+Os box-plots abaixo estão indicando a distribuição entre os valores da renda com o banco de dados original, o banco de dados com os valores faltantes e as cinco imputações realizadas:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p51-graf.pdf")
+include_graphics("p55-graf.pdf")
 ```
 
-Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots.
+Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots, e também confirmamos a variação maior encontrada na imputação nº 5, quando está é comparada com os dados originais da renda.
 
 Como temos o banco de dados com os valores originais da renda, o gráfico abaixo demonstra a distribuição dos pontos para os dados originais e os imputados da renda:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 gg65.graf
 ```
 
-Pelo gráfico de dispersão percebemos que a imputação nº 5 não possui valores imputados para rendas menores, sendo que a original possui valores pequenos de renda, e as outras 4 imputações obtiveram valores imputados para rendas ao redor do valor da Log(renda) igual a 5. Percebemos também que somente as imputações de nº 1 e 5 possuem valores altos de renda imputados. É interessante observar o comportamento da imputação de nº 5, dado que não segue exatamente a distribuição das outras imputações, uma vez que não houve imputação de valores para Log(renda) ao redor de 5 e houveram imputações para Log(renda) ao redor de 15.
-
-Para analisar as variações mencionadas anteriormente, temos abaixo os box-plots do banco de dados com os valores originais da renda e o banco de dados com os valores imputados da renda:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p52-graf.pdf")
-```
-
-Pelos box-plots confirmamos a variação maior encontrada na imputação nº 5, quando está é comparada com os dados originais da renda.
+Para analisar as variações mencionadas anteriormente, pelo gráfico de dispersão percebemos que a imputação nº 5 não possui valores imputados para rendas menores, sendo que a original possui valores pequenos de renda, e as outras 4 imputações obtiveram valores imputados para rendas ao redor do valor da log(renda) igual a 5. Percebemos também que somente as imputações de nº 1 e 5 possuem valores altos de renda imputados. É interessante observar o comportamento da imputação de nº 5, dado que não segue exatamente a distribuição das outras imputações, uma vez que não houve imputação de valores para log(renda) ao redor de 5 e houveram imputações para log(renda) ao redor de 15.
 
 Abaixo temos o QQ-plot:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p53-graf.pdf")
 ```
 
-O intuito principal do QQ-plot acima é checar a adequação da distribuição. Por ele percebemos deslocamentos do ajuste da reta para valores de Log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
+O intuito principal do QQ-plot acima é checar a adequação da distribuição. Por ele percebemos deslocamentos do ajuste da reta para valores de log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
 
-Como dito anteriormente, para gerar o mecanismo de perda aleatória conjuntamente com o tipo de ensino, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 137 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 137 observações:
+Como dito anteriormente, para gerar o mecanismo de PA conjuntamente com o tipo de ensino, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados esse mecanismo gerou 137 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 137 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p54-graf.pdf")
 ```
 
 ### Perda Não Aleatória
 
-O mecanismo de perda não aleatória consiste no motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse. Para gerar os dados ausentes desse mecanismo avaliamos a perda da variável Renda através da função logit ..... (colocar fórmula aqui), em que utilizamos os valores do mínimo e do máximo da renda anual, observados no banco de dados original, para solucionar o sistema de equações e encontrar os betas (colocar fórmula dos betas aqui). Após encontrar as probabilidades através da função aplicamos nos dados da renda para gerar os valores ausentes.
+Para gerar os dados ausentes do mecanismo de PNA avaliamos a perda da variável Renda através da função logit: $$logit(p) = log( \frac{p}{1-p} ) = log(p) - log(1-p)$$
 
-Os box-plots da renda com valores ausentes e as 5 imputações realizadas podem ser vistos abaixo:
+Em que utilizamos o valor do máximo da log(renda), sem o outilier existente no banco de dados original, com probabilidade de sucesso (p) de 0,9; e o valor da média da log(renda), sem o outlier existente no banco de dados original, com probabilidade de sucesso (p) de 0,3; para solucionar o sistema de equações e encontrar os $\beta$'s.
+
+$$ \hat{\beta_1} = \frac{log( \frac{0,9}{1-0,9} ) - log( \frac{0,3}{1-0,3} )}{máximo - média} $$
+
+$$ \hat{\beta_0} = log( \frac{0,9}{1-0,9} ) - \hat{\beta_1}*máximo $$
+
+Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações.
+
+Os box-plots da renda com o banco de dados original, o banco de dados com os valores ausentes e as cinco imputações realizadas podem ser vistos abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p60-graf.pdf")
+include_graphics("p64-graf.pdf")
 ```
 
-Nos box-plots há indícios de variações nas imputações. Portanto, temos abaixo o gráfico de dispersão para os valores originais da renda, que foram codificados como ausentes, e os valores imputados da renda:
+Nos box-plots há indícios de variações entre o banco de dados original e as imputações. Portanto, temos abaixo o gráfico de dispersão para verificar a distribuição dos valores originais da renda, destacando os valores que foram codificados como ausentes, e os valores imputados da renda:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 gg80.graf
 ```
 
-Pelo gráfico de dispersão acima comprovamos alguns indícios de variações, temos que os dados originais não posseum codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor, vemos também que a imputação nº 2 a partir de aproximadamente log(renda) igual a 13 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda.
-
-Temos abaixo os box-plots para os valores originais e os imputados da renda:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p61-graf.pdf")
-```
-
-Para os box-plots acima percebemos distribuições divergentes entre os dados originais e os dados imputados, e também existe a confirmação que a imputação nº 2 está divergente entre os dados originais e as outras imputações.
+Pelo gráfico de dispersão acima comprovamos alguns indícios de variações, temos que os dados originais não posseum codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor, vemos também que nas imputações a partir de aproximadamente log(renda) igual a 14 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda. Assim percebemos distribuições divergentes entre os dados originais e os dados imputados.
 
 Para a adequação do modelo temos o QQ-plot abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
@@ -328,10 +315,13 @@ include_graphics("p62-graf.pdf")
 
 O QQ-plot indica que a adequação do modelo, entre os dados de renda com valores ausentes e os dados de renda imputados, está demonstrando alguns deslocamentos do ajuste da reta.
 
-O mecanismo de perda não aleatória aplicado na variável renda do banco de dados original gerou 144 observações ausentes. Portanto analisamos abaixo somente essas observações, tanto as que foram retiradas do banco original, e depois codificadas como ausentes, tanto as 144 observações que foram imputadas. Assim temos abaixo os box-plots dessas 144 observações:
+O mecanismo de PNA aplicado na variável renda do banco de dados original gerou 144 observações ausentes. Portanto analisamos abaixo somente essas observações, tanto as que foram retiradas do banco original, e depois codificadas como ausentes, tanto as 144 observações que foram imputadas. Assim temos abaixo os box-plots dessas 144 observações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
 include_graphics("p63-graf.pdf")
 ```
+
+## Regressão
+
 
 
 # CONCLUSÃO
