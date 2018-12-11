@@ -86,21 +86,21 @@ range_MNAR <- round(range(ic_completo_MNAR),digits=2)
 
 
 ###### GRÁFICO
-plot(1, type="n", xlab="", ylab="", xlim=range_orig, ylim=range_orig)
+plot(1, type="n", xlab="", ylab="", xlim=c(-1.60,11.10), ylim=c(-1.60,11.10))
 points(x=coef_fit_orig, y=coef_fit_orig, col="black", pch=20, cex=1.5)
 segments(x0=ic_completo_orig[,1], x1=ic_completo_orig[,1], y0=ic_completo_orig[,2],
          y1=ic_completo_orig[,3], col="black", lwd=3, lty=1, pch=20)
-points(x=coef_fit_MCAR, y=coef_fit_MCAR, col="gray", pch=4, cex=1.5)
+points(x=coef_fit_MCAR, y=coef_fit_MCAR, col="gray60", pch=4, cex=1.5)
 segments(x0=ic_completo_MCAR[,1], x1=ic_completo_MCAR[,1], y0=ic_completo_MCAR[,2],
-         y1=ic_completo_MCAR[,3], col="gray", lwd=3, lty=1, pch=4)
-points(x=coef_fit_MAR_genero, y=coef_fit_MAR_genero, col="gray", pch=17, cex=1.5)
+         y1=ic_completo_MCAR[,3], col="gray60", lwd=3, lty=1, pch=4)
+points(x=coef_fit_MAR_genero, y=coef_fit_MAR_genero, col="gray60", pch=17, cex=1.5)
 segments(x0=ic_completo_MAR_genero[,1], x1=ic_completo_MAR_genero[,1],
-         y0=ic_completo_MAR_genero[,2], y1=ic_completo_MAR_genero[,3], col="gray",
+         y0=ic_completo_MAR_genero[,2], y1=ic_completo_MAR_genero[,3], col="gray60",
          lwd=3, lty=1, pch=17)
-points(x=coef_fit_MAR_ensino, y=coef_fit_MAR_ensino, col="gray", pch=15, cex=1.5)
+points(x=coef_fit_MAR_ensino, y=coef_fit_MAR_ensino, col="gray60", pch=15, cex=1.5)
 segments(x0=ic_completo_MAR_ensino[,1], x1=ic_completo_MAR_ensino[,1],
-         y0=ic_completo_MAR_ensino[,2], y1=ic_completo_MAR_ensino[,3], col="gray",
+         y0=ic_completo_MAR_ensino[,2], y1=ic_completo_MAR_ensino[,3], col="gray60",
          lwd=3, lty=1, pch=15)
-points(x=coef_fit_MNAR, y=coef_fit_MNAR, col="gray", pch='-', cex=1.5)
+points(x=coef_fit_MNAR, y=coef_fit_MNAR, col="gray60", pch='-', cex=1.5)
 segments(x0=ic_completo_MNAR[,1], x1=ic_completo_MNAR[,1], y0=ic_completo_MNAR[,2],
-         y1=ic_completo_MNAR[,3], col="gray", lwd=3, lty=1, pch='-')
+         y1=ic_completo_MNAR[,3], col="gray60", lwd=3, lty=1, pch='-')
