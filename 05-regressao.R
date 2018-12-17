@@ -86,19 +86,20 @@ range_MNAR <- round(range(ic_completo_MNAR),digits=2)
 
 
 ###### GRÁFICO
+p=11
 plot(1, type="n", xlab="", ylab="", xlim=c(-1.60,11.10), ylim=c(-1.60,11.10))
-points(x=c(0,0,0,0,0,0,0,0,0,0,0), y=coef_fit_orig, col="black", pch=20, cex=1.5)
+points(x=0:(p-1), y=coef_fit_orig, col="black", pch=20, cex=1.5)
 segments(x0=0, x1=0, y0=ic_completo_orig[,2],
          y1=ic_completo_orig[,3], col="black", lwd=3, lty=1, pch=20)
-points(x=c(2,2,2,2,2,2,2,2,2,2,2), y=coef_fit_MCAR, col="gray60", pch=4, cex=1.5)
+points(x=0:(p-1) + 0.1, y=coef_fit_MCAR, col="gray60", pch=4, cex=1.5)
 segments(x0=2, x1=2, y0=ic_completo_MCAR[,2],
          y1=ic_completo_MCAR[,3], col="gray60", lwd=3, lty=1, pch=4)
-points(x=c(4,4,4,4,4,4,4,4,4,4,4), y=coef_fit_MAR_genero, col="gray60", pch=17, cex=1.5)
+points(x=0:(p-1) + 0.2, y=coef_fit_MAR_genero, col="gray60", pch=17, cex=1.5)
 segments(x0=4, x1=4, y0=ic_completo_MAR_genero[,2], y1=ic_completo_MAR_genero[,3],
          col="gray60", lwd=3, lty=1, pch=17)
-points(x=c(6,6,6,6,6,6,6,6,6,6,6), y=coef_fit_MAR_ensino, col="gray60", pch=15, cex=1.5)
+points(x=0:(p-1) + 0.3, y=coef_fit_MAR_ensino, col="gray60", pch=15, cex=1.5)
 segments(x0=6, x1=6, y0=ic_completo_MAR_ensino[,2], y1=ic_completo_MAR_ensino[,3],
          col="gray60", lwd=3, lty=1, pch=15)
-points(x=c(8,8,8,8,8,8,8,8,8,8,8), y=coef_fit_MNAR, col="gray60", pch='-', cex=1.5)
+points(x=0:(p-1) + 0.4, y=coef_fit_MNAR, col="gray60", pch='-', cex=1.5)
 segments(x0=8, x1=8, y0=ic_completo_MNAR[,2],
          y1=ic_completo_MNAR[,3], col="gray60", lwd=3, lty=1, pch='-')
