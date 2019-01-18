@@ -1,13 +1,17 @@
 ---
 title: "Comparação de métodos de imputação de dados ausentes sob diferentes mecanismos"
-author: "Fernanda Buzza Alves Barros"
-date: "__ de ________ de ____"
+author:
+  - name: "Fernanda Buzza Alves Barros"
+    affiliation: "Aluna"
+  - name: "Thaís Paiva"
+    affiliation: "Orientadora"
+date: "28 de fevereiro de 2019"
 output:
   pdf_document: default
+    number_sections: yes
   word_document: default
   html_document:
     df_print: paged
-    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
