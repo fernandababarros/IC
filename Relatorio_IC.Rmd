@@ -46,9 +46,14 @@ Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Gr
 
 # METODOLOGIA
 
-A Imputação Múltipla consiste em gerar valores (m vezes) para os dados faltantes, ela cria uma matriz com todas as M imputações. Para gerar essas imputações existem alguns métodos, como por exemplo *Predictive Mean Matching (pmm)* e *Unconditional Mean Imputation (mean)*, que serão os métodos utilizados nesse estudo.
+Para esse estudo aplicamos a metodologia de três diferentes mecanismos de geração de dados ausentes, são eles: Perda Completamente Aleatória (PCA), Perda Aleatória (PA) e Perda Não Aleatória (PNA). Sendo que na PCA o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na PA a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na PNA o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
 
-## Predictive Mean Matching (pmm)
+Após gerar os dados ausentes aplicamos a metodologia da Imputação Múltipla, que consiste em gerar valores (m vezes) para os dados faltantes, sendo que ela cria uma matriz com todas as M imputações. Para realização das imputações utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se *mice*, e nesse estudo realizamos a imputação 5 vezes (m=5). A aplicação dessa função requer um método e esse método varia de acordo com o tipo de escala da variável de interesse, no pacote existem os seguintes tipos de escala: numérico, fator, fator de dois níveis, fator acima de 2 níveis e qualquer tipo de escala. Para os tipos de escala númericos existem os seguintes métodos: *Predictive mean matching (pmm)*, *Bayesian linear regression (norm)*, *Linear regression, non-Bayesian (norm.nob)*, *Unconditional mean imputation (mean)* e *Two-level linear model (2l.norm)*. Já para os tipos de escala fator existem os seguintes métodos: *Logistic regression (logreg)*, *Polytomous (unordered) regression (polyreg)* e *Linear discriminant analysis (lda)*. E por fim para qualquer tipo de escala existe o método *Random sample from the observed data (sample)*. 
+
+Como a variável de interesse desse estudo é numérica portanto optamos por um método em que o tipo de escala é numérico, assim o método escolhido foi o *Predictive mean matching (pmm)*.
+
+## Predictive mean matching (pmm)
+
 
 
 # RESULTADOS
@@ -178,26 +183,17 @@ Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos qu
 include_graphics("p22-graf.pdf")
 ```
 
-Para a análise entre as variáveis Log(Renda), Idade e os tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; assim há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio.
+Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; assim há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio.
 
 ## Imputação
 
-O banco de dados escolhido para aplicação dos mecanismos de dados ausentes através da imputação não possui dados faltantes, portanto para avaliar os mecanismos foi necessário gerar os dados faltantes. Os mecanismos de dados faltantes existentes são: Perda Completamente Aleatória (PCA), Perda Aleatória (PA) e Perda Não Aleatória (PNA). Sendo que na PCA o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na PA a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na PNA o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
-
-Para realização das imputações utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se mice, e nesse estudo realizamos a imputação 5 vezes (m=5) utilizando o método da *PMM* e comparamos os resultados para os três mecanismos de dados ausentes utilizados.
-
-### Perda Completamente Aleatória
+### Perda Completamente Aleatória (PCA)
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
-Como dito anteriormente o banco de dados utilizado nesse estudo não possui dados ausentes. Portanto, no mecanismo de PCA utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios.
-
-Primeiras observações do banco de dados com dados faltantes na variável Renda:
-```{r, echo=FALSE, message=FALSE}
-head(dados_MCAR)
-```
+No mecanismo de PCA utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 96 observações ausentes das 500 observações existentes no banco de dados.
 
 Pelos box-plots abaixo podemos verificar os valores da Renda do banco de dados original, do banco de dados gerado com valores ausentes (através do mecanismo PCA) e as cinco imputações geradas.
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
@@ -219,18 +215,13 @@ include_graphics("p43-graf.pdf")
 
 Pelo QQ-plot podemos checar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
 
-Como dito anteriormente, para gerar o mecanismo de PCA, criamos os valores ausentes na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 96 observações ausentes. Portanto analisamos somente essas observações originais codificados como ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 96 observações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p44-graf.pdf")
-```
-
-### Perda Aleatória
+### Perda Aleatória (PA)
 
 Para gerar os dados ausentes do mecanismo de PA avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
 
 #### Gênero
 
-Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 127 observações ausentes das 500 observações existentes no banco de dados.
 
 Os box-plots abaixo indicam como estão a distribuição dos valores da renda para o banco de dados original, o banco de dados com valores ausentes na renda e as cinco imputações:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
@@ -253,14 +244,9 @@ include_graphics("p48-graf.pdf")
 
 Pelo QQ-plot acima percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
 
-Como dito anteriormente, para gerar o mecanismo de PA conjuntamente com o gênero, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados o mecanismo gerou 127 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 127 observações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p49-graf.pdf")
-```
-
 #### Tipo de Ensino
 
-Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma distribuição bernoulli com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 137 observações ausentes das 500 observações existentes no banco de dados.
 
 Os box-plots abaixo estão indicando a distribuição entre os valores da renda com o banco de dados original, o banco de dados com os valores faltantes e as cinco imputações realizadas:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
@@ -283,22 +269,17 @@ include_graphics("p53-graf.pdf")
 
 O intuito principal do QQ-plot acima é checar a adequação da distribuição. Por ele percebemos deslocamentos do ajuste da reta para valores de log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
 
-Como dito anteriormente, para gerar o mecanismo de PA conjuntamente com o tipo de ensino, criamos os valores ausente na variável renda no banco de dados original, das 500 observações presentes no banco de dados esse mecanismo gerou 137 observações ausentes. Portanto analisamos somente essas observações originais codificadas para ausentes com os valores que foram imputados para elas. Assim temos abaixo os box-plots dessas 137 observações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p54-graf.pdf")
-```
-
-### Perda Não Aleatória
+### Perda Não Aleatória (PNA)
 
 Para gerar os dados ausentes do mecanismo de PNA avaliamos a perda da variável Renda através da função logit: $$logit(p) = log( \frac{p}{1-p} ) = log(p) - log(1-p)$$
 
-Em que utilizamos o valor do máximo da log(renda), sem o outilier existente no banco de dados original, com probabilidade de sucesso (p) de 0,9; e o valor da média da log(renda), sem o outlier existente no banco de dados original, com probabilidade de sucesso (p) de 0,3; para solucionar o sistema de equações e encontrar os $\beta$'s.
+Primeiramente retiramos uma observação constatada como um outlier, devido a sua presença influenciar muito as medidas, assim obtemos um banco de dados com 499 observações. Para realizar o mecanismo de PNA nessas observações utilizamos o valor do máximo da log(renda), com probabilidade de sucesso (p) de 0,9 e o valor da média da log(renda), com probabilidade de sucesso (p) de 0,3 e assim solucionar o sistema de equações e encontrar os $\beta$'s conforme as equações abaixo:
 
 $$ \hat{\beta_1} = \frac{log( \frac{0,9}{1-0,9} ) - log( \frac{0,3}{1-0,3} )}{máximo - média} $$
 
 $$ \hat{\beta_0} = log( \frac{0,9}{1-0,9} ) - \hat{\beta_1}*máximo $$
 
-Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações.
+Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações, ao utilizar essa função aplicamos um fixador de sementes para a aleatoriedade das probabilidades geradas. Ao final obtivemos um banco de dados com 144 observações ausentes das 500 observações presentes no banco de dados.
 
 Os box-plots da renda com o banco de dados original, o banco de dados com os valores ausentes e as cinco imputações realizadas podem ser vistos abaixo:
 ```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
@@ -319,16 +300,14 @@ include_graphics("p62-graf.pdf")
 
 O QQ-plot indica que a adequação do modelo, entre os dados de renda com valores ausentes e os dados de renda imputados, está demonstrando alguns deslocamentos do ajuste da reta.
 
-O mecanismo de PNA aplicado na variável renda do banco de dados original gerou 144 observações ausentes. Portanto analisamos abaixo somente essas observações, tanto as que foram retiradas do banco original, e depois codificadas como ausentes, tanto as 144 observações que foram imputadas. Assim temos abaixo os box-plots dessas 144 observações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
-include_graphics("p63-graf.pdf")
-```
-
-## Regressão
+## Análise de Regressão
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 source(file="05-regressao.R", encoding="UTF-8")
 ```
+
+
+
 
 Dados Originais:
 ```{r, echo=TRUE, message=FALSE}
@@ -382,3 +361,5 @@ Van Buuren, S., Groothuis-Oudshoorn, K. (2011). mice: Multivariate Imputation by
 Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive mean matching and local residual draws. BMC Med Res Methodol. ;14:75.
 
 Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
+
+Van Buuren, S. (2018). Flexible Imputation of Missing Data. Second Edition. Chapman & Hall/CRC. Boca Raton, FL.
