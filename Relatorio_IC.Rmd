@@ -38,11 +38,9 @@ source("01-organizando_os_dados.R")
 
 # INTRODUÇÃO
 
-Problemas de dados faltantes em pesquisa são recorrentes em bancos de dados. Para a solução desses problemas existem vários métodos que podem ser utilizados. Entretanto, todos os métodos possuem uma questão principal: como inferir os valores não observados?
+Problemas de dados faltantes em bancos de dados são recorrentes, e interferem diretamente nas inferências e tomada de decisões decorrentes do estudo do banco de dados. Um exemplo seriam perguntas constrangedoras como o consumo de drogas ilícitas, infração de leis de trânsito e doenças sexualmente transmissíveis. 
 
-Para a resposta dessa pergunta, temos que o ideal seria ter os dados, porém na falta deles temos que utilizar o método que melhor se ajusta a distribuição dos dados.
-
-Nessa pesquisa utilizaremos o método proposto por Rubin (1987), Van Buuren e Groothuis-Oudshoorn (2011), que é conhecido como Imputação Múltipla.
+Assim temos a principal questão: como inferir informações dos valores ausentes? Vários métodos foram propostos para solucionar este problema como a Análise de Casos Completos (ACC) e Imputação Múltipla, sendo a última o foco dessa pesquisa. Essa abordagem, prosposta por Little e Rubin (1987) e aprimorada por outros pesquisadores como Schafer (1997) e Van Buuren e Groothuis-Oudshoorn (2011), que consiste em preencher os dados faltantes aleatoriamente com valores candidatos baseados nos valores observados.
 
 # METODOLOGIA
 
@@ -54,7 +52,11 @@ Como a variável de interesse desse estudo é numérica portanto optamos por um 
 
 ## Predictive mean matching (pmm)
 
+O método da pmm consiste em escolher valores possíveis para as observações faltantes baseando-se nas obsevações que possuem valores completos, a escolha dos valores variam entre 3, 5 ou 10 possíveis candidatos com valores completos, que são chamados de doadores.
 
+Os doadores são escolhidos aleatoriamente e assumindo que a distribuição das observações com valores ausentes segue a mesma distribuição das observações com valores completos.
+
+O método é bastante robusto para transformações da variável de interesse, que será o caso nessa pesquisa, e também é válido para variáveis discretas presentes no banco de dados. Como o método é baseado nas observações completas, os valores gerados são bastante realistas e não serão imputados valores fora da amplitude dos dados.
 
 # RESULTADOS
 
