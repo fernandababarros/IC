@@ -7,11 +7,12 @@ author:
     affiliation: "Orientadora"
 date: "28 de fevereiro de 2019"
 output:
-  pdf_document: default
-    number_sections: yes
-  word_document: default
-  html_document:
-    df_print: paged
+  pdf_document:
+    toc: true
+    number_sections: true
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
 ---
 
 ```{r setup, include=FALSE}
@@ -308,49 +309,21 @@ O QQ-plot indica que a adequação do modelo, entre os dados de renda com valore
 source(file="05-regressao.R", encoding="UTF-8")
 ```
 
+Para realizar a análise de regresão ajustamos o seguinte modelo:
 
+$$ log(Renda) = \hat{\beta_0} + \hat{\beta_1}*Masculino + \hat{\beta_2}*Idade + \hat{\beta_3}*Morando Juntos + \hat{\beta_4}*Outros + \hat{\beta_5}*Anos de Escolaridade \\+ \hat{\beta_6}*Hispânico + \hat{\beta_7}*Negro + \hat{\beta_8}*Outros + \hat{\beta_9}*Ensino Médio + \hat{\beta_{10}}*Ensino Superior $$
 
+Sendo que as bases são: Gênero Feminino, Estado Civil Casados, Etnia Branco e Tipo de Ensino Fundamental. De acordo com o modelo ajustado acima realizamos o cálculo dos intervalos de confiança para os mecanismos utilizando a função do pacote *mice* denominada *pool*. Com isso obtivemos o gráfico abaixo, que contém os intervalos de confiança, com nível de confiança ($\alpha$) de 95%, dos dados originais e dos dados das imputações dos diferentes mecanismos analisados nessa pesquisa.
 
-Dados Originais:
-```{r, echo=TRUE, message=FALSE}
-resumo_orig
+```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+include_graphics("reg-graf.pdf")
 ```
 
-Imputações pelo mecanismo PCA:
-```{r, echo=TRUE, message=FALSE}
-#est_MCAR <- pool(fit_MCAR)
-#reg_MCAR <- summary(pool(fit_MCAR))
-est_MCAR
-reg_MCAR
-```
-
-Imputações pelo mecanismo PA gênero:
-```{r, echo=TRUE, message=FALSE}
-est_MAR_genero
-reg_MAR_genero
-```
-
-Imputações pelo mecanismo PA ensino:
-```{r, echo=TRUE, message=FALSE}
-est_MAR_ensino
-reg_MAR_ensino
-```
-
-Imputações pelo mecanismo PNA:
-```{r, echo=TRUE, message=FALSE}
-est_MNAR
-reg_MNAR
-```
-
-```{r, echo=TRUE, message=FALSE}
-lista <- ldply(list(pool(fit_MNAR),pool(fit_MCAR)), summary)
-lista
-```
-
+Com esse gráfico analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente, e seus mecanismos, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que também possuem os maiores intervalos.
 
 # CONCLUSÃO
 
-
+O tratamento das observações faltantes em um banco de dados é muito importante, sendo que nesse estudo analisamos os diferentes mecanismos de dados ausentes. Com o método aprensentado, Imputação Múltipla, foi possível realizar a análise do banco de dados gerados com valores ausentes. Esse método proposto gerou inferências bastante próximas das geradas pelos dados originais, ou seja, é um dos melhores métodos a ser implementado no estudo de dados ausentes. Futuramente, para medir a acurácia, seria interessante avaliar todos os métodos existentes no banco de dados utilizado nessa pesquisa.
 
 # REFERÊNCIAS BIBLIOGRÁFICAS
 
