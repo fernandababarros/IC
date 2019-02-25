@@ -248,7 +248,7 @@ dev.off()
 ## Idade e Renda
 pdf("p12-graf.pdf", width=16, height=8, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income), ylab="Log(Renda)",
-     xlab="Idade", main="Gráfico da Idade e a Log(Renda)", pch=20)
+     xlab="Idade", main="", pch=20)
 ## abline(h=quantile(log(dados_originais$Income)), lty=2, col="purple")
 mod0 = lm(log(dados_originais$Income)~dados_originais$Age)
 abline(mod0, col="red3", lwd=3)
@@ -267,7 +267,7 @@ invisible(dev.off())
 pdf("p27-graf.pdf", width=16, height=8, pointsize=24)
 plot(dados_originais$Education, dados_originais$Age, ylab="Idade",
      xlab="Anos de Escolaridade", pch=20,
-     main="Gráfico dos Anos de Escolaridade e a Idade")
+     main="")
 mod23 = lm(dados_originais$Age~dados_originais$Education)
 abline(mod23, col="red3", lwd=3)
 dev.off()
@@ -312,7 +312,7 @@ par(mfrow=c(1,1))
 pdf("p17-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
+     main="",
      col=ifelse(dados_originais$Gender=='Feminino','black','gray50'),
      pch=ifelse(dados_originais$Gender=='Feminino',20,20))
 homem_dados1 = dados_originais[dados_originais$Gender=='Masculino',]
@@ -393,7 +393,7 @@ invisible(dev.off())
 pdf("p18-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
+     main="",
      col=ifelse(dados_originais$MarStat=='Outros','black',ifelse(dados_originais$MarStat=='Casado','gray50','red')),
      pch=ifelse(dados_originais$MarStat=='Outros',1,ifelse(dados_originais$MarStat=='Casado',20,8)))
 ecoutros_dados1 = dados_originais[dados_originais$MarStat=='Outros',]
@@ -482,7 +482,7 @@ invisible(dev.off())
 pdf("p21-graf.pdf", width=12, height=12, pointsize=24)
 boxplot(log(dados_originais$Income) ~ dados_originais$Education2,
         col="grey", xlab="Tipos de Ensino", ylab="Log(Renda)",
-        main="Boxplot dos Tipos de Ensino e a Log(Renda)")
+        main="")
 dev.off()
 
 ########## Gráfico no Relatório
@@ -509,7 +509,7 @@ dev.off()
 pdf("p22-graf.pdf", width=12, height=12, pointsize=24)
 plot(dados_originais$Age, log(dados_originais$Income),
      ylab="Log(Renda)", xlab="Idade",
-     main="Gráfico da Idade e a Log(Renda)",
+     main="",
      col=ifelse(dados_originais$Education2=='Ensino Fundamental','black',ifelse(dados_originais$Education2=='Ensino Médio','red','gray50')),
      pch=ifelse(dados_originais$Education2=='Ensino Fundamental',1,ifelse(dados_originais$Education2=='Ensino Médio',8,20)))
 ed.ef_dados = dados_originais[dados_originais$Education2=='Ensino Fundamental',]

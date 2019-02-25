@@ -1,22 +1,27 @@
 ---
 title: "Comparação de métodos de imputação de dados ausentes sob diferentes mecanismos"
-author:
-  - name: "Fernanda Buzza Alves Barros"
-    affiliation: "Aluna"
-  - name: "Thaís Paiva"
-    affiliation: "Orientadora"
+author: |
+  | Fernanda Buzza Alves Barros^1^, Thaís Paiva^2^
+  | 1. Aluna
+  | 2. Orientadora
 date: "28 de fevereiro de 2019"
 output:
   pdf_document:
-    toc: true
+    toc: false
     number_sections: true
     fig_width: 7
     fig_height: 6
-    fig_caption: true
+    fig_caption: yes
+    keep_tex: yes
+header-includes: \usepackage{float}
 ---
 
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos='H')
+```
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache=TRUE)
 ```
 
 ```{r, message=FALSE, echo=FALSE}
@@ -92,13 +97,13 @@ Após a escolha das variáveis para esse estudo, iremos realizar uma análise de
 
 Primeiramente analisaremos as variáveis individualmente, com interesse em suas distribuições e comportamentos. Pelos dados observamos que as variáveis contínuas são: Renda, Idade e Escolaridade, e as variáveis discretas são: Gênero, Estado Civil e Etnia.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição das variáveis discretas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p100-graf.pdf")
 ```
 
 Para as variáveis discretas temos que o banco de dados possui uma quantidade maior de entrevistados do sexo masculino (413 entrevistados) do que do sexo feminino (87 entrevistadas); para o estado civil temos uma concentração maior de respostas para os entrevistados Casados (333 entrevistados) e a menor quantidade de entrevistados pertence ao estado civil de Morando Juntos (31 entrevistados), sendo que o estado civil Outros possui 136 entrevistados; por fim para a etnia temos uma maior quantidade de entrevistados que possuem etnia Branco (365 entrevistados), sendo que as outras etnias possuem valores menores de entrevistados no banco de dados: Hispânico (40 entrevistados), Negro (70 entrevistados) e Outros (25 entrevistados).
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição das variáveis contínuas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p101-graf.pdf")
 ```
 
@@ -128,9 +133,9 @@ mediana_renda = median(dados_originais$Income)
 
 E para a variável Renda temos que a renda mínima anual é `r min_renda` dólares e a renda máxima anual é `r max_renda` dólares. A mediana e a média são 54000 dólares e 321021 doláres, respectivamente. O primeiro quantil é de 28000 dólares, representando o valor de renda anual que deixa 25% das observações abaixo dela e 75% acima deela. E o terceiro quantil é de 106000 dólares, representando a renda anual que possui 75% das observações abaixo dela e 25% das observações acima dela. Aplicamos o logarítimo para melhor visualização da distribuição da renda anual através do histograma e percebemos uma aparência com a distribuição normal.
 
-Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos:
+Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos a Figura 3:
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da escolaridade.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p102-graf.pdf")
 ```
 
@@ -138,55 +143,55 @@ Avaliando os tipos de ensino percebemos uma maior concentração de entrevistado
 
 Analisamos também a relação entre a variável resposta (Renda) e as covariáveis presentes no banco de dados escolhido. Assim obtivemos os seguintes resultados:
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots da Log(Renda) com as variáveis Gênero, Estado Civil e Etnia.", fig.align='center', out.width = "80%", purl=FALSE, fig.pos="H"}
 include_graphics("p103-graf.pdf")
 ```
 
 Para as variáveis discretas temos os boxplots da Log(Renda) com cada uma das variáveis separadamente. Para o gênero observamos um valor de renda maior para o sexo masculino, comparando com o sexo feminino; já a variável Estado Civil os entrevistados casados possuem uma renda maior, sendo que a mediana da renda dos que moram juntos com o parceiro(a) e outros estão bastante próximas, porém são inferiores aos valores de renda dos entrevistados casados. Na comparação entre a Log(Renda) e a Etnia percebemos uma amplitude da renda maior para as etnias Branco e Outros, entretanto, como foi observado anteriormente, essas etnias correspondem a 73% e 5%, respectivamente, do total do banco de dados.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p12-graf.pdf")
 ```
 
-Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão acima, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica um possível ganho de renda anual maior para os entrevistados a medida que aumenta a idade.
+Para a relação entre as variáveis Log(Renda) e a Idade temos o gráfico de dispersão da Figura 5, nele percebemos uma pequena inclinação no ajuste da curva quando ocorre o aumento das idades dos entrevistados, o que indica um possível ganho de renda anual maior para os entrevistados a medida que aumenta a idade.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Idade pelos Anos de Escolaridade.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p27-graf.pdf")
 ```
 
-Analisando as variáveis Anos de Escolaridade e a Idade, percebemos uma inclinação quando aumenta os anos de escolaridade e as idades dos entrevistados, ou seja, os entrevistados possuem maior anos de escolaridade à medida que aumentam as idade, o que condiz com a realidade dos ensinos visto anteiormente. Embora quantidades de anos de escolaridade maior possuem grande concentração de pessoas em diversas idades, para os anos de escolaridade entre 2-10 percebemos a presença de variabilidade.
+Analisando as variáveis Anos de Escolaridade e a Idade, percebemos um aumento na inclinação quando aumenta os anos de escolaridade e as idades dos entrevistados, ou seja, os entrevistados possuem maior anos de escolaridade à medida que aumentam as idades, o que condiz com a realidade dos ensinos visto anteriormente. Embora quantidades de anos de escolaridade maior possuem grande concentração de pessoas em diversas idades, para os anos de escolaridade entre 2-10 anos percebemos a presença de variabilidade, conforme a Figura 6.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots da Log(Renda) pelos Tipos de Ensino.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p21-graf.pdf")
 ```
 
-Avaliando a relação entre as variáveis Log(Renda) e a recodificação da variável Anos de Escolaridade, variável separada em tipos de ensino para melhor visualização da relação existente, temos que o tipo de ensino influencia na renda dos entrevistados. Assim observamos valores de renda maiores para o Ensino Superior, que possui de 15-17 anos de escolaridade.
+Avaliando a relação entre as variáveis Log(Renda) e a recodificação da variável Anos de Escolaridade, variável separada em tipos de ensino para melhor visualização da relação existente, temos que o tipo de ensino influencia na renda dos entrevistados. Assim observamos valores de renda maiores para o Ensino Superior, que possui de 15-17 anos de escolaridade, conforme Figura 7.
 
 Após a apresentação das variáveis individualmente e em pares com a variável de interesse renda anual, realizamos a análise das variáveis em trios, como por exemplo a Log(Renda), Idade e o Gênero. As análises da relação dessas variáveis permitem fazer suposições sobre os modelos a serem estudados e verificar a influência de cada covariável na variável resposta.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade, decomposta pelo Gênero.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p17-graf.pdf")
 ```
 
-Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influenciam nos valores da renda anual. O gráfico possui o ajuste das retas e mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o do sexo feminino; podemos perceber também uma inclinação na reta, à medida que aumenta a idade, para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena ou inexistente.
+Analisando a relação entre as variáveis Log(Renda), Idade e Gênero percebemos o quanto a idade e o gênero influenciam nos valores da renda anual. A Figura 8 possui o ajuste das retas e mostra claramente o que foi discutido anteriormente, sobre os valores de renda anual para o sexo masculino serem maiores que o do sexo feminino; podemos perceber também uma inclinação na reta à medida que aumenta a idade para o sexo masculino, entretanto para as mulheres essa inclinação é muito pequena ou inexistente.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade, decomposta pelo Estado Civil.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p18-graf.pdf")
 ```
 
-Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos observar que os entrevistados casados possuem uma quantidade maior de renda e através da inclinação da reta podemos concluir que a renda aumenta através da idade, já para os entrevistados que estão morando junto e os outros tipos de estado civil as retas e a inclinação estão quase juntas, sendo que possuem pequenas diferenças em algumas idades; o gráfico acima também mostra como está a distribuição por estado civil dos entrevistados.
+Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos observar que os entrevistados casados possuem uma quantidade maior de renda e através da inclinação da reta podemos concluir que a renda aumenta através da idade, já para os entrevistados que estão morando juntos e os outros tipos de estado civil as retas e a inclinação estão quase juntas, sendo que possuem pequenas diferenças em algumas idades; a Figura 9 também mostra como está a distribuição por estado civil dos entrevistados.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade, decomposta pela Etnia.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p28-graf.pdf")
 ```
 
-Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros, os Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
+Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros; já a etnia Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição da Figura 10 percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade, decomposta pelo Tipo de Ensino.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p22-graf.pdf")
 ```
 
-Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; assim há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio.
+Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio, conforme a Figura 11.
 
 ## Imputação
 
@@ -198,25 +203,25 @@ source(file="04-graficos_imputacao.R", encoding="UTF-8")
 
 No mecanismo de PCA utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 96 observações ausentes das 500 observações existentes no banco de dados.
 
-Pelos box-plots abaixo podemos verificar os valores da Renda do banco de dados original, do banco de dados gerado com valores ausentes (através do mecanismo PCA) e as cinco imputações geradas.
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Pelos box-plots da Figura 12 podemos verificar os valores da Renda do banco de dados original, do banco de dados gerado com valores ausentes (através do mecanismo PCA) e as cinco imputações geradas.
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p57-graf.pdf")
 ```
 
-Nos box-plots acima percebemos que as cinco imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes. Temos também que os valores originais e os valores imputados estão bastante próximos. Podemos verificar também através da distribuição do banco de dados original com os bancos de dados das imputações através do gráfico abaixo:
+Nos box-plots da Figura 12 percebemos que as cinco imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes. Temos também que os valores originais e os valores imputados estão bastante próximos. Podemos verificar também através da distribuição do banco de dados original com os bancos de dados das imputações através da Figura 13:
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 gg34.graf
 ```
 
-Pelo gráfico de dispersão acima, confirmamos que os valores orignais e os valores imputados estão bastante próximos.
+Pelo gráfico de dispersão da Figura 13, confirmamos que os valores orignais e os valores imputados estão bastante próximos.
 
-Para realizar a adequação do modelo temos o gráfico QQ-plot abaixo:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Para realizar a adequação do modelo temos a Figura 14:
+```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p43-graf.pdf")
 ```
 
-Pelo QQ-plot podemos checar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
+Pela Figura 14 podemos checar a adequação do modelo dos dados com as observações faltantes com as imputações realizadas. Nele vemos que os valores estão bastante concentrados indicando que os valores imputados são adequados.
 
 ### Perda Aleatória (PA)
 
@@ -226,51 +231,51 @@ Para gerar os dados ausentes do mecanismo de PA avaliamos a perda da variável R
 
 Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 127 observações ausentes das 500 observações existentes no banco de dados.
 
-Os box-plots abaixo indicam como estão a distribuição dos valores da renda para o banco de dados original, o banco de dados com valores ausentes na renda e as cinco imputações:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Os box-plots da Figura 15 indicam como estão a distribuição dos valores da renda para o banco de dados original, o banco de dados com valores ausentes na renda e as cinco imputações:
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p56-graf.pdf")
 ```
 
 Pelos box-plots podemos verificar que há pequenos desvios entre eles, porém as imputações possuem bastante proximidade com o banco de dados original.
 
 Realizamos a análise dos valores da renda no banco original com os valores da renda das imputações, e assim obtemos a seguinte distribuição:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 gg50.graf
 ```
 
-Pelo gráfico de dispersão acima percebemos melhor a distribuição verificada no gráfico dos box-plots anterior, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5, sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
+Pelo gráfico de dispersão da Figura 16 percebemos melhor a distribuição verificada na Figura 15, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5, sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
 
-Assim percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto abaixo temos o QQ-plot no intuito de checar a adequação do ajuste:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Assim percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto temos Figura 17 no intuito de checar a adequação do ajuste:
+```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p48-graf.pdf")
 ```
 
-Pelo QQ-plot acima percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
+Pela Figura 17 percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
 
 #### Tipo de Ensino
 
 Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 137 observações ausentes das 500 observações existentes no banco de dados.
 
-Os box-plots abaixo estão indicando a distribuição entre os valores da renda com o banco de dados original, o banco de dados com os valores faltantes e as cinco imputações realizadas:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Os box-plots da Figura 18 estão indicando a distribuição entre os valores da renda com o banco de dados original, o banco de dados com os valores faltantes e as cinco imputações realizadas:
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p55-graf.pdf")
 ```
 
 Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots, e também confirmamos a variação maior encontrada na imputação nº 5, quando está é comparada com os dados originais da renda.
 
-Como temos o banco de dados com os valores originais da renda, o gráfico abaixo demonstra a distribuição dos pontos para os dados originais e os imputados da renda:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Como temos o banco de dados com os valores originais da renda, a Figura 19 demonstra a distribuição dos pontos para os dados originais e os imputados da renda:
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 gg65.graf
 ```
 
 Para analisar as variações mencionadas anteriormente, pelo gráfico de dispersão percebemos que a imputação nº 5 não possui valores imputados para rendas menores, sendo que a original possui valores pequenos de renda, e as outras 4 imputações obtiveram valores imputados para rendas ao redor do valor da log(renda) igual a 5. Percebemos também que somente as imputações de nº 1 e 5 possuem valores altos de renda imputados. É interessante observar o comportamento da imputação de nº 5, dado que não segue exatamente a distribuição das outras imputações, uma vez que não houve imputação de valores para log(renda) ao redor de 5 e houveram imputações para log(renda) ao redor de 15.
 
-Abaixo temos o QQ-plot:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Abaixo temos a Figura 20:
+```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p53-graf.pdf")
 ```
 
-O intuito principal do QQ-plot acima é checar a adequação da distribuição. Por ele percebemos deslocamentos do ajuste da reta para valores de log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
+O intuito principal da Figura 20 é checar a adequação da distribuição. Por ela percebemos deslocamentos do ajuste da reta para valores de log(renda) menores que 8 e acima de 13, indicando que as variações encontradas estão interferindo na adequação do modelo.
 
 ### Perda Não Aleatória (PNA)
 
@@ -284,46 +289,50 @@ $$ \hat{\beta_0} = log( \frac{0,9}{1-0,9} ) - \hat{\beta_1}*máximo $$
 
 Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações, ao utilizar essa função aplicamos um fixador de sementes para a aleatoriedade das probabilidades geradas. Ao final obtivemos um banco de dados com 144 observações ausentes das 500 observações presentes no banco de dados.
 
-Os box-plots da renda com o banco de dados original, o banco de dados com os valores ausentes e as cinco imputações realizadas podem ser vistos abaixo:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Os box-plots da renda com o banco de dados original, o banco de dados com os valores ausentes e as cinco imputações realizadas podem ser vistos na Figura 21:
+```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p64-graf.pdf")
 ```
 
-Nos box-plots há indícios de variações entre o banco de dados original e as imputações. Portanto, temos abaixo o gráfico de dispersão para verificar a distribuição dos valores originais da renda, destacando os valores que foram codificados como ausentes, e os valores imputados da renda:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Nos box-plots há indícios de variações entre o banco de dados original e as imputações. Portanto, temos a Figura 22 para verificar a distribuição dos valores originais da renda, destacando os valores que foram codificados como ausentes, e os valores imputados da renda:
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 gg80.graf
 ```
 
-Pelo gráfico de dispersão acima comprovamos alguns indícios de variações, temos que os dados originais não posseum codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor, vemos também que nas imputações a partir de aproximadamente log(renda) igual a 14 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda. Assim percebemos distribuições divergentes entre os dados originais e os dados imputados.
+Pela Figura 22 comprovamos alguns indícios de variações, temos que os dados originais não posseum codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor, vemos também que nas imputações a partir de aproximadamente log(renda) igual a 14 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda. Assim percebemos distribuições divergentes entre os dados originais e os dados imputados.
 
-Para a adequação do modelo temos o QQ-plot abaixo:
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+Para a adequação do modelo temos a Figura 23:
+```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p62-graf.pdf")
 ```
 
-O QQ-plot indica que a adequação do modelo, entre os dados de renda com valores ausentes e os dados de renda imputados, está demonstrando alguns deslocamentos do ajuste da reta.
+A Figura 23 indica que a adequação do modelo, entre os dados de renda com valores ausentes e os dados de renda imputados, está demonstrando alguns deslocamentos do ajuste da reta.
 
 ## Análise de Regressão
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
+```{r, echo=FALSE, message=FALSE,warning=FALSE, results="hide"}
 source(file="05-regressao.R", encoding="UTF-8")
 ```
 
 Para realizar a análise de regresão ajustamos o seguinte modelo:
 
-$$ log(Renda) = \hat{\beta_0} + \hat{\beta_1}*Masculino + \hat{\beta_2}*Idade + \hat{\beta_3}*Morando Juntos + \hat{\beta_4}*Outros + \hat{\beta_5}*Anos de Escolaridade \\+ \hat{\beta_6}*Hispânico + \hat{\beta_7}*Negro + \hat{\beta_8}*Outros + \hat{\beta_9}*Ensino Médio + \hat{\beta_{10}}*Ensino Superior $$
+$$log(Renda)=\hat{\beta_0}+\hat{\beta_1}*x_1+\hat{\beta_2}*x_1+\hat{\beta_3}*x_3+\hat{\beta_4}*x_4+\hat{\beta_5}*x_5+\hat{\beta_6}*x_6+\hat{\beta_7}*x_7+\hat{\beta_8}*x_8+\hat{\beta_9}*x_9+\hat{\beta_{10}}*x_{10}$$
 
-Sendo que as bases são: Gênero Feminino, Estado Civil Casados, Etnia Branco e Tipo de Ensino Fundamental. De acordo com o modelo ajustado acima realizamos o cálculo dos intervalos de confiança para os mecanismos utilizando a função do pacote *mice* denominada *pool*. Com isso obtivemos o gráfico abaixo, que contém os intervalos de confiança, com nível de confiança ($\alpha$) de 95%, dos dados originais e dos dados das imputações dos diferentes mecanismos analisados nessa pesquisa.
+Sendo que $x_1$ = Gênero Masculino, $x_2$ = Idade, $x_3$ = Estado Civil Morando Juntos, $x_4$ = Estado Civil Outros, $x_5$ = Anos de Escolaridade, $x_6$ = Etnia Hispânico, $x_7$ = Etnia Negro, $x_8$ = Etnia Outros, $x_9$ = Ensino Médio, $x_{10}$ = Ensino Superior; e as bases são: Gênero Feminino, Estado Civil Casados, Etnia Branco e Tipo de Ensino Fundamental. De acordo com o modelo ajustado realizamos o cálculo dos intervalos de confiança para os mecanismos utilizando a função do pacote *mice* denominada *pool*. Com isso obtivemos a Figura 24, que contém os intervalos de confiança, com nível de confiança ($\alpha$) de 95%, dos dados originais e dos dados das imputações dos diferentes mecanismos analisados nessa pesquisa.
 
-```{r, echo=FALSE, message=FALSE, fig.align='center', out.width = "100%", purl=FALSE}
+```{r, echo=FALSE, message=FALSE, fig.cap="Intervalos de confiança dos coeficientes da regressão.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("reg-graf.pdf")
 ```
 
-Com esse gráfico analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente, e seus mecanismos, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que também possuem os maiores intervalos.
+Com Figura 24 analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente pelos seus mecanismos de dados ausentes utilizado, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que esses também possuem os maiores intervalos.
 
 # CONCLUSÃO
 
-O tratamento das observações faltantes em um banco de dados é muito importante, sendo que nesse estudo analisamos os diferentes mecanismos de dados ausentes. Com o método aprensentado, Imputação Múltipla, foi possível realizar a análise do banco de dados gerados com valores ausentes. Esse método proposto gerou inferências bastante próximas das geradas pelos dados originais, ou seja, é um dos melhores métodos a ser implementado no estudo de dados ausentes. Futuramente, para medir a acurácia, seria interessante avaliar todos os métodos existentes no banco de dados utilizado nessa pesquisa.
+Os dados ausentes, objetivo principal desse estudo, proporcionou a elaboração dos mecanismos existentes e que são avaliados nessa pesquisa. Utilizando os mecanismos de PCA, PA e PNA como inserção de dados faltantes em um banco de dados completo, conforme discutido na seção metodologia, observamos o comportamento entre os mecanismos.
+
+Através da Imputação Múltipla foi possível realizar a análise dos bancos de dados gerados com valores ausentes. O método proposto gerou inferências bastante próximas das geradas pelos dados originais, ou seja, é um dos melhores métodos a ser implementado no estudo de dados ausentes.
+
+Futuramente, para medir a acurácia, seria interessante avaliar outros métodos existentes no banco de dados utilizado nessa pesquisa e comparar com os resultados obtidos.
 
 # REFERÊNCIAS BIBLIOGRÁFICAS
 
@@ -338,3 +347,7 @@ Morris TP, White IR, Royston P (2015). Tuning multiple imputation by predictive 
 Frees, E.W. (2011). Regression Modeling with Actuarial and Financial Applications, Cambridge University Press.
 
 Van Buuren, S. (2018). Flexible Imputation of Missing Data. Second Edition. Chapman & Hall/CRC. Boca Raton, FL.
+
+Camargos, V. P. et al. Imputação múltipla e análise de casos completos em modelos de regressão logística: uma avaliação prática do impacto das perdas em covariáveis. Cad. Saúde Pública [online]. 2011, vol.27, n.12, pp.2299-2313.
+
+Allison, P. D. (2001) Missing Data. Thousand Oaks, CA: Sage.

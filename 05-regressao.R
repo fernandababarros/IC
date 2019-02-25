@@ -92,7 +92,7 @@ par(mar=c(5,1,3,1))
 plot(1, type="n", xlab="",
      ylab="", xlim=c(0,11), ylim=c(-1.60,11.10),
      xaxt="n", yaxt="n",
-     main="Intervalos de Confiança dos Coeficientes da Regressão")
+     main="")
 
 points(x=0:(p-1), y=coef_fit_orig, col="black", pch=20, cex=1.0)
 segments(x0=0, x1=0, y0=ic_completo_orig[1,2], y1=ic_completo_orig[1,3],

@@ -74,7 +74,7 @@ dados_comp_MCAR[,".imp"] = factor(dados_comp_MCAR[,".imp"],levels=c("Orig.","Obs
 pdf("p57-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=dados_comp_MCAR, xlab="Imputações", ylab="Log(Renda)",
         col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Dados originais, Observados \n com NA e imputações")
+        main="")
 dev.off()
 
 #stripplot do banco original com os valores observados e o banco com os valores
@@ -113,7 +113,7 @@ imp5com_MCAR = com_MCAR[2501:3000,]
 
 pdf("p43-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MCAR$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       main="", xlab="Quantil original da Log(Renda)",
        ylab="Quantil imputado da Log(Renda)", xlim=c(5,19), ylim=c(5,19))
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MCAR$Income), plot.it=FALSE)
 imp2 = qqplot(log(dados_originais$Income), log(imp2com_MCAR$Income), plot.it=FALSE)
@@ -207,7 +207,7 @@ dados_comp_MAR_genero[,".imp"] = factor(dados_comp_MAR_genero[,".imp"],levels=c(
 pdf("p56-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=dados_comp_MAR_genero, xlab="Imputações", ylab="Log(Renda)",
         col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Dados originais, Observados \n com NA e imputações")
+        main="")
 dev.off()
 
 
@@ -244,7 +244,7 @@ imp5com_MAR_genero = com_MAR_genero[2501:3000,]
 
 pdf("p48-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MAR_genero$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       main="", xlab="Quantil original da Log(Renda)",
        ylab="Quantil imputado da Log(Renda)", xlim=c(5,19), ylim=c(5,19))
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MAR_genero$Income),
               plot.it=FALSE)
@@ -338,7 +338,7 @@ dados_comp_MAR_ensino[,".imp"] = factor(dados_comp_MAR_ensino[,".imp"],levels=c(
 pdf("p55-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=dados_comp_MAR_ensino, xlab="Imputações", ylab="Log(Renda)",
         col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Dados originais, Observados \n com NA e imputações")
+        main="")
 dev.off()
 
 
@@ -375,7 +375,7 @@ imp5com_MAR_ensino = com_MAR_ensino[2501:3000,]
 
 pdf("p53-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MAR_ensino$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       main="", xlab="Quantil original da Log(Renda)",
        ylab="Quantil imputado da Log(Renda)", xlim=c(5,19), ylim=c(5,19))
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MAR_ensino$Income),
               plot.it=FALSE)
@@ -468,7 +468,7 @@ dados_comp_MNAR[,".imp"] = factor(dados_comp_MNAR[,".imp"],levels=c("Orig.","Obs
 pdf("p64-graf.pdf", width=10, height=10, pointsize=24)
 boxplot(log(Income) ~ .imp, data=dados_comp_MNAR, xlab="Imputações", ylab="Log(Renda)",
         col=c("white","grey","#d7191c","#fdae61","#e78ac3","#abdda4","#2b83ba"),
-        main="Dados originais, Observados \n com NA e imputações")
+        main="")
 dev.off()
 
 #stripplot do banco original com os valores observados e o banco com os valores
@@ -503,7 +503,7 @@ imp5com_MNAR = com_MNAR[2501:3000,]
 
 pdf("p62-graf.pdf", width=12, height=12, pointsize=24)
 qqplot(log(dados_originais$Income), log(imp0com_MNAR$Income), pch=20,
-       main="QQ-plot das imputações", xlab="Quantil original da Log(Renda)",
+       main="", xlab="Quantil original da Log(Renda)",
        ylab="Quantil imputado da Log(Renda)", xlim=c(5,19), ylim=c(5,19))
 imp1 = qqplot(log(dados_originais$Income), log(imp1com_MNAR$Income), plot.it=FALSE)
 imp2 = qqplot(log(dados_originais$Income), log(imp2com_MNAR$Income), plot.it=FALSE)
