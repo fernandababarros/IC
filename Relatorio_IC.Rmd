@@ -46,19 +46,19 @@ source("01-organizando_os_dados.R")
 
 Problemas de dados faltantes em bancos de dados são recorrentes, e interferem diretamente nas inferências e tomada de decisões decorrentes do estudo do banco de dados. Um exemplo seriam perguntas constrangedoras como o consumo de drogas ilícitas, infração de leis de trânsito e doenças sexualmente transmissíveis. 
 
-Assim temos a principal questão: como inferir informações dos valores ausentes? Vários métodos foram propostos para solucionar este problema como a Análise de Casos Completos (ACC) e Imputação Múltipla, sendo a última o foco dessa pesquisa. Essa abordagem, prosposta por Little e Rubin (1987) e aprimorada por outros pesquisadores como Schafer (1997) e Van Buuren e Groothuis-Oudshoorn (2011), que consiste em preencher os dados faltantes aleatoriamente com valores candidatos baseados nos valores observados.
+Assim temos a principal questão: como inferir informações dos valores ausentes? Vários métodos foram propostos para solucionar este problema como a Análise de Casos Completos (ACC) e Imputação Múltipla, sendo a última o foco dessa pesquisa. Essa abordagem, prosposta por Little e Rubin (1987) e aprimorada por outros pesquisadores como Schafer (1997) e Van Buuren e Groothuis-Oudshoorn (2011), consiste em preencher os dados faltantes aleatoriamente com valores candidatos baseados nos valores observados.
 
 # METODOLOGIA
 
-Para esse estudo aplicamos a metodologia de três diferentes mecanismos de geração de dados ausentes, são eles: Perda Completamente Aleatória (PCA), Perda Aleatória (PA) e Perda Não Aleatória (PNA). Sendo que na PCA o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na PA a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na PNA o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
+Para esse estudo aplicamos a metodologia de três diferentes mecanismos de geração de dados ausentes Perda Completamente Aleatória (PCA), Perda Aleatória (PA) e Perda Não Aleatória (PNA). Na PCA o motivo pelo qual os dados estão ausentes não está relacionado às variáveis do estudo; já na PA a razão para um valor estar ausente está relacionada às outras variáveis observadas, mas não está relacionada à variável em que há valores ausentes; e por fim na PNA o motivo pelo qual os dados estão ausentes está diretamente relacionado aos valores não observados da variável de interesse.
 
-Após gerar os dados ausentes aplicamos a metodologia da Imputação Múltipla, que consiste em gerar valores (m vezes) para os dados faltantes, sendo que ela cria uma matriz com todas as M imputações. Para realização das imputações utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)*. A função que realiza a imputação chama-se *mice*, e nesse estudo realizamos a imputação 5 vezes (m=5). A aplicação dessa função requer um método e esse método varia de acordo com o tipo de escala da variável de interesse, no pacote existem os seguintes tipos de escala: numérico, fator, fator de dois níveis, fator acima de 2 níveis e qualquer tipo de escala. Para os tipos de escala númericos existem os seguintes métodos: *Predictive mean matching (pmm)*, *Bayesian linear regression (norm)*, *Linear regression, non-Bayesian (norm.nob)*, *Unconditional mean imputation (mean)* e *Two-level linear model (2l.norm)*. Já para os tipos de escala fator existem os seguintes métodos: *Logistic regression (logreg)*, *Polytomous (unordered) regression (polyreg)* e *Linear discriminant analysis (lda)*. E por fim para qualquer tipo de escala existe o método *Random sample from the observed data (sample)*. 
+Após gerar os dados ausentes aplicamos a metodologia da Imputação Múltipla, que consiste em gerar valores (m vezes) para os dados faltantes, sendo que ela cria uma matriz com todas as M imputações. Para realização das imputações utilizamos o pacote *Multivariate Imputation With Chained Equations (MICE)* Van Buuren, S., Groothuis-Oudshoorn, K. (2011). A função que realiza a imputação chama-se *mice*, e nesse estudo realizamos a imputação 5 vezes (m=5). A aplicação dessa função requer um método que varia de acordo com o tipo de escala da variável de interesse numérico, fator, fator de dois níveis, fator acima de 2 níveis e qualquer tipo de escala. Para os tipos de escala númericos existem os seguintes métodos: *Predictive mean matching (pmm)*, *Bayesian linear regression (norm)*, *Linear regression, non-Bayesian (norm.nob)*, *Unconditional mean imputation (mean)* e *Two-level linear model (2l.norm)*. Já para os tipos de escala fator existem os seguintes métodos: *Logistic regression (logreg)*, *Polytomous (unordered) regression (polyreg)* e *Linear discriminant analysis (lda)*. E por fim para qualquer tipo de escala existe o método *Random sample from the observed data (sample)*. 
 
-Como a variável de interesse desse estudo é numérica portanto optamos por um método em que o tipo de escala é numérico, assim o método escolhido foi o *Predictive mean matching (pmm)*.
+Como a variável de interesse desse estudo é numérica, optamos por um método em que o tipo de escala é numérico, assim o método escolhido foi o *Predictive mean matching (pmm)*.
 
 ## Predictive mean matching (pmm)
 
-O método da pmm consiste em escolher valores possíveis para as observações faltantes baseando-se nas obsevações que possuem valores completos, a escolha dos valores variam entre 3, 5 ou 10 possíveis candidatos com valores completos, que são chamados de doadores.
+O método da *pmm* consiste em escolher valores possíveis para as observações faltantes baseando-se nas observações que possuem valores completos. A escolha dos valores variam entre 3, 5 ou 10 possíveis candidatos com valores completos, que são chamados de doadores.
 
 Os doadores são escolhidos aleatoriamente e assumindo que a distribuição das observações com valores ausentes segue a mesma distribuição das observações com valores completos.
 
@@ -68,13 +68,13 @@ O método é bastante robusto para transformações da variável de interesse, q
 
 ## Banco de dados
 
-Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software R. As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
+Para realizar a imputação dos dados utilizamos o banco de dados *US Term Life insurance* do pacote *CASdatasets* disponível no software estatístico R. O banco de dados é uma amostra de 500 domicílios retirada da pesquisa de finanças de consumidores (Survey of Consumer Finances), realizada em 2004 nos Estados Unidos da América (EUA). As imputações e os resultados foram obtidos utilizando esse mesmo software estatístico. O banco de dados possui 18 variáveis com 500 observações, como pode ser visto abaixo.
 
 ```{r, echo=FALSE, message=FALSE}
 str(ustermlife)
 ```
 
-Porém selecionamos as seguintes variáveis para realizar a pesquisa:
+Selecionamos as seguintes variáveis para realizar a pesquisa:
 Gênero (gênero do entrevistado);
 Idade (idade do entrevistado);
 Estado Civil (estado civil do entrevistado);
@@ -97,7 +97,7 @@ Após a escolha das variáveis para esse estudo, iremos realizar uma análise de
 
 Primeiramente analisaremos as variáveis individualmente, com interesse em suas distribuições e comportamentos. Pelos dados observamos que as variáveis contínuas são: Renda, Idade e Escolaridade, e as variáveis discretas são: Gênero, Estado Civil e Etnia.
 
-```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição das variáveis discretas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
+```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição das variáveis discretas.", fig.align='center', out.width = "100%", purl=FALSE, fig.pos="H"}
 include_graphics("p100-graf.pdf")
 ```
 
@@ -117,7 +117,7 @@ quantil1_idade = quantile(dados_originais$Age, 0.25)
 quantil3_idade = quantile(dados_originais$Age, 0.75)
 ```
 
-Para as variáveis contínuas temos que a variável Idade está bastante distribuída entre os 20 anos e 70 anos, após 70 anos vemos poucos entrevistados no banco de dados, sendo também que a idade máxima é `r max_idade` anos e a idade mínima é `r min_idade` anos. A média é `r media_idade` anos e a mediana `r mediana_idade` anos. O primeiro quantil é de `r quantil1_idade` anos, representando a idade que deixa 25% das observações abaixo e 75% acima dessa idade. E o terceiro quantil é de `r quantil3_idade` anos, representando a idade que possui 75% das observações abaixo dela e 25% das observações acima dela.
+Para as variáveis contínuas temos que a variável Idade está na maior parte distribuída entre os 20 anos e 70 anos, após 70 anos vemos poucos entrevistados no banco de dados, sendo também que a idade máxima é `r max_idade` anos e a idade mínima é `r min_idade` anos. A média é `r media_idade` anos e a mediana `r mediana_idade` anos. O primeiro quantil é de `r quantil1_idade` anos, representando a idade que deixa 25% das observações abaixo e 75% acima dessa idade. E o terceiro quantil é de `r quantil3_idade` anos, representando a idade que possui 75% das observações abaixo dela e 25% das observações acima dela.
 
 A distribuição da variável Escolaridade possui maior concentração de entrevistados após 10 anos de escolaridade.
 
@@ -131,9 +131,9 @@ mediana_renda = median(dados_originais$Income)
 ## quantil3_renda = quantile(dados_originais$Income, 0.75)
 ```
 
-E para a variável Renda temos que a renda mínima anual é `r min_renda` dólares e a renda máxima anual é `r max_renda` dólares. A mediana e a média são 54000 dólares e 321021 doláres, respectivamente. O primeiro quantil é de 28000 dólares, representando o valor de renda anual que deixa 25% das observações abaixo dela e 75% acima deela. E o terceiro quantil é de 106000 dólares, representando a renda anual que possui 75% das observações abaixo dela e 25% das observações acima dela. Aplicamos o logarítimo para melhor visualização da distribuição da renda anual através do histograma e percebemos uma aparência com a distribuição normal.
+E para a variável Renda temos que a renda mínima anual é `r min_renda` dólares e a renda máxima anual é `r max_renda` dólares. A mediana e a média são 54000 dólares e 321021 doláres, respectivamente. O primeiro quantil é de 28000 dólares, representando o valor de renda anual que deixa 25% das observações abaixo dela e 75% acima dela. E o terceiro quantil é de 106000 dólares, representando a renda anual que possui 75% das observações abaixo dela e 25% das observações acima dela. Aplicamos o logarítimo para melhor visualização da distribuição da renda anual através do histograma e percebemos uma aparência com a distribuição normal.
 
-Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade é o Ensino Fundamental, 11-14 anos de escolaridade é o Ensino Médio e de 15-17 anos de escolaridade é o Ensino Superior, assim obtemos a Figura 3:
+Além da análise da variável Escolaridade em anos, foi realizada também a análise dos anos de escolaridade divididos pelos tipos de ensino existentes, que são: 2-10 anos de escolaridade corresponde ao Ensino Fundamental, 11-14 anos de escolaridade corresponde ao Ensino Médio e de 15-17 anos de escolaridade corresponde ao Ensino Superior. Assim obtemos a Figura 3:
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da escolaridade.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p102-graf.pdf")
@@ -185,13 +185,13 @@ Para a análise entre as variáveis Log(Renda), Idade e Estado Civil, podemos ob
 include_graphics("p28-graf.pdf")
 ```
 
-Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros; já a etnia Hispânicos, que começam a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição da Figura 10 percebemos que a etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
+Analisando a relação entre as variáveis Log(Renda), Idade e a Etnia, vemos que as retas pertencentes as etnias Branco, Negro e Outros partem quase do mesmo valor de renda, entretanto, ao longo das idades, possuem comportamentos diferentes para a inclinação da reta, sendo que para a etnia Negro a renda decresce a medida que aumenta a idade. Observamos maior renda para a etnia Outros; já a etnia Hispânico, que começa a reta abaixo das outras etnias, intercepta a etnia Negro entre as idades 40-50 anos. Pelo gráfico da distribuição da Figura 10 percebemos que as observações da etnia Hispânico estão concentrados em torno do Log(Renda) igual a 10, e que a etnia Negro possue valores de renda bastante dispersos a medida que aumenta a idade.  
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pela Idade, decomposta pelo Tipo de Ensino.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p22-graf.pdf")
 ```
 
-Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, confirmamos a conlusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Sendo que nas idades mais jovens a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio, conforme a Figura 11.
+Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, confirmamos a conclusão anterior sobre o Ensino Superior possuir renda maior que os outros tipos de ensino. Nas idades mais jovens, a renda para o Ensino Fundamental e o Ensino Médio estão muito próximas quando analisamos a inclinação da reta, entretanto a partir dos 30 anos as retas desses dois tipos de ensino começam a se distanciar; há um aumento de renda para o Ensino Médio enquanto o Ensino Fundamental apresenta declínio, conforme a Figura 11.
 
 ## Imputação
 
@@ -201,22 +201,19 @@ Para a análise entre as variáveis Log(Renda), Idade e os Tipos de Ensino, conf
 source(file="04-graficos_imputacao.R", encoding="UTF-8")
 ```
 
-No mecanismo de PCA utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 96 observações ausentes das 500 observações existentes no banco de dados.
+No mecanismo de PCA, utilizamos uma Distribuição Bernoulli com probabilidade de sucesso (p) de 0,20 para gerar os dados ausentes na variável Renda, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 96 observações ausentes das 500 observações existentes no banco de dados, os dados ausentes foram gerados de acordo com a metodologia descrita na seção 2.
 
 Pelos box-plots da Figura 12 podemos verificar os valores da Renda do banco de dados original, do banco de dados gerado com valores ausentes (através do mecanismo PCA) e as cinco imputações geradas.
 ```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p57-graf.pdf")
 ```
 
-Nos box-plots da Figura 12 percebemos que as cinco imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes. Temos também que os valores originais e os valores imputados estão bastante próximos. Podemos verificar também através da distribuição do banco de dados original com os bancos de dados das imputações através da Figura 13:
+Nos box-plots da Figura 12 percebemos que as cinco imputações geradas seguem de modo semelhante a distribuição do banco com os valores ausentes. Temos também que os valores originais e os valores imputados estão bastante próximos. Podemos verificar também através da distribuição do banco de dados original com os bancos de dados das imputações através da Figura 13. Pelo gráfico de dispersão da Figura 13, confirmamos que os valores orignais e os valores imputados estão bastante próximos.
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 gg34.graf
 ```
 
-Pelo gráfico de dispersão da Figura 13, confirmamos que os valores orignais e os valores imputados estão bastante próximos.
-
-Para realizar a adequação do modelo temos a Figura 14:
 ```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p43-graf.pdf")
 ```
@@ -225,11 +222,11 @@ Pela Figura 14 podemos checar a adequação do modelo dos dados com as observaç
 
 ### Perda Aleatória (PA)
 
-Para gerar os dados ausentes do mecanismo de PA avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
+Para gerar os dados ausentes do mecanismo de PA, avaliamos a perda da variável Renda conjuntamente com as variáveis Gênero e Tipo de Ensino.
 
 #### Gênero
 
-Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 127 observações ausentes das 500 observações existentes no banco de dados.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o gênero, utilizamos uma Distribuição Bernoulli com probabilidade de sucesso (p) de 0,10 para o sexo feminino e 0,30 para o sexo masculino, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 127 observações ausentes das 500 observações existentes no banco de dados.
 
 Os box-plots da Figura 15 indicam como estão a distribuição dos valores da renda para o banco de dados original, o banco de dados com valores ausentes na renda e as cinco imputações:
 ```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
@@ -243,25 +240,25 @@ Realizamos a análise dos valores da renda no banco original com os valores da r
 gg50.graf
 ```
 
-Pelo gráfico de dispersão da Figura 16 percebemos melhor a distribuição verificada na Figura 15, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputação. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5, sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
+Pelo gráfico de dispersão da Figura 16 percebemos melhor a distribuição verificada na Figura 15, novamente observamos indícios de pequenos desvios entre o banco de dados original e o banco de dados imputado. Nas imputações 2, 3 e 4 percebemos imputações de valores da log(renda) próximos de 5, sendo que no banco de dados original não encontramos tais valores ausentes ao redor do log(renda) igual a 5.
 
 Assim percebemos ainda o indício de pequenos desvios nas imputações comparada com o banco original. Portanto temos Figura 17 no intuito de checar a adequação do ajuste:
 ```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p48-graf.pdf")
 ```
 
-Pela Figura 17 percebemos para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
+Pela Figura 17 percebemos que, para valores menores que o log(renda) de 10 e maiores que o log(renda) de 14, há um deslocamento maior entre as imputações e a reta de adequação do modelo entre os quantis originais e o quantis imputados da log(renda).
 
 #### Tipo de Ensino
 
-Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma *Distribuição Bernoulli* com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 137 observações ausentes das 500 observações existentes no banco de dados.
+Para gerar os dados ausentes na renda, pelo caso de PA conjuntamente com o tipo de ensino, utilizamos uma Distribuição Bernoulli com probabilidade de sucesso (p) de 0,05 para o ensino fundamental, 0,20 para o ensino médio e 0,40 para o ensino superior, e fixamos uma semente ao gerar os números aleatórios. Ao final obtivemos um banco de dados com 137 observações ausentes das 500 observações existentes no banco de dados.
 
 Os box-plots da Figura 18 estão indicando a distribuição entre os valores da renda com o banco de dados original, o banco de dados com os valores faltantes e as cinco imputações realizadas:
 ```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p55-graf.pdf")
 ```
 
-Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots, e também confirmamos a variação maior encontrada na imputação nº 5, quando está é comparada com os dados originais da renda.
+Pelos box-plots podemos perceber pequenas variações, a imputação nº 5 que apresentou maior divergência comparada com os outros box-plots, e também confirmamos a variação maior encontrada na imputação nº 5, quando esta é comparada com os dados originais da renda.
 
 Como temos o banco de dados com os valores originais da renda, a Figura 19 demonstra a distribuição dos pontos para os dados originais e os imputados da renda:
 ```{r, echo=FALSE, message=FALSE, fig.cap="Distribuição da Log(Renda) pelos dados originais e as imputações, as observações foram decompostas em observações originais e ausentes imputadas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
@@ -270,7 +267,6 @@ gg65.graf
 
 Para analisar as variações mencionadas anteriormente, pelo gráfico de dispersão percebemos que a imputação nº 5 não possui valores imputados para rendas menores, sendo que a original possui valores pequenos de renda, e as outras 4 imputações obtiveram valores imputados para rendas ao redor do valor da log(renda) igual a 5. Percebemos também que somente as imputações de nº 1 e 5 possuem valores altos de renda imputados. É interessante observar o comportamento da imputação de nº 5, dado que não segue exatamente a distribuição das outras imputações, uma vez que não houve imputação de valores para log(renda) ao redor de 5 e houveram imputações para log(renda) ao redor de 15.
 
-Abaixo temos a Figura 20:
 ```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p53-graf.pdf")
 ```
@@ -279,15 +275,15 @@ O intuito principal da Figura 20 é checar a adequação da distribuição. Por 
 
 ### Perda Não Aleatória (PNA)
 
-Para gerar os dados ausentes do mecanismo de PNA avaliamos a perda da variável Renda através da função logit: $$logit(p) = log( \frac{p}{1-p} ) = log(p) - log(1-p)$$
+Para gerar os dados ausentes do mecanismo de *PNA* avaliamos a perda da variável Renda através da função logit: $$logit(p) = log( \frac{p}{1-p} ) = log(p) - log(1-p)$$
 
-Primeiramente retiramos uma observação constatada como um outlier, devido a sua presença influenciar muito as medidas, assim obtemos um banco de dados com 499 observações. Para realizar o mecanismo de PNA nessas observações utilizamos o valor do máximo da log(renda), com probabilidade de sucesso (p) de 0,9 e o valor da média da log(renda), com probabilidade de sucesso (p) de 0,3 e assim solucionar o sistema de equações e encontrar os $\beta$'s conforme as equações abaixo:
+Primeiramente retiramos uma observação constatada como um outlier, devido a sua presença influenciar muito as medidas, assim obtemos um banco de dados com 499 observações. Para realizar o mecanismo de PNA nessas observações utilizamos o valor do máximo da log(renda), com probabilidade de sucesso (p) de 0,9 e o valor da média da log(renda), com probabilidade de sucesso (p) de 0,3. O objetivo são as probabilidades de observações ausentes estarem ligadas a renda, ou seja, valores de renda maiores possuem mais observações ausentes, e valores de renda menores possuem menos observações ausentes. Assim solucionamos o sistema de equações e encontramos os $\beta$'s conforme as equações abaixo:
 
 $$ \hat{\beta_1} = \frac{log( \frac{0,9}{1-0,9} ) - log( \frac{0,3}{1-0,3} )}{máximo - média} $$
 
 $$ \hat{\beta_0} = log( \frac{0,9}{1-0,9} ) - \hat{\beta_1}*máximo $$
 
-Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações, ao utilizar essa função aplicamos um fixador de sementes para a aleatoriedade das probabilidades geradas. Ao final obtivemos um banco de dados com 144 observações ausentes das 500 observações presentes no banco de dados.
+Após encontrar os $\beta$'s, aplicamos nos dados da renda a função *inv.logit* do pacote *boot* para gerar as probabilidades de valores ausentes em cada uma das observações, com um fixador de sementes para a aleatoriedade das probabilidades geradas. Ao final obtivemos um banco de dados com 144 observações ausentes das 500 observações presentes no banco de dados.
 
 Os box-plots da renda com o banco de dados original, o banco de dados com os valores ausentes e as cinco imputações realizadas podem ser vistos na Figura 21:
 ```{r, echo=FALSE, message=FALSE, fig.cap="Box-plots dos dados originais, dados observados com valores ausentes e as 5 imputações geradas.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
@@ -299,9 +295,8 @@ Nos box-plots há indícios de variações entre o banco de dados original e as 
 gg80.graf
 ```
 
-Pela Figura 22 comprovamos alguns indícios de variações, temos que os dados originais não posseum codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor, vemos também que nas imputações a partir de aproximadamente log(renda) igual a 14 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda. Assim percebemos distribuições divergentes entre os dados originais e os dados imputados.
+Pela Figura 22 comprovamos alguns indícios de variações, temos que os dados originais não possuem codificação de dados ausentes para log(renda) ao redor de 5, e as imputações obtiveram valores imputados próximos desse valor. Vemos também que nas imputações a partir de aproximadamente log(renda) igual a 14 não há mais imputações, sendo que nos dados originais percebemos codificação de variável ausente acima desse valor de renda. Assim percebemos distribuições divergentes entre os dados originais e os dados imputados.
 
-Para a adequação do modelo temos a Figura 23:
 ```{r, echo=FALSE, message=FALSE, fig.cap="QQ-plot das imputações, quantil imputado da Log(Renda) pelo quantil observado da Log(Renda).", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("p62-graf.pdf")
 ```
@@ -314,17 +309,17 @@ A Figura 23 indica que a adequação do modelo, entre os dados de renda com valo
 source(file="05-regressao.R", encoding="UTF-8")
 ```
 
-Para realizar a análise de regresão ajustamos o seguinte modelo:
+Para analisar o impacto dos diferentes mecanismos de dados ausentes no resultado de inferências feitas com os dados imputados, utilizamos o seguinte modelo de regressão do log da renda com as demais covariáveis.
 
 $$log(Renda)=\hat{\beta_0}+\hat{\beta_1}*x_1+\hat{\beta_2}*x_1+\hat{\beta_3}*x_3+\hat{\beta_4}*x_4+\hat{\beta_5}*x_5+\hat{\beta_6}*x_6+\hat{\beta_7}*x_7+\hat{\beta_8}*x_8+\hat{\beta_9}*x_9+\hat{\beta_{10}}*x_{10}$$
 
-Sendo que $x_1$ = Gênero Masculino, $x_2$ = Idade, $x_3$ = Estado Civil Morando Juntos, $x_4$ = Estado Civil Outros, $x_5$ = Anos de Escolaridade, $x_6$ = Etnia Hispânico, $x_7$ = Etnia Negro, $x_8$ = Etnia Outros, $x_9$ = Ensino Médio, $x_{10}$ = Ensino Superior; e as bases são: Gênero Feminino, Estado Civil Casados, Etnia Branco e Tipo de Ensino Fundamental. De acordo com o modelo ajustado realizamos o cálculo dos intervalos de confiança para os mecanismos utilizando a função do pacote *mice* denominada *pool*. Com isso obtivemos a Figura 24, que contém os intervalos de confiança, com nível de confiança ($\alpha$) de 95%, dos dados originais e dos dados das imputações dos diferentes mecanismos analisados nessa pesquisa.
+Onde $x_1$ = Gênero Masculino, $x_2$ = Idade, $x_3$ = Estado Civil (Morando Juntos), $x_4$ = Estado Civil (Outros), $x_5$ = Anos de Escolaridade, $x_6$ = Etnia Hispânico, $x_7$ = Etnia Negro, $x_8$ = Etnia Outros, $x_9$ = Ensino Médio, $x_{10}$ = Ensino Superior; e as bases são: Gênero Feminino, Estado Civil (Casados), Etnia Branco e Tipo de Ensino Fundamental. De acordo com o modelo ajustado, realizamos o cálculo dos intervalos de confiança para os mecanismos utilizando a função do pacote *mice* denominada *pool*. Com isso obtivemos a Figura 24, que contém os intervalos de confiança de 95% dos dados originais e dos dados das imputações dos diferentes mecanismos analisados nessa pesquisa.
 
 ```{r, echo=FALSE, message=FALSE, fig.cap="Intervalos de confiança dos coeficientes da regressão.", fig.align='center', out.width = "60%", purl=FALSE, fig.pos="H"}
 include_graphics("reg-graf.pdf")
 ```
 
-Com Figura 24 analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente pelos seus mecanismos de dados ausentes utilizado, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que esses também possuem os maiores intervalos.
+Com Figura 24 analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente pelos mecanismos de dados ausentes utilizados, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que esses também possuem os maiores intervalos.
 
 # CONCLUSÃO
 

@@ -74,7 +74,7 @@ invisible(dev.off())
 ## p2.graf
 ## p3.graf
 pdf("p100-graf.pdf", width=14, height=10, pointsize=24)
-par(mfrow=c(2,2))
+par(mfrow=c(1,3))
 barplot(cont_gen, main="Distribuição do Gênero", col="grey", density=60,
         axis.lty=20, axes=TRUE)
 text(0.7,110,"17,4%")
