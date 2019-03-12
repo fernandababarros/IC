@@ -323,9 +323,9 @@ Com Figura 24 analisamos melhor a influência de cada variável do banco de dado
 
 # CONCLUSÃO
 
-Os dados ausentes, objetivo principal desse estudo, proporcionou a elaboração dos mecanismos existentes e que são avaliados nessa pesquisa. Utilizando os mecanismos de PCA, PA e PNA como inserção de dados faltantes em um banco de dados completo, conforme discutido na seção metodologia, observamos o comportamento entre os mecanismos.
+Nesse estudo analisamos o impacto dos mecanismos de dados ausentes PCA, PA e PNA utilizando o método de Imputação Múltipla, que foi possível realizar a comparação do banco de dados original com os bancos de dados imputados com valores ausentes.
 
-Através da Imputação Múltipla foi possível realizar a análise dos bancos de dados gerados com valores ausentes. O método proposto gerou inferências bastante próximas das geradas pelos dados originais, ou seja, é um dos melhores métodos a ser implementado no estudo de dados ausentes.
+Na seção resultados percebemos como o mecanismo influencia nas inferências e assim vemos que os mecanismos de PCA e PA, por assumirem aleatoriedade, possuem resultados próximos e o mecanismo mais divergente seria o PNA, que não assume aleatoriedade. Vale ressaltar que como a imputação foi feita assumindo a aleatoriedade da PA, percebemos maiores diferenças nos casos de PNA.
 
 Futuramente, para medir a acurácia, seria interessante avaliar outros métodos existentes no banco de dados utilizado nessa pesquisa e comparar com os resultados obtidos.
 
