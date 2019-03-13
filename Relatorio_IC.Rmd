@@ -319,15 +319,17 @@ Onde $x_1$ = Gênero Masculino, $x_2$ = Idade, $x_3$ = Estado Civil (Morando Jun
 include_graphics("reg-graf.pdf")
 ```
 
-Com Figura 24 analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente pelos mecanismos de dados ausentes utilizados, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que esses também possuem os maiores intervalos.
+Com a Figura 24 analisamos melhor a influência de cada variável do banco de dados no modelo ajustado. Analisando cada variável separadamente pelos mecanismos de dados ausentes utilizados, observamos pouca variabilidade nas variáveis Idade e Anos de Escolaridade, e muita variabilidade no Intercepto, Ensino Médio e Ensino Superior, observando que esses também possuem os maiores intervalos.
 
 # CONCLUSÃO
 
-Nesse estudo analisamos o impacto dos mecanismos de dados ausentes PCA, PA e PNA utilizando o método de Imputação Múltipla, que foi possível realizar a comparação do banco de dados original com os bancos de dados imputados com valores ausentes.
+Nesse estudo analisamos o impacto dos mecanismos de dados ausentes PCA, PA e PNA utilizando o método de Imputação Múltipla, realizando a comparação do banco de dados original com os bancos de dados imputados com valores ausentes.
 
-Na seção resultados percebemos como o mecanismo influencia nas inferências e assim vemos que os mecanismos de PCA e PA, por assumirem aleatoriedade, possuem resultados próximos e o mecanismo mais divergente seria o PNA, que não assume aleatoriedade. Vale ressaltar que como a imputação foi feita assumindo a aleatoriedade da PA, percebemos maiores diferenças nos casos de PNA.
+Na seção resultados percebemos como o mecanismo influencia nas inferências, vemos que os mecanismos de PCA e PA, por assumirem aleatoriedade, possuem resultados próximos e o mecanismo divergente seria o PNA, que não assume aleatoriedade. Vale ressaltar que como a imputação foi feita assumindo a aleatoriedade da PA há uma influência direta nas inferências dos mecanismos de PCA e PA, por isso percebemos maiores diferenças nas inferências para os casos de PNA.
 
 Futuramente, para medir a acurácia, seria interessante avaliar outros métodos existentes no banco de dados utilizado nessa pesquisa e comparar com os resultados obtidos.
+
+Todos os códigos executados nessa pesquisa estão disponíveis em: https://github.com/fernandababarros/IC
 
 # REFERÊNCIAS BIBLIOGRÁFICAS
 

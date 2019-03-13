@@ -73,23 +73,23 @@ invisible(dev.off())
 ## p1.graf
 ## p2.graf
 ## p3.graf
-pdf("p100-graf.pdf", width=14, height=10, pointsize=24)
+pdf("p100-graf.pdf", width=18, height=10, pointsize=24)
 par(mfrow=c(1,3))
 barplot(cont_gen, main="Distribuição do Gênero", col="grey", density=60,
-        axis.lty=20, axes=TRUE)
-text(0.7,110,"17,4%")
-text(1.90,350,"82,6%")
+        axis.lty=20, axes=TRUE, ylim=c(0,500))
+text(0.7,100,"17,4%")
+text(1.90,425,"82,6%")
 barplot(cont_ecivil, main="Distribuição do Estado Civil", col="grey", density=60,
-        axis.lty=20, axes=TRUE)
-text(0.7,300,"66,6%")
-text(1.95,50,"6,2%")
+        axis.lty=20, axes=TRUE, ylim=c(0,500))
+text(0.7,345,"66,6%")
+text(1.95,45,"6,2%")
 text(3.1,150,"27,2%")
 barplot(cont_etnia, main="Distribuição da Etnia", col="grey", density=60,
-        axis.lty=20, axes=TRUE)
-text(0.7,340,"73%")
+        axis.lty=20, axes=TRUE, ylim=c(0,500))
+text(0.7,380,"73%")
 text(1.95,57,"8%")
-text(3.1,95,"14%")
-text(4.3,50,"5%")
+text(3.1,85,"14%")
+text(4.3,37,"5%")
 dev.off()
 ##########
 
